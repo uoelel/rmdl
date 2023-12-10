@@ -1,0 +1,75 @@
+---
+title: "QML tutorial – Group-level effects"
+execute: 
+  freeze: auto
+---
+
+```{r setup}
+#| label: setup
+#| message: false
+#| echo: false
+
+library(tidyverse)
+theme_set(theme_light())
+library(posterior)
+
+library(brms)
+library(broom.mixed)
+
+options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
+options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))
+
+options(dplyr.summarise.inform = FALSE)
+
+my_seed <- 8878
+```
+
+
+## Introduction
+
+::: callout-warning
+#### Important
+
+When working through these tutorials, always **make sure you are in the course RStudio Project** you created.
+
+You know you are in an RStudio Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.
+
+If you see `Project (none)` in the top-right corner, that means **you are not** in an RStudio Project.
+
+To make sure you are in the RStudio project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
+:::
+
+```{r}
+ota2009 <- read_csv("data/ota2009.csv") %>%
+  filter(
+    Procedure == "TrialProc",
+    Contrast != "F"
+  ) %>%
+  mutate(
+    Subject = as.factor(Subject),
+    RT_log = log(Words.RT)
+  )
+```
+
+```{r}
+ota2009_bm <- brm(
+  RT_log ~
+    Condition * Contrast +
+    (Condition * Contrast | Subject),
+  family = gaussian,
+  backend = "cmdstanr",
+  data = ota2009,
+  cores = 4,
+  seed = my_seed,
+  file = "data/cache/ota2009_bm"
+)
+```
+
+```{r}
+summary(ota2009_bm)
+```
+
+```{r}
+conditional_effects(ota2009_bm, "Contrast:Condition")
+```
+

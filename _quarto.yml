@@ -1,0 +1,30 @@
+project:
+  type: website
+  output-dir: docs
+  execute-dir: project
+  render:
+    - "*.qmd"
+    - "!data/"
+  resources:
+    - "slides/"
+    - "img/"
+    - "data/"
+
+website:
+  title: "RMDL"
+  navbar:
+    background: dark
+    left:
+      - href: index.qmd
+        text: Home
+
+format:
+  html:
+    theme: united
+    css: styles.css
+    toc: true
+    df-print: paged
+    number-sections: true
+
+callout-icon: false
+

@@ -1,0 +1,70 @@
+## Assessment overview
+
+This course will be assessed on the basis of a set of online tests, **2 formative assessments** and **2 summative assessments**.
+
+**Formative assessments** are mock assessments that mirror the summative assessments. These will give you a chance to keep on track with the course contents and get interim feedback that will better prepare you for the summative assessment. See below for info.
+
+You will have to submit **two summative assessments**. They will weight 50% and 50% of the final mark.
+
+See below for details.
+
+## Feedback and marking
+
+You will receive individual feedback for the summative assessments, as comments on the submitted file in Turnitin.
+
+The comments will be categorised according the the Feedback Categorisation Rubric used for this course, which you can see [here](https://uoe-my.sharepoint.com/:x:/g/personal/scoretta_ed_ac_uk/EWXAA_yIFx9Aoj8WF2glt6MBEyHbUr8CUBqR1Tt1sSTwJg?e=ba3tZ7). The rubric is based on the learning outcomes of the course. For each criterion in the rubric there are three possible outcomes: insufficient, developing, proficient. This should help you identify areas of strength and those that can be improved.
+
+Note that the Feedback Categorisation Form is **not used to calculate a numeric mark**. Marking will follow the PPLS MSc Common Marking Scheme, which you can find [here](https://uoe.sharepoint.com/:u:/r/sites/hss/ppls/MScHub/SitePages/Marking-%26-Moderation-Procedure.aspx?csf=1&web=1&e=RyVb39) (login required).
+
+More specifically, we will use a "step marking" procedure, where, within each mark band, you can get a 2, 5 or 8 (for example, 62, 65 or 68). We will not use other numbers within the scale. These are the criteria for getting 2, 5, or 8:
+
+- 2: The criteria for the mark band have been achieved, but there might be minor issues.
+- 5: The criteria for the mark band have been achieved fully.
+- 8: The criteria for the mark band have been achieved fully and in a particularly remarkable way, but not in such a way to grant a higher mark band.
+
+Finally, please note that marking does not follow a point-based system, i.e. different exercises are not assigned a specific amount of points you can obtain and we will instead adopt an "impression-based" marking system, based on the descriptors of the PPLS MSC Common Marking Scheme.
+
+## Formative assessments
+
+::: {.callout-warning}
+## Formative 1: Week 5 (Thu 19 October at noon)
+
+**Data summary and visualisation**
+
+You can find the instructions and data for the first formative here: <https://github.com/uoelel/qml-f1/>.
+:::
+
+::: {.callout-warning}
+## Formative 2: Week 10 (Thu 23 November at noon)
+
+**Statistical modelling**
+
+You can find the instructions and data for the second formative here: <https://github.com/uoelel/qml-f2/>.
+:::
+
+## Summative assessments
+
+::: {.callout-tip}
+## Summative 1: Week 8 (Thu 9 November at noon)
+
+**Due on Thursday 9 November at noon**
+
+The first summative contains a series of guided exercises that cover things done in Weeks 1 to 7.
+
+You can find the instructions and data for the first summative here: <https://github.com/uoelel/qml-s1/>.
+
+:::
+
+::: {.callout-tip}
+## Summative 2: Week 12 (Thu 7 December at noon)
+
+**Due on Thursday 7 December at noon**
+
+In the second summative assessment, you will:
+
+-   Select a dataset from a list and its associated research questions.
+-   Analyse the data using one linear model.
+-   Write a report about the data, the model, and your findings.
+
+You can find the instructions and data for the first summative here: <https://github.com/uoelel/qml-s2/>.
+:::
