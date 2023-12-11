@@ -164,7 +164,7 @@ ota_bm_1_gdraws <- ota_bm_1 %>%
 
 ---
 
-```{r }
+```{r fig-ota-bm-1-gdraws}
 ota_bm_1_gdraws %>%
   filter(.variable != "b_Intercept") %>%
   ggplot(aes(.value, .variable, fill = .variable)) +
@@ -175,7 +175,7 @@ ota_bm_1_gdraws %>%
 
 ---
 
-```{r}
+```{r ota-bm-1-sdraws}
 ota_bm_1_sdraws <- ota_bm_1 %>%
   spread_draws(`b_.*`, regex = TRUE) %>%
   mutate(
@@ -186,7 +186,7 @@ ota_bm_1_sdraws
 
 ---
 
-```{r}
+```{r fig-ota-bm-1}
 ota_bm_1_sdraws %>%
   ggplot(aes(LR_cond_dif)) +
   geom_vline(xintercept = 0, linetype = "dashed") +
@@ -210,13 +210,13 @@ ota_bm_2 <- brm(
 
 ---
 
-```{r}
+```{r ota-bm-2-sum}
 summary(ota_bm_2, prob = 0.9)
 ```
 
 ---
 
-```{r}
+```{r ota-bm-2-sdraws}
 ota_bm_2_sdraws <- ota_bm_2 %>%
   spread_draws(`b_.*`, regex = TRUE) %>%
   mutate(
@@ -227,7 +227,7 @@ ota_bm_2_sdraws
 
 ---
 
-```{r}
+```{r fig-ota-bm-2}
 ota_bm_2_sdraws %>%
   ggplot(aes(LR_cond_dif)) +
   geom_vline(xintercept = 0, linetype = "dashed") +
@@ -236,7 +236,7 @@ ota_bm_2_sdraws %>%
 
 ---
 
-```{r}
+```{r ota-bm-2-int}
 ota_bm_2_int <- ota_bm_2 %>%
   gather_draws(r_Subject[Subject,term])
 ota_bm_2_int
@@ -244,10 +244,94 @@ ota_bm_2_int
 
 ---
 
-```{r}
+```{r fig-ota-bm-2-int}
 ota_bm_2_int %>%
   ggplot(aes(.value, reorder(as.factor(Subject), .value))) +
   geom_vline(xintercept = 0, linetype = "dashed") +
   stat_halfeye()
 ```
 
+---
+
+```{r ota-bm-fixef}
+fixef(ota_bm_1, probs = c(0.05, 0.95))
+fixef(ota_bm_2, probs = c(0.05, 0.95))
+```
+
+---
+
+layout: false
+layout: true
+
+## Song 2020
+
+---
+
+```{r shallow}
+shallow <- read_csv("data/shallow.csv") %>%
+  filter(Critical_Filler == "Critical")
+shallow
+```
+
+---
+
+```{r sha-bm-1}
+sha_bm_1 <- brm(
+  ACC ~ Group * Relation_type * Branching,
+  family = bernoulli,
+  data = shallow,
+  cores = 4,
+  backend = "cmdstanr",
+  seed = my_seed,
+  file = "data/cache/sha_bm_1"
+)
+```
+
+---
+
+```{r sha-bm-1-sum}
+summary(sha_bm_1, prob = 0.9)
+```
+
+---
+
+```{r sha-bm-1-conds}
+sha_conds <- make_conditions(shallow, "Branching")
+
+conditional_effects(sha_bm_1, "Relation_type:Group", conditions = sha_conds)
+```
+
+---
+
+```{r sha-bm-2}
+sha_bm_2 <- brm(
+  ACC ~ Group * Relation_type * Branching +
+    (1 | ID),
+  family = bernoulli,
+  data = shallow,
+  cores = 4,
+  backend = "cmdstanr",
+  seed = my_seed,
+  file = "data/cache/sha_bm_2"
+)
+```
+
+---
+
+```{r sha-bm-2-sum}
+summary(sha_bm_2, prob = 0.9)
+```
+
+---
+
+```{r sha-bm-2-conds}
+conditional_effects(sha_bm_2, "Relation_type:Group", conditions = sha_conds)
+```
+
+
+---
+
+```{r sha-bm-fixef}
+fixef(sha_bm_1, probs = c(0.05, 0.95))
+fixef(sha_bm_2, probs = c(0.05, 0.95))
+```
