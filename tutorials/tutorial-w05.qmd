@@ -1,7 +1,5 @@
 ---
 title: "QML tutorial – Group-level effects"
-execute: 
-  freeze: auto
 ---
 
 ```{r setup}

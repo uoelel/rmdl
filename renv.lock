@@ -1073,16 +1073,6 @@
       ],
       "Hash": "9b302fe352f9cfc5dcf0a4139af3a565"
     },
-    "here": {
-      "Package": "here",
-      "Version": "1.0.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "rprojroot"
-      ],
-      "Hash": "24b224366f9c2e7534d2344d10d59211"
-    },
     "highr": {
       "Package": "highr",
       "Version": "0.10",
@@ -1974,20 +1964,6 @@
       ],
       "Hash": "3838071b66e0c566d55cc26bd6e27bf4"
     },
-    "servr": {
-      "Package": "servr",
-      "Version": "0.27",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "httpuv",
-        "jsonlite",
-        "mime",
-        "xfun"
-      ],
-      "Hash": "f4d1414c2ddc0a34ea27923134ac3c7b"
-    },
     "shiny": {
       "Package": "shiny",
       "Version": "1.7.5.1",
@@ -2408,13 +2384,6 @@
       ],
       "Hash": "9db52c1656cf19c124f93124ea57f0fd"
     },
-    "whisker": {
-      "Package": "whisker",
-      "Version": "0.4.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "c6abfa47a46d281a7d5159d0a8891e88"
-    },
     "withr": {
       "Package": "withr",
       "Version": "2.5.1",
@@ -2427,51 +2396,6 @@
         "stats"
       ],
       "Hash": "d77c6f74be05c33164e33fbc85540cae"
-    },
-    "xaringan": {
-      "Package": "xaringan",
-      "Version": "0.28",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "htmltools",
-        "knitr",
-        "rmarkdown",
-        "servr",
-        "xfun"
-      ],
-      "Hash": "45f9f113bff72909fc149b870867ddaf"
-    },
-    "xaringanExtra": {
-      "Package": "xaringanExtra",
-      "Version": "0.7.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "htmltools",
-        "jsonlite",
-        "knitr",
-        "utils",
-        "uuid"
-      ],
-      "Hash": "b700278c14be355c081d130d48abc83d"
-    },
-    "xaringanthemer": {
-      "Package": "xaringanthemer",
-      "Version": "0.4.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "colorspace",
-        "glue",
-        "methods",
-        "purrr",
-        "utils",
-        "whisker"
-      ],
-      "Hash": "65ea1016710fa4058b9d5d330f3f24f6"
     },
     "xfun": {
       "Package": "xfun",

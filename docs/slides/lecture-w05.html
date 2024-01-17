@@ -29,6 +29,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -342,7 +407,14 @@ Dr Stefano Coretta
 </section>
 <section id="ota-2009" class="slide level2">
 <h2>Ota 2009</h2>
-<p>[STUDY DESCRIPTION]</p>
+<ul>
+<li><p>From <em>The KEY to the ROCK: Near-homophony in nonnative visual word recognition</em> (<a href="https://doi.org/10.1016/j.cognition.2008.12.007">10.1016/j.cognition.2008.12.007</a>)</p></li>
+<li><p>Visual semantic-relatedness paradigm.</p>
+<ul>
+<li>LOCK/ROCK ~ KEY.</li>
+</ul></li>
+<li><p>Japanese data.</p></li>
+</ul>
 </section>
 <section id="ota-2009-1" class="slide level2">
 <h2>Ota 2009</h2>
@@ -372,16 +444,18 @@ Dr Stefano Coretta
 <img data-src="lecture-w05_files/figure-revealjs/fig-contr-cond-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;1: <strong>?(caption)</strong></p></section>
 <section id="ota-2009-3" class="slide level2">
 <h2>Ota 2009</h2>
-
-<img data-src="lecture-w05_files/figure-revealjs/fig-subj-int-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;2: <strong>?(caption)</strong></p></section>
-<section id="ota-2009-4" class="slide level2">
-<h2>Ota 2009</h2>
-
-<img data-src="lecture-w05_files/figure-revealjs/fig-subj-slo-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;3: <strong>?(caption)</strong></p></section>
-<section id="ota-2009-5" class="slide level2">
-<h2>Ota 2009</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>ota_bm_1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  RT_log <span class="sc">~</span> Condition <span class="sc">*</span> Contrast,</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="at">family =</span> gaussian,</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="at">data =</span> ota2009,</span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_1"</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="ota-2009-6" class="slide level2">
+<section id="ota-2009-4" class="slide level2">
 <h2>Ota 2009</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -418,14 +492,36 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="ota-2009-7" class="slide level2">
+<section id="ota-2009-5" class="slide level2">
 <h2>Ota 2009</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>ota_bm_1_gdraws <span class="ot">&lt;-</span> ota_bm_1 <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">gather_draws</span>(<span class="st">`</span><span class="at">b_.*</span><span class="st">`</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>ota_bm_1_gdraws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24,000 × 5
+# Groups:   .variable [6]
+   .chain .iteration .draw .variable   .value
+    &lt;int&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt;
+ 1      1          1     1 b_Intercept   7.63
+ 2      1          2     2 b_Intercept   7.67
+ 3      1          3     3 b_Intercept   7.65
+ 4      1          4     4 b_Intercept   7.63
+ 5      1          5     5 b_Intercept   7.62
+ 6      1          6     6 b_Intercept   7.63
+ 7      1          7     7 b_Intercept   7.61
+ 8      1          8     8 b_Intercept   7.63
+ 9      1          9     9 b_Intercept   7.61
+10      1         10    10 b_Intercept   7.65
+# ℹ 23,990 more rows</code></pre>
+</div>
+</div>
 </section>
-<section id="ota-2009-8" class="slide level2">
+<section id="ota-2009-6" class="slide level2">
 <h2>Ota 2009</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-1-gdraws-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;4: <strong>?(caption)</strong></p></section>
-<section id="ota-2009-9" class="slide level2">
+<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-1-gdraws-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;2: <strong>?(caption)</strong></p></section>
+<section id="ota-2009-7" class="slide level2">
 <h2>Ota 2009</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -449,15 +545,31 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="ota-2009-10" class="slide level2">
+<section id="ota-2009-8" class="slide level2">
 <h2>Ota 2009</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-1-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;5: <strong>?(caption)</strong></p></section>
-<section id="ota-2009-11" class="slide level2">
-<h2>Ota 2009</h2>
+<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-1-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;3: <strong>?(caption)</strong></p></section>
+<section id="ota-2009-subject-level-intercepts" class="slide level2">
+<h2>Ota 2009: subject-level intercepts</h2>
+
+<img data-src="lecture-w05_files/figure-revealjs/fig-subj-int-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;4: <strong>?(caption)</strong></p></section>
+<section id="ota-2009-subject-level-intercepts-1" class="slide level2">
+<h2>Ota 2009: subject-level intercepts</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>ota_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  RT_log <span class="sc">~</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    Condition <span class="sc">*</span> Contrast <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>    (<span class="dv">1</span> <span class="sc">|</span> Subject),</span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="at">family =</span> gaussian,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="at">data =</span> ota2009,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_2"</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="ota-2009-12" class="slide level2">
-<h2>Ota 2009</h2>
+<section id="ota-2009-subject-level-intercepts-2" class="slide level2">
+<h2>Ota 2009: subject-level intercepts</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
@@ -498,9 +610,15 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="ota-2009-13" class="slide level2">
-<h2>Ota 2009</h2>
+<section id="ota-2009-subject-level-intercepts-3" class="slide level2">
+<h2>Ota 2009: subject-level intercepts</h2>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>ota_bm_2_sdraws <span class="ot">&lt;-</span> ota_bm_2 <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">spread_draws</span>(<span class="st">`</span><span class="at">b_.*</span><span class="st">`</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="at">LR_cond_dif =</span> b_ConditionUnrelated <span class="sc">+</span> <span class="st">`</span><span class="at">b_ConditionUnrelated:ContrastLR</span><span class="st">`</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>  )</span>
+<span id="cb9-6"><a href="#cb9-6"></a>ota_bm_2_sdraws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,000 × 10
    .chain .iteration .draw b_Intercept b_ConditionUnrelated b_ContrastLR
@@ -522,13 +640,16 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="ota-2009-14" class="slide level2">
-<h2>Ota 2009</h2>
+<section id="ota-2009-subject-level-intercepts-4" class="slide level2">
+<h2>Ota 2009: subject-level intercepts</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-2-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;6: <strong>?(caption)</strong></p></section>
-<section id="ota-2009-15" class="slide level2">
-<h2>Ota 2009</h2>
+<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-2-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;5: <strong>?(caption)</strong></p></section>
+<section id="ota-2009-subject-level-intercepts-5" class="slide level2">
+<h2>Ota 2009: subject-level intercepts</h2>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>ota_bm_2_int <span class="ot">&lt;-</span> ota_bm_2 <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">gather_draws</span>(r_Subject[Subject,term])</span>
+<span id="cb11-3"><a href="#cb11-3"></a>ota_bm_2_int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 80,000 × 7
 # Groups:   Subject, term, .variable [20]
@@ -548,13 +669,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="ota-2009-16" class="slide level2">
-<h2>Ota 2009</h2>
+<section id="ota-2009-subject-level-intercepts-6" class="slide level2">
+<h2>Ota 2009: subject-level intercepts</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-2-int-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;7: <strong>?(caption)</strong></p></section>
-<section id="ota-2009-17" class="slide level2">
-<h2>Ota 2009</h2>
+<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-2-int-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;6: <strong>?(caption)</strong></p></section>
+<section id="ota-2009-subject-level-intercepts-7" class="slide level2">
+<h2>Ota 2009: subject-level intercepts</h2>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">fixef</span>(ota_bm_1, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                 Estimate  Est.Error           Q5        Q95
 Intercept                      7.62620715 0.02768641  7.581469000 7.67360300
@@ -564,6 +686,7 @@ ContrastPB                    -0.00571623 0.03891494 -0.069516300 0.05773055
 ConditionUnrelated:ContrastLR -0.04495745 0.05472389 -0.133708800 0.04321842
 ConditionUnrelated:ContrastPB -0.06209090 0.05630206 -0.155772200 0.03102230</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">fixef</span>(ota_bm_2, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                  Estimate  Est.Error          Q5        Q95
 Intercept                      7.621548095 0.08356667  7.48760400 7.75970050
@@ -575,7 +698,25 @@ ConditionUnrelated:ContrastPB -0.060051002 0.04276476 -0.13151040 0.01025244</co
 </div>
 </div>
 </section>
+<section id="ota-2009-subject-level-slopes" class="slide level2">
+<h2>Ota 2009: subject-level slopes</h2>
+
+<img data-src="lecture-w05_files/figure-revealjs/fig-subj-slo-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;7: <strong>?(caption)</strong></p></section>
 <section id="song-2020" class="slide level2">
+<h2>Song 2020</h2>
+<ul>
+<li><p>From <em>Second language users exhibit shallow morphological processing</em> (<a href="https://doi.org/10.1017/S0272263120000170">10.1017/S0272263120000170</a>).</p></li>
+<li><p>English L1 and L2 participants (L2 participants are native speakers of Cantonese).</p></li>
+<li><p><strong>Lexical decision task:</strong> Is the word a real English word or not?</p></li>
+<li><p>Each trial:</p>
+<ul>
+<li><p><strong>Prime</strong>: <em>prolong</em> (unrelated), <em>unkind</em> (constituent), <em>kindness</em> (non-constituent).</p></li>
+<li><p><strong>Target</strong>: <em>unkindness</em> (<em>[un-kind]-ness</em>, not <em>un-[kind-ness]</em>).</p></li>
+</ul></li>
+<li><p>Data gathered: Reaction times and accuracy.</p></li>
+</ul>
+</section>
+<section id="song-2020-1" class="slide level2">
 <h2>Song 2020</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -597,101 +738,60 @@ ConditionUnrelated:ContrastPB -0.060051002 0.04276476 -0.13151040 0.01025244</co
 </div>
 </div>
 </section>
-<section id="song-2020-1" class="slide level2">
-<h2>Song 2020</h2>
-</section>
 <section id="song-2020-2" class="slide level2">
 <h2>Song 2020</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code> Family: bernoulli 
-  Links: mu = logit 
-Formula: ACC ~ Group * Relation_type * Branching 
-   Data: shallow (Number of observations: 1950) 
-  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-         total post-warmup draws = 4000
-
-Population-Level Effects: 
-                                                              Estimate
-Intercept                                                         1.80
-GroupL2                                                          -0.57
-Relation_typeNonConstituent                                      -0.62
-Relation_typeUnrelated                                           -0.80
-BranchingRight                                                    1.05
-GroupL2:Relation_typeNonConstituent                               0.46
-GroupL2:Relation_typeUnrelated                                    0.26
-GroupL2:BranchingRight                                            0.27
-Relation_typeNonConstituent:BranchingRight          543274275165103.75
-Relation_typeUnrelated:BranchingRight                             0.69
-GroupL2:Relation_typeNonConstituent:BranchingRight -398555596501661.31
-GroupL2:Relation_typeUnrelated:BranchingRight                    -0.15
-                                                             Est.Error
-Intercept                                                         0.22
-GroupL2                                                           0.27
-Relation_typeNonConstituent                                       0.28
-Relation_typeUnrelated                                            0.28
-BranchingRight                                                    0.40
-GroupL2:Relation_typeNonConstituent                               0.36
-GroupL2:Relation_typeUnrelated                                    0.35
-GroupL2:BranchingRight                                            0.50
-Relation_typeNonConstituent:BranchingRight         1663438628768865.75
-Relation_typeUnrelated:BranchingRight                             0.54
-GroupL2:Relation_typeNonConstituent:BranchingRight  863303839058927.62
-GroupL2:Relation_typeUnrelated:BranchingRight                     0.68
-                                                               l-90% CI
-Intercept                                                          1.46
-GroupL2                                                           -1.02
-Relation_typeNonConstituent                                       -1.09
-Relation_typeUnrelated                                            -1.24
-BranchingRight                                                     0.40
-GroupL2:Relation_typeNonConstituent                               -0.13
-GroupL2:Relation_typeUnrelated                                    -0.31
-GroupL2:BranchingRight                                            -0.55
-Relation_typeNonConstituent:BranchingRight         -1818860500000000.50
-Relation_typeUnrelated:BranchingRight                             -0.20
-GroupL2:Relation_typeNonConstituent:BranchingRight -2355534500000000.00
-GroupL2:Relation_typeUnrelated:BranchingRight                     -1.27
-                                                              u-90% CI Rhat
-Intercept                                                         2.16 1.00
-GroupL2                                                          -0.13 1.00
-Relation_typeNonConstituent                                      -0.16 1.00
-Relation_typeUnrelated                                           -0.35 1.00
-BranchingRight                                                    1.71 1.00
-GroupL2:Relation_typeNonConstituent                               1.05 1.00
-GroupL2:Relation_typeUnrelated                                    0.83 1.00
-GroupL2:BranchingRight                                            1.10 1.00
-Relation_typeNonConstituent:BranchingRight         3714069000000000.00 1.64
-Relation_typeUnrelated:BranchingRight                             1.56 1.00
-GroupL2:Relation_typeNonConstituent:BranchingRight  645896749999999.75 1.70
-GroupL2:Relation_typeUnrelated:BranchingRight                     0.97 1.00
-                                                   Bulk_ESS Tail_ESS
-Intercept                                              2962     3020
-GroupL2                                                2929     3063
-Relation_typeNonConstituent                            3098     3093
-Relation_typeUnrelated                                 3197     2996
-BranchingRight                                         2891     2785
-GroupL2:Relation_typeNonConstituent                    3038     2856
-GroupL2:Relation_typeUnrelated                         3068     2770
-GroupL2:BranchingRight                                 3038     2862
-Relation_typeNonConstituent:BranchingRight                8       13
-Relation_typeUnrelated:BranchingRight                  3249     3016
-GroupL2:Relation_typeNonConstituent:BranchingRight        6       13
-GroupL2:Relation_typeUnrelated:BranchingRight          3196     3092
-
-Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
-and Tail_ESS are effective sample size measures, and Rhat is the potential
-scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>sha_bm_1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  ACC <span class="sc">~</span> Group <span class="sc">*</span> Relation_type <span class="sc">*</span> Branching,</span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="at">family =</span> bernoulli,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="at">data =</span> shallow,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb18-8"><a href="#cb18-8"></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_1"</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="song-2020-3" class="slide level2">
 <h2>Song 2020</h2>
-
-<img data-src="lecture-w05_files/figure-revealjs/sha-bm-1-conds-1.png" width="960" class="r-stretch"></section>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   term                                         Estimate Est.Error     Q5    Q95
+   &lt;chr&gt;                                           &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1 Intercept                                       1.80      0.217  1.46   2.16 
+ 2 GroupL2                                        -0.567     0.272 -1.02  -0.128
+ 3 Relation_typeNonConstituent                    -0.621     0.282 -1.09  -0.158
+ 4 Relation_typeUnrelated                         -0.800     0.275 -1.24  -0.350
+ 5 BranchingRight                                  1.05      0.400  0.396  1.71 
+ 6 GroupL2:Relation_typeNonConstituent             0.464     0.361 -0.135  1.05 
+ 7 GroupL2:Relation_typeUnrelated                  0.262     0.347 -0.305  0.826
+ 8 GroupL2:BranchingRight                          0.267     0.502 -0.552  1.10 
+ 9 Relation_typeUnrelated:BranchingRight           0.686     0.541 -0.201  1.56 
+10 GroupL2:Relation_typeUnrelated:BranchingRig…   -0.146     0.684 -1.27   0.972</code></pre>
+</div>
+</div>
+</section>
 <section id="song-2020-4" class="slide level2">
 <h2>Song 2020</h2>
-</section>
+
+<img data-src="lecture-w05_files/figure-revealjs/sha-bm-1-conds-1.png" width="960" class="r-stretch"></section>
 <section id="song-2020-5" class="slide level2">
+<h2>Song 2020</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>sha_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb20-2"><a href="#cb20-2"></a>  ACC <span class="sc">~</span> Group <span class="sc">*</span> Relation_type <span class="sc">*</span> Branching <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>    (<span class="dv">1</span> <span class="sc">|</span> ID),</span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="at">family =</span> bernoulli,</span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="at">data =</span> shallow,</span>
+<span id="cb20-6"><a href="#cb20-6"></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb20-7"><a href="#cb20-7"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8"></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb20-9"><a href="#cb20-9"></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_2"</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="song-2020-6" class="slide level2">
 <h2>Song 2020</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -780,68 +880,120 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="song-2020-6" class="slide level2">
+<section id="song-2020-7" class="slide level2">
 <h2>Song 2020</h2>
 
 <img data-src="lecture-w05_files/figure-revealjs/sha-bm-2-conds-1.png" width="960" class="r-stretch"></section>
-<section id="song-2020-7" class="slide level2">
+<section id="song-2020-8" class="slide level2">
 <h2>Song 2020</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>                                                        Estimate    Est.Error
-Intercept                                           1.801976e+00 2.169616e-01
-GroupL2                                            -5.670743e-01 2.717929e-01
-Relation_typeNonConstituent                        -6.207528e-01 2.818726e-01
-Relation_typeUnrelated                             -7.996187e-01 2.753214e-01
-BranchingRight                                      1.048360e+00 3.995391e-01
-GroupL2:Relation_typeNonConstituent                 4.637915e-01 3.607741e-01
-GroupL2:Relation_typeUnrelated                      2.623161e-01 3.473604e-01
-GroupL2:BranchingRight                              2.667780e-01 5.023164e-01
-Relation_typeNonConstituent:BranchingRight          5.432743e+14 1.663439e+15
-Relation_typeUnrelated:BranchingRight               6.864681e-01 5.407214e-01
-GroupL2:Relation_typeNonConstituent:BranchingRight -3.985556e+14 8.633038e+14
-GroupL2:Relation_typeUnrelated:BranchingRight      -1.459870e-01 6.844142e-01
-                                                              Q5           Q95
-Intercept                                           1.456466e+00  2.159677e+00
-GroupL2                                            -1.018863e+00 -1.278813e-01
-Relation_typeNonConstituent                        -1.085342e+00 -1.582347e-01
-Relation_typeUnrelated                             -1.240515e+00 -3.496822e-01
-BranchingRight                                      3.959245e-01  1.705628e+00
-GroupL2:Relation_typeNonConstituent                -1.345275e-01  1.053800e+00
-GroupL2:Relation_typeUnrelated                     -3.052880e-01  8.258839e-01
-GroupL2:BranchingRight                             -5.520640e-01  1.103538e+00
-Relation_typeNonConstituent:BranchingRight         -1.818860e+15  3.714069e+15
-Relation_typeUnrelated:BranchingRight              -2.010909e-01  1.563848e+00
-GroupL2:Relation_typeNonConstituent:BranchingRight -2.355534e+15  6.458967e+14
-GroupL2:Relation_typeUnrelated:BranchingRight      -1.272506e+00  9.724854e-01</code></pre>
+<pre><code>                                                                   Estimate
+Intercept                                                         1.8019761
+GroupL2                                                          -0.5670743
+Relation_typeNonConstituent                                      -0.6207528
+Relation_typeUnrelated                                           -0.7996187
+BranchingRight                                                    1.0483603
+GroupL2:Relation_typeNonConstituent                               0.4637915
+GroupL2:Relation_typeUnrelated                                    0.2623161
+GroupL2:BranchingRight                                            0.2667780
+Relation_typeNonConstituent:BranchingRight          543274275165103.7500000
+Relation_typeUnrelated:BranchingRight                             0.6864681
+GroupL2:Relation_typeNonConstituent:BranchingRight -398555596501661.3125000
+GroupL2:Relation_typeUnrelated:BranchingRight                    -0.1459870
+                                                                  Est.Error
+Intercept                                                         0.2169616
+GroupL2                                                           0.2717929
+Relation_typeNonConstituent                                       0.2818726
+Relation_typeUnrelated                                            0.2753214
+BranchingRight                                                    0.3995391
+GroupL2:Relation_typeNonConstituent                               0.3607741
+GroupL2:Relation_typeUnrelated                                    0.3473604
+GroupL2:BranchingRight                                            0.5023164
+Relation_typeNonConstituent:BranchingRight         1663438628768865.7500000
+Relation_typeUnrelated:BranchingRight                             0.5407214
+GroupL2:Relation_typeNonConstituent:BranchingRight  863303839058927.6250000
+GroupL2:Relation_typeUnrelated:BranchingRight                     0.6844142
+                                                                          Q5
+Intercept                                                          1.4564655
+GroupL2                                                           -1.0188625
+Relation_typeNonConstituent                                       -1.0853420
+Relation_typeUnrelated                                            -1.2405150
+BranchingRight                                                     0.3959245
+GroupL2:Relation_typeNonConstituent                               -0.1345275
+GroupL2:Relation_typeUnrelated                                    -0.3052880
+GroupL2:BranchingRight                                            -0.5520640
+Relation_typeNonConstituent:BranchingRight         -1818860500000000.0000000
+Relation_typeUnrelated:BranchingRight                             -0.2010909
+GroupL2:Relation_typeNonConstituent:BranchingRight -2355534500000000.0000000
+GroupL2:Relation_typeUnrelated:BranchingRight                     -1.2725060
+                                                                        Q95
+Intercept                                                         2.1596770
+GroupL2                                                          -0.1278813
+Relation_typeNonConstituent                                      -0.1582347
+Relation_typeUnrelated                                           -0.3496822
+BranchingRight                                                    1.7056285
+GroupL2:Relation_typeNonConstituent                               1.0538005
+GroupL2:Relation_typeUnrelated                                    0.8258839
+GroupL2:BranchingRight                                            1.1035385
+Relation_typeNonConstituent:BranchingRight         3714069000000000.0000000
+Relation_typeUnrelated:BranchingRight                             1.5638485
+GroupL2:Relation_typeNonConstituent:BranchingRight  645896749999999.7500000
+GroupL2:Relation_typeUnrelated:BranchingRight                     0.9724854</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                                                        Estimate    Est.Error
-Intercept                                           1.985887e+00 2.680633e-01
-GroupL2                                            -6.073526e-01 3.463333e-01
-Relation_typeNonConstituent                        -6.580701e-01 2.882147e-01
-Relation_typeUnrelated                             -8.647917e-01 2.877647e-01
-BranchingRight                                      1.075579e+00 4.081778e-01
-GroupL2:Relation_typeNonConstituent                 4.959971e-01 3.737823e-01
-GroupL2:Relation_typeUnrelated                      2.727230e-01 3.650077e-01
-GroupL2:BranchingRight                              3.455812e-01 5.180112e-01
-Relation_typeNonConstituent:BranchingRight         -1.144266e+08 1.090974e+09
-Relation_typeUnrelated:BranchingRight               7.635728e-01 5.447181e-01
-GroupL2:Relation_typeNonConstituent:BranchingRight  2.214369e+10 4.556543e+10
-GroupL2:Relation_typeUnrelated:BranchingRight      -1.773523e-01 6.998716e-01
-                                                              Q5           Q95
-Intercept                                           1.551265e+00  2.427865e+00
-GroupL2                                            -1.191630e+00 -3.791660e-02
-Relation_typeNonConstituent                        -1.139785e+00 -1.953609e-01
-Relation_typeUnrelated                             -1.357199e+00 -3.970380e-01
-BranchingRight                                      4.276229e-01  1.755235e+00
-GroupL2:Relation_typeNonConstituent                -1.016538e-01  1.125129e+00
-GroupL2:Relation_typeUnrelated                     -3.174186e-01  8.845447e-01
-GroupL2:BranchingRight                             -5.158256e-01  1.213518e+00
-Relation_typeNonConstituent:BranchingRight         -2.476557e+09  1.463468e+09
-Relation_typeUnrelated:BranchingRight              -1.197826e-01  1.652681e+00
-GroupL2:Relation_typeNonConstituent:BranchingRight -2.156151e+09  1.359474e+11
-GroupL2:Relation_typeUnrelated:BranchingRight      -1.349198e+00  9.486110e-01</code></pre>
+<pre><code>                                                              Estimate
+Intercept                                                    1.9858870
+GroupL2                                                     -0.6073526
+Relation_typeNonConstituent                                 -0.6580701
+Relation_typeUnrelated                                      -0.8647917
+BranchingRight                                               1.0755789
+GroupL2:Relation_typeNonConstituent                          0.4959971
+GroupL2:Relation_typeUnrelated                               0.2727230
+GroupL2:BranchingRight                                       0.3455812
+Relation_typeNonConstituent:BranchingRight          -114426605.6484664
+Relation_typeUnrelated:BranchingRight                        0.7635728
+GroupL2:Relation_typeNonConstituent:BranchingRight 22143688139.0905342
+GroupL2:Relation_typeUnrelated:BranchingRight               -0.1773523
+                                                             Est.Error
+Intercept                                                    0.2680633
+GroupL2                                                      0.3463333
+Relation_typeNonConstituent                                  0.2882147
+Relation_typeUnrelated                                       0.2877647
+BranchingRight                                               0.4081778
+GroupL2:Relation_typeNonConstituent                          0.3737823
+GroupL2:Relation_typeUnrelated                               0.3650077
+GroupL2:BranchingRight                                       0.5180112
+Relation_typeNonConstituent:BranchingRight          1090974143.9644828
+Relation_typeUnrelated:BranchingRight                        0.5447181
+GroupL2:Relation_typeNonConstituent:BranchingRight 45565430280.8072739
+GroupL2:Relation_typeUnrelated:BranchingRight                0.6998716
+                                                                    Q5
+Intercept                                                    1.5512645
+GroupL2                                                     -1.1916305
+Relation_typeNonConstituent                                 -1.1397845
+Relation_typeUnrelated                                      -1.3571985
+BranchingRight                                               0.4276229
+GroupL2:Relation_typeNonConstituent                         -0.1016538
+GroupL2:Relation_typeUnrelated                              -0.3174186
+GroupL2:BranchingRight                                      -0.5158256
+Relation_typeNonConstituent:BranchingRight         -2476557499.9999981
+Relation_typeUnrelated:BranchingRight                       -0.1197826
+GroupL2:Relation_typeNonConstituent:BranchingRight -2156151000.0000000
+GroupL2:Relation_typeUnrelated:BranchingRight               -1.3491975
+                                                                    Q95
+Intercept                                                     2.4278655
+GroupL2                                                      -0.0379166
+Relation_typeNonConstituent                                  -0.1953609
+Relation_typeUnrelated                                       -0.3970380
+BranchingRight                                                1.7552355
+GroupL2:Relation_typeNonConstituent                           1.1251290
+GroupL2:Relation_typeUnrelated                                0.8845447
+GroupL2:BranchingRight                                        1.2135175
+Relation_typeNonConstituent:BranchingRight           1463468500.0000000
+Relation_typeUnrelated:BranchingRight                         1.6526810
+GroupL2:Relation_typeNonConstituent:BranchingRight 135947450000.0000000
+GroupL2:Relation_typeUnrelated:BranchingRight                 0.9486110</code></pre>
 </div>
 </div>
 
@@ -1031,7 +1183,7 @@ GroupL2:Relation_typeUnrelated:BranchingRight      -1.349198e+00  9.486110e-01</
         height: 700,
 
         // Factor of the display size that should remain empty around the content
-        margin: 0.1,
+        margin: 0.2,
 
         math: {
           mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',

@@ -1,7 +1,6 @@
 ---
 title: "QML tutorial – Group-level effects"
 execute: 
-  freeze: auto
   eval: false
 ---
 

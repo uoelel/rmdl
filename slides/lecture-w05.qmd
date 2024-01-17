@@ -7,6 +7,8 @@ format:
   mono-light-revealjs:
     theme: [default, custom.scss]
     history: false
+execute: 
+  echo: false
 ---
 
 ```{r setup, include=FALSE}
@@ -22,16 +24,25 @@ options(show.signif.stars = FALSE)
 
 my_seed <- 8878
 set.seed(my_seed)
+options(scipen=999)
 ```
 
 
 ## Ota 2009
 
-[STUDY DESCRIPTION]
+- From *The KEY to the ROCK: Near-homophony in nonnative visual word recognition* ([10.1016/j.cognition.2008.12.007](https://doi.org/10.1016/j.cognition.2008.12.007))
+
+- Visual semantic-relatedness paradigm.
+
+  - LOCK/ROCK ~ KEY.
+
+- Japanese data.
 
 ## Ota 2009
 
-```{r ota2009}
+```{r}
+#| label: ota2009
+
 ota2009 <- read_csv("data/ota2009.csv") %>%
   filter(
     Procedure == "TrialProc", Contrast != "F"
@@ -44,7 +55,9 @@ ota2009
 
 ## Ota 2009
 
-```{r fig-contr-cond, echo=FALSE}
+```{r}
+#| label: fig-contr-cond
+
 ota2009 %>%
   ggplot(aes(Contrast, RT_log)) +
   geom_violin(aes(fill = Condition), alpha = 0.2) +
@@ -61,52 +74,10 @@ ota2009 %>%
 
 ## Ota 2009
 
-```{r fig-subj-int, echo=FALSE, fig.asp=0.5}
+```{r}
+#| label: ota-bm-1
+#| echo: true
 
-ota2009 %>%
-  filter(Contrast == "LR") %>%
-  ggplot(aes("a", RT_log)) +
-  geom_violin() +
-  geom_jitter(
-    aes(colour = Subject), alpha = 0.4,
-    width = 0.1
-  ) +
-  stat_summary(
-    position = position_dodge(width = 0.9),
-    fun = "median", geom = "point"
-  ) +
-  facet_wrap(~ Subject, nrow = 2) +
-  labs(x = element_blank()) +
-  theme(
-    axis.text.x = element_blank(),
-    legend.position = "none"
-  )
-```
-
-## Ota 2009
-
-```{r fig-subj-slo, echo=FALSE, fig.asp=0.5}
-
-ota2009 %>%
-  filter(Contrast == "LR") %>%
-  ggplot(aes(Condition, RT_log)) +
-  geom_violin(aes(fill = Condition), alpha = 0.5) +
-  # geom_jitter(
-  #   aes(colour = Condition), alpha = 0.4,
-  #   position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.9)
-  # ) +
-  stat_summary(
-    aes(group = Condition),
-    position = position_dodge(width = 0.9),
-    fun = "median", geom = "point"
-  ) +
-  facet_wrap(~ Subject, nrow = 2) +
-  theme(axis.text.x = element_blank(), legend.position = "bottom")
-```
-
-## Ota 2009
-
-```{r ota-bm-1}
 ota_bm_1 <- brm(
   RT_log ~ Condition * Contrast,
   family = gaussian,
@@ -119,20 +90,28 @@ ota_bm_1 <- brm(
 
 ## Ota 2009
 
-```{r ota-bm-1-sum}
+```{r}
+#| label: ota-bm-1-sum
+
 summary(ota_bm_1, prob = 0.9)
 ```
 
 ## Ota 2009
 
-```{r ota-bm-1-gdraws}
+```{r}
+#| label: ota-bm-1-gdraws
+#| echo: true
+
 ota_bm_1_gdraws <- ota_bm_1 %>%
   gather_draws(`b_.*`, regex = TRUE)
+ota_bm_1_gdraws
 ```
 
 ## Ota 2009
 
-```{r fig-ota-bm-1-gdraws}
+```{r}
+#| label: fig-ota-bm-1-gdraws
+
 ota_bm_1_gdraws %>%
   filter(.variable != "b_Intercept") %>%
   ggplot(aes(.value, .variable, fill = .variable)) +
@@ -154,16 +133,47 @@ ota_bm_1_sdraws
 
 ## Ota 2009
 
-```{r fig-ota-bm-1}
+```{r}
+#| label: fig-ota-bm-1
+
 ota_bm_1_sdraws %>%
   ggplot(aes(LR_cond_dif)) +
   geom_vline(xintercept = 0, linetype = "dashed") +
   stat_halfeye(slab_alpha = 0.5)
 ```
 
-## Ota 2009
+## Ota 2009: subject-level intercepts
 
-```{r ota-bm-2}
+```{r}
+#| label: fig-subj-int
+#| fig_asp: 0.5
+
+ota2009 %>%
+  filter(Contrast == "LR") %>%
+  ggplot(aes("a", RT_log)) +
+  geom_violin() +
+  geom_jitter(
+    aes(colour = Subject), alpha = 0.4,
+    width = 0.1
+  ) +
+  stat_summary(
+    position = position_dodge(width = 0.9),
+    fun = "median", geom = "point"
+  ) +
+  facet_wrap(~ Subject, nrow = 2) +
+  labs(x = element_blank()) +
+  theme(
+    axis.text.x = element_blank(),
+    legend.position = "none"
+  )
+```
+
+## Ota 2009: subject-level intercepts
+
+```{r}
+#| label: ota-bm-2
+#| echo: true
+
 ota_bm_2 <- brm(
   RT_log ~
     Condition * Contrast +
@@ -176,15 +186,20 @@ ota_bm_2 <- brm(
 )
 ```
 
-## Ota 2009
+## Ota 2009: subject-level intercepts
 
-```{r ota-bm-2-sum}
+```{r}
+#| label: ota-bm-2-sum
+
 summary(ota_bm_2, prob = 0.9)
 ```
 
-## Ota 2009
+## Ota 2009: subject-level intercepts
 
-```{r ota-bm-2-sdraws}
+```{r}
+#| label: ota-bm-2-sdraws
+#| echo: true
+
 ota_bm_2_sdraws <- ota_bm_2 %>%
   spread_draws(`b_.*`, regex = TRUE) %>%
   mutate(
@@ -193,43 +208,93 @@ ota_bm_2_sdraws <- ota_bm_2 %>%
 ota_bm_2_sdraws
 ```
 
-## Ota 2009
+## Ota 2009: subject-level intercepts
 
-```{r fig-ota-bm-2}
+```{r}
+#| label: fig-ota-bm-2
+
 ota_bm_2_sdraws %>%
   ggplot(aes(LR_cond_dif)) +
   geom_vline(xintercept = 0, linetype = "dashed") +
   stat_halfeye(slab_alpha = 0.5)
 ```
 
-## Ota 2009
+## Ota 2009: subject-level intercepts
 
-```{r ota-bm-2-int}
+```{r}
+#| label: ota-bm-2-int
+#| echo: true
+
 ota_bm_2_int <- ota_bm_2 %>%
   gather_draws(r_Subject[Subject,term])
 ota_bm_2_int
 ```
 
-## Ota 2009
+## Ota 2009: subject-level intercepts
 
-```{r fig-ota-bm-2-int}
+```{r}
+#| label: fig-ota-bm-2-int
+
 ota_bm_2_int %>%
   ggplot(aes(.value, reorder(as.factor(Subject), .value))) +
   geom_vline(xintercept = 0, linetype = "dashed") +
   stat_halfeye()
 ```
 
-## Ota 2009
+## Ota 2009: subject-level intercepts
 
-```{r ota-bm-fixef}
+```{r}
+#| label: ota-bm-fixef
+#| echo: true
+
 fixef(ota_bm_1, probs = c(0.05, 0.95))
 fixef(ota_bm_2, probs = c(0.05, 0.95))
 ```
 
+## Ota 2009: subject-level slopes
+
+```{r}
+#| label: fig-subj-slo
+#| fig_asp: 0.5
+
+ota2009 %>%
+  filter(Contrast == "LR") %>%
+  ggplot(aes(Condition, RT_log)) +
+  geom_violin(aes(fill = Condition), alpha = 0.5) +
+  # geom_jitter(
+  #   aes(colour = Condition), alpha = 0.4,
+  #   position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.9)
+  # ) +
+  stat_summary(
+    aes(group = Condition),
+    position = position_dodge(width = 0.9),
+    fun = "median", geom = "point"
+  ) +
+  facet_wrap(~ Subject, nrow = 2) +
+  theme(axis.text.x = element_blank(), legend.position = "bottom")
+```
 
 ## Song 2020
 
-```{r shallow}
+- From *Second language users exhibit shallow morphological processing* ([10.1017/S0272263120000170](https://doi.org/10.1017/S0272263120000170)).
+
+- English L1 and L2 participants (L2 participants are native speakers of Cantonese).
+
+- **Lexical decision task:** Is the word a real English word or not?
+
+- Each trial:
+
+  - **Prime**: *prolong* (unrelated), *unkind* (constituent), *kindness* (non-constituent).
+
+  - **Target**: *unkindness* (*[un-kind]-ness*, not *un-[kind-ness]*).
+
+- Data gathered: Reaction times and accuracy.
+
+## Song 2020
+
+```{r}
+#| label: shallow
+
 shallow <- read_csv("data/shallow.csv") %>%
   filter(Critical_Filler == "Critical")
 shallow
@@ -237,7 +302,10 @@ shallow
 
 ## Song 2020
 
-```{r sha-bm-1}
+```{r}
+#| label: sha-bm-1
+#| echo: true
+
 sha_bm_1 <- brm(
   ACC ~ Group * Relation_type * Branching,
   family = bernoulli,
@@ -251,13 +319,19 @@ sha_bm_1 <- brm(
 
 ## Song 2020
 
-```{r sha-bm-1-sum}
-summary(sha_bm_1, prob = 0.9)
+```{r}
+#| label: sha-bm-1-sum
+
+fixef(sha_bm_1, probs = c(0.05, 0.95)) %>%
+  as_tibble(rownames = "term") %>%
+  filter(Estimate < 5, Estimate > -2)
 ```
 
 ## Song 2020
 
-```{r sha-bm-1-conds}
+```{r}
+#| label: sha-bm-1-conds
+
 sha_conds <- make_conditions(shallow, "Branching")
 
 conditional_effects(sha_bm_1, "Relation_type:Group", conditions = sha_conds)
@@ -265,7 +339,10 @@ conditional_effects(sha_bm_1, "Relation_type:Group", conditions = sha_conds)
 
 ## Song 2020
 
-```{r sha-bm-2}
+```{r}
+#| label: sha-bm-2
+#| echo: true
+
 sha_bm_2 <- brm(
   ACC ~ Group * Relation_type * Branching +
     (1 | ID),
@@ -293,7 +370,9 @@ conditional_effects(sha_bm_2, "Relation_type:Group", conditions = sha_conds)
 
 ## Song 2020
 
-```{r sha-bm-fixef}
+```{r}
+#| label: sha-bm-fixef
+
 fixef(sha_bm_1, probs = c(0.05, 0.95))
 fixef(sha_bm_2, probs = c(0.05, 0.95))
 ```
