@@ -1,6 +1,6 @@
 ---
-title: "Research Methods in Developmental Linguistics"
-subtitle: "Week 5"
+title: "Research Methods in Developmental Linguistics -- Week 5"
+subtitle: "Group-level effects: Intercepts"
 author: "Dr Stefano Coretta"
 institute: "University of Edinburgh"
 format:
@@ -43,7 +43,7 @@ options(scipen=999)
 ```{r}
 #| label: ota2009
 
-ota2009 <- read_csv("data/ota2009.csv") %>%
+ota2009 <- read_csv("data/ota2009/key-rock.csv") %>%
   filter(
     Procedure == "TrialProc", Contrast != "F"
   ) %>%
@@ -295,7 +295,7 @@ ota2009 %>%
 ```{r}
 #| label: shallow
 
-shallow <- read_csv("data/shallow.csv") %>%
+shallow <- read_csv("data/song2020/shallow.csv") %>%
   filter(Critical_Filler == "Critical")
 shallow
 ```

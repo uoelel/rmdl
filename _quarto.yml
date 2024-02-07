@@ -17,6 +17,8 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: content.qmd
+        text: Course content
 
 format:
   html:

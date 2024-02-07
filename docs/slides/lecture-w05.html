@@ -8,10 +8,10 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+  <meta name="generator" content="quarto-1.4.549">
 
   <meta name="author" content="Dr Stefano Coretta">
-  <title>RMDL - Research Methods in Developmental Linguistics</title>
+  <title>RMDL - Research Methods in Developmental Linguistics – Week 5</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -31,7 +31,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -221,7 +221,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -390,8 +391,8 @@
     <div class="slides">
 
 <section id="title-slide" data-background="var(--inverse)" class="quarto-title-block center">
-  <h1 class="title">Research Methods in Developmental Linguistics</h1>
-  <p class="subtitle">Week 5</p>
+  <h1 class="title">Research Methods in Developmental Linguistics – Week 5</h1>
+  <p class="subtitle">Group-level effects: Intercepts</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -441,18 +442,20 @@ Dr Stefano Coretta
 <section id="ota-2009-2" class="slide level2">
 <h2>Ota 2009</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-contr-cond-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;1: <strong>?(caption)</strong></p></section>
+<img data-src="lecture-w05_files/figure-revealjs/fig-contr-cond-1.png" id="fig-contr-cond" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;1
+</p></section>
 <section id="ota-2009-3" class="slide level2">
 <h2>Ota 2009</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>ota_bm_1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  RT_log <span class="sc">~</span> Condition <span class="sc">*</span> Contrast,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="at">family =</span> gaussian,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="at">data =</span> ota2009,</span>
-<span id="cb2-5"><a href="#cb2-5"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="at">seed =</span> my_seed,</span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_1"</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>ota_bm_1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb2-2"><a></a>  RT_log <span class="sc">~</span> Condition <span class="sc">*</span> Contrast,</span>
+<span id="cb2-3"><a></a>  <span class="at">family =</span> gaussian,</span>
+<span id="cb2-4"><a></a>  <span class="at">data =</span> ota2009,</span>
+<span id="cb2-5"><a></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb2-6"><a></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb2-7"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_1"</span></span>
+<span id="cb2-8"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="ota-2009-4" class="slide level2">
@@ -495,9 +498,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="ota-2009-5" class="slide level2">
 <h2>Ota 2009</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>ota_bm_1_gdraws <span class="ot">&lt;-</span> ota_bm_1 <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">gather_draws</span>(<span class="st">`</span><span class="at">b_.*</span><span class="st">`</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-3"><a href="#cb4-3"></a>ota_bm_1_gdraws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>ota_bm_1_gdraws <span class="ot">&lt;-</span> ota_bm_1 <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a></a>  <span class="fu">gather_draws</span>(<span class="st">`</span><span class="at">b_.*</span><span class="st">`</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-3"><a></a>ota_bm_1_gdraws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 24,000 × 5
 # Groups:   .variable [6]
@@ -520,7 +523,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="ota-2009-6" class="slide level2">
 <h2>Ota 2009</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-1-gdraws-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;2: <strong>?(caption)</strong></p></section>
+<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-1-gdraws-1.png" id="fig-ota-bm-1-gdraws" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;2
+</p></section>
 <section id="ota-2009-7" class="slide level2">
 <h2>Ota 2009</h2>
 <div class="cell">
@@ -548,24 +553,28 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="ota-2009-8" class="slide level2">
 <h2>Ota 2009</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-1-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;3: <strong>?(caption)</strong></p></section>
+<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-1-1.png" id="fig-ota-bm-1" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;3
+</p></section>
 <section id="ota-2009-subject-level-intercepts" class="slide level2">
 <h2>Ota 2009: subject-level intercepts</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-subj-int-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;4: <strong>?(caption)</strong></p></section>
+<img data-src="lecture-w05_files/figure-revealjs/fig-subj-int-1.png" id="fig-subj-int" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;4
+</p></section>
 <section id="ota-2009-subject-level-intercepts-1" class="slide level2">
 <h2>Ota 2009: subject-level intercepts</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>ota_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  RT_log <span class="sc">~</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a>    Condition <span class="sc">*</span> Contrast <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>    (<span class="dv">1</span> <span class="sc">|</span> Subject),</span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="at">family =</span> gaussian,</span>
-<span id="cb7-6"><a href="#cb7-6"></a>  <span class="at">data =</span> ota2009,</span>
-<span id="cb7-7"><a href="#cb7-7"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb7-8"><a href="#cb7-8"></a>  <span class="at">seed =</span> my_seed,</span>
-<span id="cb7-9"><a href="#cb7-9"></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_2"</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>ota_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb7-2"><a></a>  RT_log <span class="sc">~</span></span>
+<span id="cb7-3"><a></a>    Condition <span class="sc">*</span> Contrast <span class="sc">+</span></span>
+<span id="cb7-4"><a></a>    (<span class="dv">1</span> <span class="sc">|</span> Subject),</span>
+<span id="cb7-5"><a></a>  <span class="at">family =</span> gaussian,</span>
+<span id="cb7-6"><a></a>  <span class="at">data =</span> ota2009,</span>
+<span id="cb7-7"><a></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb7-8"><a></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb7-9"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_2"</span></span>
+<span id="cb7-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="ota-2009-subject-level-intercepts-2" class="slide level2">
@@ -613,12 +622,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="ota-2009-subject-level-intercepts-3" class="slide level2">
 <h2>Ota 2009: subject-level intercepts</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>ota_bm_2_sdraws <span class="ot">&lt;-</span> ota_bm_2 <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">spread_draws</span>(<span class="st">`</span><span class="at">b_.*</span><span class="st">`</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-4"><a href="#cb9-4"></a>    <span class="at">LR_cond_dif =</span> b_ConditionUnrelated <span class="sc">+</span> <span class="st">`</span><span class="at">b_ConditionUnrelated:ContrastLR</span><span class="st">`</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>  )</span>
-<span id="cb9-6"><a href="#cb9-6"></a>ota_bm_2_sdraws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>ota_bm_2_sdraws <span class="ot">&lt;-</span> ota_bm_2 <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a></a>  <span class="fu">spread_draws</span>(<span class="st">`</span><span class="at">b_.*</span><span class="st">`</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-4"><a></a>    <span class="at">LR_cond_dif =</span> b_ConditionUnrelated <span class="sc">+</span> <span class="st">`</span><span class="at">b_ConditionUnrelated:ContrastLR</span><span class="st">`</span></span>
+<span id="cb9-5"><a></a>  )</span>
+<span id="cb9-6"><a></a>ota_bm_2_sdraws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,000 × 10
    .chain .iteration .draw b_Intercept b_ConditionUnrelated b_ContrastLR
@@ -643,13 +652,15 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="ota-2009-subject-level-intercepts-4" class="slide level2">
 <h2>Ota 2009: subject-level intercepts</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-2-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;5: <strong>?(caption)</strong></p></section>
+<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-2-1.png" id="fig-ota-bm-2" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;5
+</p></section>
 <section id="ota-2009-subject-level-intercepts-5" class="slide level2">
 <h2>Ota 2009: subject-level intercepts</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>ota_bm_2_int <span class="ot">&lt;-</span> ota_bm_2 <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">gather_draws</span>(r_Subject[Subject,term])</span>
-<span id="cb11-3"><a href="#cb11-3"></a>ota_bm_2_int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>ota_bm_2_int <span class="ot">&lt;-</span> ota_bm_2 <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a></a>  <span class="fu">gather_draws</span>(r_Subject[Subject,term])</span>
+<span id="cb11-3"><a></a>ota_bm_2_int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 80,000 × 7
 # Groups:   Subject, term, .variable [20]
@@ -672,11 +683,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="ota-2009-subject-level-intercepts-6" class="slide level2">
 <h2>Ota 2009: subject-level intercepts</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-2-int-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;6: <strong>?(caption)</strong></p></section>
+<img data-src="lecture-w05_files/figure-revealjs/fig-ota-bm-2-int-1.png" id="fig-ota-bm-2-int" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;6
+</p></section>
 <section id="ota-2009-subject-level-intercepts-7" class="slide level2">
 <h2>Ota 2009: subject-level intercepts</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">fixef</span>(ota_bm_1, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">fixef</span>(ota_bm_1, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                 Estimate  Est.Error           Q5        Q95
 Intercept                      7.62620715 0.02768641  7.581469000 7.67360300
@@ -686,7 +699,7 @@ ContrastPB                    -0.00571623 0.03891494 -0.069516300 0.05773055
 ConditionUnrelated:ContrastLR -0.04495745 0.05472389 -0.133708800 0.04321842
 ConditionUnrelated:ContrastPB -0.06209090 0.05630206 -0.155772200 0.03102230</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">fixef</span>(ota_bm_2, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">fixef</span>(ota_bm_2, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                  Estimate  Est.Error          Q5        Q95
 Intercept                      7.621548095 0.08356667  7.48760400 7.75970050
@@ -701,7 +714,9 @@ ConditionUnrelated:ContrastPB -0.060051002 0.04276476 -0.13151040 0.01025244</co
 <section id="ota-2009-subject-level-slopes" class="slide level2">
 <h2>Ota 2009: subject-level slopes</h2>
 
-<img data-src="lecture-w05_files/figure-revealjs/fig-subj-slo-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;7: <strong>?(caption)</strong></p></section>
+<img data-src="lecture-w05_files/figure-revealjs/fig-subj-slo-1.png" id="fig-subj-slo" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;7
+</p></section>
 <section id="song-2020" class="slide level2">
 <h2>Song 2020</h2>
 <ul>
@@ -741,15 +756,15 @@ ConditionUnrelated:ContrastPB -0.060051002 0.04276476 -0.13151040 0.01025244</co
 <section id="song-2020-2" class="slide level2">
 <h2>Song 2020</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>sha_bm_1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb18-2"><a href="#cb18-2"></a>  ACC <span class="sc">~</span> Group <span class="sc">*</span> Relation_type <span class="sc">*</span> Branching,</span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="at">family =</span> bernoulli,</span>
-<span id="cb18-4"><a href="#cb18-4"></a>  <span class="at">data =</span> shallow,</span>
-<span id="cb18-5"><a href="#cb18-5"></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb18-6"><a href="#cb18-6"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="at">seed =</span> my_seed,</span>
-<span id="cb18-8"><a href="#cb18-8"></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_1"</span></span>
-<span id="cb18-9"><a href="#cb18-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>sha_bm_1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb18-2"><a></a>  ACC <span class="sc">~</span> Group <span class="sc">*</span> Relation_type <span class="sc">*</span> Branching,</span>
+<span id="cb18-3"><a></a>  <span class="at">family =</span> bernoulli,</span>
+<span id="cb18-4"><a></a>  <span class="at">data =</span> shallow,</span>
+<span id="cb18-5"><a></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb18-6"><a></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb18-7"><a></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb18-8"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_1"</span></span>
+<span id="cb18-9"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="song-2020-3" class="slide level2">
@@ -779,16 +794,16 @@ ConditionUnrelated:ContrastPB -0.060051002 0.04276476 -0.13151040 0.01025244</co
 <section id="song-2020-5" class="slide level2">
 <h2>Song 2020</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>sha_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  ACC <span class="sc">~</span> Group <span class="sc">*</span> Relation_type <span class="sc">*</span> Branching <span class="sc">+</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a>    (<span class="dv">1</span> <span class="sc">|</span> ID),</span>
-<span id="cb20-4"><a href="#cb20-4"></a>  <span class="at">family =</span> bernoulli,</span>
-<span id="cb20-5"><a href="#cb20-5"></a>  <span class="at">data =</span> shallow,</span>
-<span id="cb20-6"><a href="#cb20-6"></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb20-7"><a href="#cb20-7"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
-<span id="cb20-8"><a href="#cb20-8"></a>  <span class="at">seed =</span> my_seed,</span>
-<span id="cb20-9"><a href="#cb20-9"></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_2"</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>sha_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb20-2"><a></a>  ACC <span class="sc">~</span> Group <span class="sc">*</span> Relation_type <span class="sc">*</span> Branching <span class="sc">+</span></span>
+<span id="cb20-3"><a></a>    (<span class="dv">1</span> <span class="sc">|</span> ID),</span>
+<span id="cb20-4"><a></a>  <span class="at">family =</span> bernoulli,</span>
+<span id="cb20-5"><a></a>  <span class="at">data =</span> shallow,</span>
+<span id="cb20-6"><a></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb20-7"><a></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>,</span>
+<span id="cb20-8"><a></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb20-9"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_2"</span></span>
+<span id="cb20-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="song-2020-6" class="slide level2">
@@ -997,8 +1012,10 @@ GroupL2:Relation_typeUnrelated:BranchingRight                 0.9486110</code></
 </div>
 </div>
 
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
@@ -1027,7 +1044,6 @@ GroupL2:Relation_typeUnrelated:BranchingRight                 0.9486110</code></
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1326,10 +1342,9 @@ GroupL2:Relation_typeUnrelated:BranchingRight                 0.9486110</code></
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1339,8 +1354,17 @@ GroupL2:Relation_typeUnrelated:BranchingRight                 0.9486110</code></
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
