@@ -766,9 +766,6 @@ Figure&nbsp;7
 <span id="cb18-8"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_1"</span></span>
 <span id="cb18-9"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="song-2020-3" class="slide level2">
-<h2>Song 2020</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 5
@@ -787,11 +784,11 @@ Figure&nbsp;7
 </div>
 </div>
 </section>
-<section id="song-2020-4" class="slide level2">
+<section id="song-2020-3" class="slide level2">
 <h2>Song 2020</h2>
 
 <img data-src="lecture-w05_files/figure-revealjs/sha-bm-1-conds-1.png" width="960" class="r-stretch"></section>
-<section id="song-2020-5" class="slide level2">
+<section id="song-2020-4" class="slide level2">
 <h2>Song 2020</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>sha_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
@@ -805,8 +802,64 @@ Figure&nbsp;7
 <span id="cb20-9"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_2"</span></span>
 <span id="cb20-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   term                                        Estimate Est.Error     Q5     Q95
+   &lt;chr&gt;                                          &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Intercept                                      1.99      0.268  1.55   2.43  
+ 2 GroupL2                                       -0.607     0.346 -1.19  -0.0379
+ 3 Relation_typeNonConstituent                   -0.658     0.288 -1.14  -0.195 
+ 4 Relation_typeUnrelated                        -0.865     0.288 -1.36  -0.397 
+ 5 BranchingRight                                 1.08      0.408  0.428  1.76  
+ 6 GroupL2:Relation_typeNonConstituent            0.496     0.374 -0.102  1.13  
+ 7 GroupL2:Relation_typeUnrelated                 0.273     0.365 -0.317  0.885 
+ 8 GroupL2:BranchingRight                         0.346     0.518 -0.516  1.21  
+ 9 Relation_typeUnrelated:BranchingRight          0.764     0.545 -0.120  1.65  
+10 GroupL2:Relation_typeUnrelated:BranchingRi…   -0.177     0.700 -1.35   0.949 </code></pre>
+</div>
+</div>
 </section>
+<section id="song-2020-5" class="slide level2">
+<h2>Song 2020</h2>
+
+<img data-src="lecture-w05_files/figure-revealjs/sha-bm-2-conds-1.png" width="960" class="r-stretch"></section>
 <section id="song-2020-6" class="slide level2">
+<h2>Song 2020</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   term                                         Estimate Est.Error     Q5    Q95
+   &lt;chr&gt;                                           &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1 Intercept                                       1.80      0.217  1.46   2.16 
+ 2 GroupL2                                        -0.567     0.272 -1.02  -0.128
+ 3 Relation_typeNonConstituent                    -0.621     0.282 -1.09  -0.158
+ 4 Relation_typeUnrelated                         -0.800     0.275 -1.24  -0.350
+ 5 BranchingRight                                  1.05      0.400  0.396  1.71 
+ 6 GroupL2:Relation_typeNonConstituent             0.464     0.361 -0.135  1.05 
+ 7 GroupL2:Relation_typeUnrelated                  0.262     0.347 -0.305  0.826
+ 8 GroupL2:BranchingRight                          0.267     0.502 -0.552  1.10 
+ 9 Relation_typeUnrelated:BranchingRight           0.686     0.541 -0.201  1.56 
+10 GroupL2:Relation_typeUnrelated:BranchingRig…   -0.146     0.684 -1.27   0.972</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   term                                        Estimate Est.Error     Q5     Q95
+   &lt;chr&gt;                                          &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Intercept                                      1.99      0.268  1.55   2.43  
+ 2 GroupL2                                       -0.607     0.346 -1.19  -0.0379
+ 3 Relation_typeNonConstituent                   -0.658     0.288 -1.14  -0.195 
+ 4 Relation_typeUnrelated                        -0.865     0.288 -1.36  -0.397 
+ 5 BranchingRight                                 1.08      0.408  0.428  1.76  
+ 6 GroupL2:Relation_typeNonConstituent            0.496     0.374 -0.102  1.13  
+ 7 GroupL2:Relation_typeUnrelated                 0.273     0.365 -0.317  0.885 
+ 8 GroupL2:BranchingRight                         0.346     0.518 -0.516  1.21  
+ 9 Relation_typeUnrelated:BranchingRight          0.764     0.545 -0.120  1.65  
+10 GroupL2:Relation_typeUnrelated:BranchingRi…   -0.177     0.700 -1.35   0.949 </code></pre>
+</div>
+</div>
+</section>
+<section id="song-2020-7" class="slide level2">
 <h2>Song 2020</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -895,122 +948,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="song-2020-7" class="slide level2">
-<h2>Song 2020</h2>
-
-<img data-src="lecture-w05_files/figure-revealjs/sha-bm-2-conds-1.png" width="960" class="r-stretch"></section>
-<section id="song-2020-8" class="slide level2">
-<h2>Song 2020</h2>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>                                                                   Estimate
-Intercept                                                         1.8019761
-GroupL2                                                          -0.5670743
-Relation_typeNonConstituent                                      -0.6207528
-Relation_typeUnrelated                                           -0.7996187
-BranchingRight                                                    1.0483603
-GroupL2:Relation_typeNonConstituent                               0.4637915
-GroupL2:Relation_typeUnrelated                                    0.2623161
-GroupL2:BranchingRight                                            0.2667780
-Relation_typeNonConstituent:BranchingRight          543274275165103.7500000
-Relation_typeUnrelated:BranchingRight                             0.6864681
-GroupL2:Relation_typeNonConstituent:BranchingRight -398555596501661.3125000
-GroupL2:Relation_typeUnrelated:BranchingRight                    -0.1459870
-                                                                  Est.Error
-Intercept                                                         0.2169616
-GroupL2                                                           0.2717929
-Relation_typeNonConstituent                                       0.2818726
-Relation_typeUnrelated                                            0.2753214
-BranchingRight                                                    0.3995391
-GroupL2:Relation_typeNonConstituent                               0.3607741
-GroupL2:Relation_typeUnrelated                                    0.3473604
-GroupL2:BranchingRight                                            0.5023164
-Relation_typeNonConstituent:BranchingRight         1663438628768865.7500000
-Relation_typeUnrelated:BranchingRight                             0.5407214
-GroupL2:Relation_typeNonConstituent:BranchingRight  863303839058927.6250000
-GroupL2:Relation_typeUnrelated:BranchingRight                     0.6844142
-                                                                          Q5
-Intercept                                                          1.4564655
-GroupL2                                                           -1.0188625
-Relation_typeNonConstituent                                       -1.0853420
-Relation_typeUnrelated                                            -1.2405150
-BranchingRight                                                     0.3959245
-GroupL2:Relation_typeNonConstituent                               -0.1345275
-GroupL2:Relation_typeUnrelated                                    -0.3052880
-GroupL2:BranchingRight                                            -0.5520640
-Relation_typeNonConstituent:BranchingRight         -1818860500000000.0000000
-Relation_typeUnrelated:BranchingRight                             -0.2010909
-GroupL2:Relation_typeNonConstituent:BranchingRight -2355534500000000.0000000
-GroupL2:Relation_typeUnrelated:BranchingRight                     -1.2725060
-                                                                        Q95
-Intercept                                                         2.1596770
-GroupL2                                                          -0.1278813
-Relation_typeNonConstituent                                      -0.1582347
-Relation_typeUnrelated                                           -0.3496822
-BranchingRight                                                    1.7056285
-GroupL2:Relation_typeNonConstituent                               1.0538005
-GroupL2:Relation_typeUnrelated                                    0.8258839
-GroupL2:BranchingRight                                            1.1035385
-Relation_typeNonConstituent:BranchingRight         3714069000000000.0000000
-Relation_typeUnrelated:BranchingRight                             1.5638485
-GroupL2:Relation_typeNonConstituent:BranchingRight  645896749999999.7500000
-GroupL2:Relation_typeUnrelated:BranchingRight                     0.9724854</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                                              Estimate
-Intercept                                                    1.9858870
-GroupL2                                                     -0.6073526
-Relation_typeNonConstituent                                 -0.6580701
-Relation_typeUnrelated                                      -0.8647917
-BranchingRight                                               1.0755789
-GroupL2:Relation_typeNonConstituent                          0.4959971
-GroupL2:Relation_typeUnrelated                               0.2727230
-GroupL2:BranchingRight                                       0.3455812
-Relation_typeNonConstituent:BranchingRight          -114426605.6484664
-Relation_typeUnrelated:BranchingRight                        0.7635728
-GroupL2:Relation_typeNonConstituent:BranchingRight 22143688139.0905342
-GroupL2:Relation_typeUnrelated:BranchingRight               -0.1773523
-                                                             Est.Error
-Intercept                                                    0.2680633
-GroupL2                                                      0.3463333
-Relation_typeNonConstituent                                  0.2882147
-Relation_typeUnrelated                                       0.2877647
-BranchingRight                                               0.4081778
-GroupL2:Relation_typeNonConstituent                          0.3737823
-GroupL2:Relation_typeUnrelated                               0.3650077
-GroupL2:BranchingRight                                       0.5180112
-Relation_typeNonConstituent:BranchingRight          1090974143.9644828
-Relation_typeUnrelated:BranchingRight                        0.5447181
-GroupL2:Relation_typeNonConstituent:BranchingRight 45565430280.8072739
-GroupL2:Relation_typeUnrelated:BranchingRight                0.6998716
-                                                                    Q5
-Intercept                                                    1.5512645
-GroupL2                                                     -1.1916305
-Relation_typeNonConstituent                                 -1.1397845
-Relation_typeUnrelated                                      -1.3571985
-BranchingRight                                               0.4276229
-GroupL2:Relation_typeNonConstituent                         -0.1016538
-GroupL2:Relation_typeUnrelated                              -0.3174186
-GroupL2:BranchingRight                                      -0.5158256
-Relation_typeNonConstituent:BranchingRight         -2476557499.9999981
-Relation_typeUnrelated:BranchingRight                       -0.1197826
-GroupL2:Relation_typeNonConstituent:BranchingRight -2156151000.0000000
-GroupL2:Relation_typeUnrelated:BranchingRight               -1.3491975
-                                                                    Q95
-Intercept                                                     2.4278655
-GroupL2                                                      -0.0379166
-Relation_typeNonConstituent                                  -0.1953609
-Relation_typeUnrelated                                       -0.3970380
-BranchingRight                                                1.7552355
-GroupL2:Relation_typeNonConstituent                           1.1251290
-GroupL2:Relation_typeUnrelated                                0.8845447
-GroupL2:BranchingRight                                        1.2135175
-Relation_typeNonConstituent:BranchingRight           1463468500.0000000
-Relation_typeUnrelated:BranchingRight                         1.6526810
-GroupL2:Relation_typeNonConstituent:BranchingRight 135947450000.0000000
-GroupL2:Relation_typeUnrelated:BranchingRight                 0.9486110</code></pre>
-</div>
-</div>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li><p>If the data contains groupings other than the ones that were manipulated in the design, you need to account for it.</p></li>
+<li><p>The model must account for the fact that some data is from within a specific member of the group (like a participant, a specific word, etc).</p></li>
+<li><p>You can account for groupings in the data with group-level effects. You should always include group-level intercept to account for mean differences across members of the groups.</p></li>
+</ul>
 
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">

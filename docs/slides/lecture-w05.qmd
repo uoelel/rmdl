@@ -317,8 +317,6 @@ sha_bm_1 <- brm(
 )
 ```
 
-## Song 2020
-
 ```{r}
 #| label: sha-bm-1-sum
 
@@ -355,10 +353,12 @@ sha_bm_2 <- brm(
 )
 ```
 
-## Song 2020
+```{r}
+#| label: sha-bm-2-sum
 
-```{r sha-bm-2-sum}
-summary(sha_bm_2, prob = 0.9)
+fixef(sha_bm_2, probs = c(0.05, 0.95)) %>%
+  as_tibble(rownames = "term") %>%
+  filter(Estimate < 5, Estimate > -2)
 ```
 
 ## Song 2020
@@ -373,6 +373,26 @@ conditional_effects(sha_bm_2, "Relation_type:Group", conditions = sha_conds)
 ```{r}
 #| label: sha-bm-fixef
 
-fixef(sha_bm_1, probs = c(0.05, 0.95))
-fixef(sha_bm_2, probs = c(0.05, 0.95))
+fixef(sha_bm_1, probs = c(0.05, 0.95)) %>%
+  as_tibble(rownames = "term") %>%
+  filter(Estimate < 5, Estimate > -2)
+fixef(sha_bm_2, probs = c(0.05, 0.95)) %>%
+  as_tibble(rownames = "term") %>%
+  filter(Estimate < 5, Estimate > -2)
 ```
+
+## Song 2020
+
+```{r}
+#| label: sha-bm-2-full-sum
+
+summary(sha_bm_2, prob = 0.9)
+```
+
+## Summary
+
+- If the data contains groupings other than the ones that were manipulated in the design, you need to account for it.
+
+- The model must account for the fact that some data is from within a specific member of the group (like a participant, a specific word, etc).
+
+- You can account for groupings in the data with group-level effects. You should always include group-level intercept to account for mean differences across members of the groups.
