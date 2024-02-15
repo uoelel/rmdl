@@ -42,7 +42,7 @@ To make sure you are in the RStudio project, you can open the project by going t
 
 For this tutorial you have to run a Bayesian model with data from Winter 2012 (DOI [10.1016/j.wocn.2012.08.006](https://doi.org/10.1016/j.wocn.2012.08.006)).
 
-You can get the data [here](data/winter2012/polite.csv).
+You can get the data [here](/data/winter2012/polite.csv) (right-click and download).
 
 ## Mean f0
 
