@@ -1,0 +1,209 @@
+---
+title: "Research Methods in Developmental Linguistics -- Week 6"
+subtitle: "Group-level effects: Slopes"
+author: "Dr Stefano Coretta"
+institute: "University of Edinburgh"
+format:
+  mono-light-revealjs:
+    theme: [default, custom.scss]
+    history: false
+execute: 
+  echo: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+theme_set(theme_light())
+
+library(brms)
+library(tidybayes)
+
+options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
+options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))
+options(show.signif.stars = FALSE)
+
+my_seed <- 8878
+set.seed(my_seed)
+options(scipen=999)
+```
+
+
+## Ota 2009: the study
+
+- From *The KEY to the ROCK: Near-homophony in nonnative visual word recognition* ([10.1016/j.cognition.2008.12.007](https://doi.org/10.1016/j.cognition.2008.12.007))
+
+- Visual semantic-relatedness paradigm.
+
+  - LOCK/ROCK ~ KEY.
+
+- Japanese data.
+
+## Ota 2009: the data
+
+```{r}
+#| label: ota2009
+
+ota2009 <- read_csv("data/ota2009/key-rock.csv") %>%
+  filter(
+    Procedure == "TrialProc", Contrast != "F"
+  ) %>%
+  mutate(
+    Subject = as.factor(Subject), RT_log = log(Words.RT)
+  )
+ota2009
+```
+
+## Ota 2009: the data
+
+```{r}
+#| label: contr-cond
+
+ota2009 %>%
+  ggplot(aes(Contrast, RT_log)) +
+  geom_violin(aes(fill = Condition), alpha = 0.2) +
+  geom_jitter(
+    aes(colour = Condition), alpha = 0.4,
+    position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.9)
+  ) +
+  stat_summary(
+    aes(group = Condition),
+    position = position_dodge(width = 0.9),
+    fun = "median", geom = "point", size = 3
+  )
+```
+
+## Ota 2009: subject-level slopes
+
+```{r}
+#| label: subj-slo
+#| fig_asp: 0.5
+
+ota2009 %>%
+  filter(Contrast == "LR") %>%
+  ggplot(aes(Condition, RT_log)) +
+  geom_violin(aes(fill = Condition), alpha = 0.5) +
+  # geom_jitter(
+  #   aes(colour = Condition), alpha = 0.4,
+  #   position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.9)
+  # ) +
+  stat_summary(
+    aes(group = Condition),
+    position = position_dodge(width = 0.9),
+    fun = "median", geom = "point"
+  ) +
+  facet_wrap(~ Subject, nrow = 2) +
+  theme(axis.text.x = element_blank(), legend.position = "bottom")
+```
+
+## Ota 2009: intercepts and slopes
+
+```{r}
+#| label: ota-bm-3
+#| echo: true
+
+ota_bm_3 <- brm(
+  RT_log ~
+    Condition * Contrast +
+    (Condition * Contrast | Subject),
+  family = gaussian,
+  data = ota2009,
+  backend = "cmdstanr",
+  seed = my_seed,
+  file = "data/cache/ota_bm_3"
+)
+```
+
+## Ota 2009: intercepts and slopes
+
+```{r}
+#| label: ota-bm-3-sdraws
+#| echo: true
+
+ota_bm_3_sdraws <- ota_bm_3 %>%
+  spread_draws(`b_.*`, regex = TRUE) %>%
+  mutate(
+    LR_cond_dif = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastLR`
+  )
+ota_bm_3_sdraws
+```
+
+## Ota 2009: difference between unrelated and control
+
+```{r}
+#| label: ota-bm-3-plot
+
+ota_bm_3_sdraws %>%
+  ggplot(aes(LR_cond_dif)) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  stat_halfeye(slab_alpha = 0.5)
+```
+
+## Ota 2009: subject-level intercepts
+
+```{r}
+#| label: ota-bm-3-group
+#| echo: true
+
+ota_bm_3_group <- ota_bm_3 %>%
+  gather_draws(r_Subject[Subject,term])
+ota_bm_3_group
+```
+
+## Ota 2009: subject-level intercepts
+
+```{r}
+#| label: ota-bm-3-group-plot
+
+ota_bm_3_group %>%
+  filter(term == "ConditionUnrelated:ContrastLR") %>%
+  ggplot(aes(.value)) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  stat_halfeye() +
+  facet_wrap(vars(Subject))
+```
+
+## Ota 2009: subject-level intercepts
+
+```{r}
+#| label: ota-bm-fixef
+#| echo: false
+
+ota_bm_1 <- readRDS("data/cache/ota_bm_1.rds")
+ota_bm_2 <- readRDS("data/cache/ota_bm_2.rds")
+
+fixef(ota_bm_1, probs = c(0.05, 0.95))
+fixef(ota_bm_2, probs = c(0.05, 0.95))
+fixef(ota_bm_3, probs = c(0.05, 0.95))
+```
+
+## Ota 2009: conditional effects (log-RT)
+
+```{r}
+#| label: ota-bm-3-cond
+
+conditional_effects(ota_bm_3, "Contrast:Condition")
+```
+
+## Ota 2009: conditional effects (accuracy)
+
+```{r}
+#| label: ota-bm-acc
+
+ota_bm_acc <- brm(
+  Words.ACC ~
+    Condition * Contrast +
+    (Condition * Contrast | Subject),
+  family = bernoulli,
+  data = ota2009,
+  backend = "cmdstanr",
+  seed = my_seed,
+  file = "data/cache/ota_bm_acc"
+)
+```
+
+```{r}
+#| label: ota-bm-acc-cond
+
+conditional_effects(ota_bm_acc, "Contrast:Condition")
+```
+

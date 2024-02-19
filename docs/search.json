@@ -28,55 +28,6 @@
     "text": "3 H1-H2 difference\nIf you have time, run the same model but now with the H1-H2 difference H1H2 as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).\nNow answer the following question: Does being a music student modulate the effect of attitude on the H1-H2 difference?"
   },
   {
-    "objectID": "setup.html",
-    "href": "setup.html",
-    "title": "Set-up instructions",
-    "section": "",
-    "text": "Please, follow these instructions to get ready before the first workshop. It will take up to an hour to set everything up and you might encounter errors, so please do this asap."
-  },
-  {
-    "objectID": "setup.html#r-and-rstudio",
-    "href": "setup.html#r-and-rstudio",
-    "title": "Set-up instructions",
-    "section": "1 R and RStudio",
-    "text": "1 R and RStudio\nBefore installing the necessary software, make sure you have installed or updated the following software.\n\nThe latest version of R (https://cloud.r-project.org).\nThe latest version of RStudio (https://www.rstudio.com/products/rstudio/download/#download).\nIdeally, your operating system is up-to-date."
-  },
-  {
-    "objectID": "setup.html#r-packages",
-    "href": "setup.html#r-packages",
-    "title": "Set-up instructions",
-    "section": "2 R packages",
-    "text": "2 R packages\n\n\n\n\n\n\nImportant\n\n\n\nIf you have previously installed the C++ toolkit, CmdStan and/or cmdstanr, or if you have recently updated your OS, please follow these instructions to reinstall them.\n\n\nNow you will need to install a few packages and extra software.\nHere is an overview of what you will install:\n\nC++ toolchain.\nR packages: tidyverse, remotes, cmdstanr, brms.\nCmdStan (including Stan).\n\n\n2.1 Install the C++ toolchain\nSome of the software (CmdStan) used in the workshops require a working C++ toolchain for compilation.\nYou can find information on how to set up the C++ toolchain in Section 1.2.1 of the CmdStan User’s Guide.\nMake sure to follow the instructions for your operating system.\n\n\n2.2 Install the R packages\nAfter you have installed the C++ toolchain, you need to install the following R packages. Run the following in the Console.\ninstall.packages(\"remotes\")\nremotes::install_github(\"stan-dev/cmdstanr\")\ninstall.packages(c(\"brms\"))\ninstall.packages(c(\"tidybayes\", \"extraDistr\"))\nThe cmdstanr package is an interface between R and CmdStan (see below), while brms is the package you will use to run Bayesian linear models (think of it as the Bayesian equivalent of lme4).\nIt will take several minutes to install the packages, depending on your system and configuration.\nIf at any point you get asked about installing extra packages or software or update existing packages or software, please do so. In all cases, carefully read the message in the Console or in a pop-up window: they always tell you what to do or the options you have.\n\n\n2.3 Install CmdStan\nNow that you have installed the R packages, you need to install CmdStan.\nCmdStan is a shell interface to the programming language Stan.\nStan is what runs the Bayesian models, but you don’t have to know Stan, because you will use the R packages to run the models (those packages will communicate with Stan in your stead).\nTo install CmdStan, run the following command in the R console:\ncmdstanr::install_cmdstan(cores = parallel::detectCores(), overwrite = TRUE)\nIt will take several minutes and you will see a lot of text flashing in the Console.\n\n\n2.4 Check your installation\nRun the following in the RStudio Console.\nlibrary(cmdstanr)\nfile &lt;- file.path(cmdstan_path(), \"examples\", \"bernoulli\", \"bernoulli.stan\")\nmod &lt;- cmdstan_model(file, force_recompile = TRUE)\ndata_list &lt;- list(N = 10, y = c(0,1,0,0,0,0,0,0,0,1))\nfit &lt;- mod$sample(\n  data = data_list, \n  seed = 123, \n  chains = 4, \n  parallel_chains = 4,\n  refresh = 500 # print update every 500 iters\n)\nIf everything goes well you should see Compiling Stan program… and then Running MCMC with 4 parallel chains… followed by information on chains and iterations."
-  },
-  {
-    "objectID": "setup.html#troubleshoot",
-    "href": "setup.html#troubleshoot",
-    "title": "Set-up instructions",
-    "section": "3 Troubleshoot",
-    "text": "3 Troubleshoot\nIf you have issues with any of these steps, please get in touch on Piazza. I won’t have time to help you during the workshop."
-  },
-  {
-    "objectID": "content.html",
-    "href": "content.html",
-    "title": "RMDL",
-    "section": "",
-    "text": "Week\nLecture\nLab\n\n\n\n\n\n5\nGroup-level effects: Intercepts\nTutorial\n\n\n\nFL\nNo classes\n\n\n\n\n6\nGroup-level effects: Slopes\nTutorial"
-  },
-  {
-    "objectID": "content.html#schedule-overview",
-    "href": "content.html#schedule-overview",
-    "title": "RMDL",
-    "section": "",
-    "text": "Week\nLecture\nLab\n\n\n\n\n\n5\nGroup-level effects: Intercepts\nTutorial\n\n\n\nFL\nNo classes\n\n\n\n\n6\nGroup-level effects: Slopes\nTutorial"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Research Methods in Developmental Linguistics",
-    "section": "",
-    "text": "This site contains materials of the course Research Methods in Developmental Linguistics (Semester 2).\n\n\n\n\n\n\nAsk for help\n\n\n\nIf at any point during the course you don’t feel comfortable with any aspect of the course, you are unsure about anything that has been covered in class or in your own time, you are struggling to keep up with the course workload, you are experiencing mental of physical distress due to a pre-existing or new illness, medical condition or disability, or you find yourself unable to access basic needs like food or housing, please do get in touch with me and/or the PPLS support (go to the PPLS UG or MSc Hub on SharePoint &gt; Support for students &gt; Health & Wellbeing).\nWe are humans first and the rapidly-changing new world we are living in now can put us under pressure. What is most important to me is that you are first and foremost healthy and able to participate to the course, and that you succeed and get the most out of the course.\nIt is OK not to be OK, and remember that you are not alone. Other people, teachers and students, might be struggling right now or have struggled before and might have gone through what you are going through now. Remember that support exists for you, so please do reach out. If you see somebody close to you struggling, please let them know about the available support network and encourage them to reach out.\n\n\n\n\n\n\n\n\nContacts\n\n\n\nYou can reach Stefano at s.coretta@ed.ac.uk or on Teams.\nIf you want to book office hours with Stefano, you can do so here: https://bit.ly/33BH84L."
-  },
-  {
     "objectID": "slides/lecture-w05.html#ota-2009",
     "href": "slides/lecture-w05.html#ota-2009",
     "title": "Research Methods in Developmental Linguistics – Week 5",
@@ -264,5 +215,138 @@
     "title": "Research Methods in Developmental Linguistics – Week 5",
     "section": "Summary",
     "text": "Summary\n\nIf the data contains groupings other than the ones that were manipulated in the design, you need to account for it.\nThe model must account for the fact that some data is from within a specific member of the group (like a participant, a specific word, etc).\nYou can account for groupings in the data with group-level effects. You should always include group-level intercept to account for mean differences across members of the groups."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Research Methods in Developmental Linguistics",
+    "section": "",
+    "text": "This site contains materials of the course Research Methods in Developmental Linguistics (Semester 2).\n\n\n\n\n\n\nAsk for help\n\n\n\nIf at any point during the course you don’t feel comfortable with any aspect of the course, you are unsure about anything that has been covered in class or in your own time, you are struggling to keep up with the course workload, you are experiencing mental of physical distress due to a pre-existing or new illness, medical condition or disability, or you find yourself unable to access basic needs like food or housing, please do get in touch with me and/or the PPLS support (go to the PPLS UG or MSc Hub on SharePoint &gt; Support for students &gt; Health & Wellbeing).\nWe are humans first and the rapidly-changing new world we are living in now can put us under pressure. What is most important to me is that you are first and foremost healthy and able to participate to the course, and that you succeed and get the most out of the course.\nIt is OK not to be OK, and remember that you are not alone. Other people, teachers and students, might be struggling right now or have struggled before and might have gone through what you are going through now. Remember that support exists for you, so please do reach out. If you see somebody close to you struggling, please let them know about the available support network and encourage them to reach out.\n\n\n\n\n\n\n\n\nContacts\n\n\n\nYou can reach Stefano at s.coretta@ed.ac.uk or on Teams.\nIf you want to book office hours with Stefano, you can do so here: https://bit.ly/33BH84L."
+  },
+  {
+    "objectID": "content.html",
+    "href": "content.html",
+    "title": "RMDL",
+    "section": "",
+    "text": "Week\nLecture\nLab\n\n\n\n\n\n5\nGroup-level effects: Intercepts\nTutorial\n\n\n\nFL\nNo classes\n\n\n\n\n6\nGroup-level effects: Slopes\nTutorial"
+  },
+  {
+    "objectID": "content.html#schedule-overview",
+    "href": "content.html#schedule-overview",
+    "title": "RMDL",
+    "section": "",
+    "text": "Week\nLecture\nLab\n\n\n\n\n\n5\nGroup-level effects: Intercepts\nTutorial\n\n\n\nFL\nNo classes\n\n\n\n\n6\nGroup-level effects: Slopes\nTutorial"
+  },
+  {
+    "objectID": "setup.html",
+    "href": "setup.html",
+    "title": "Set-up instructions",
+    "section": "",
+    "text": "Please, follow these instructions to get ready before the first workshop. It will take up to an hour to set everything up and you might encounter errors, so please do this asap."
+  },
+  {
+    "objectID": "setup.html#r-and-rstudio",
+    "href": "setup.html#r-and-rstudio",
+    "title": "Set-up instructions",
+    "section": "1 R and RStudio",
+    "text": "1 R and RStudio\nBefore installing the necessary software, make sure you have installed or updated the following software.\n\nThe latest version of R (https://cloud.r-project.org).\nThe latest version of RStudio (https://www.rstudio.com/products/rstudio/download/#download).\nIdeally, your operating system is up-to-date."
+  },
+  {
+    "objectID": "setup.html#r-packages",
+    "href": "setup.html#r-packages",
+    "title": "Set-up instructions",
+    "section": "2 R packages",
+    "text": "2 R packages\n\n\n\n\n\n\nImportant\n\n\n\nIf you have previously installed the C++ toolkit, CmdStan and/or cmdstanr, or if you have recently updated your OS, please follow these instructions to reinstall them.\n\n\nNow you will need to install a few packages and extra software.\nHere is an overview of what you will install:\n\nC++ toolchain.\nR packages: tidyverse, remotes, cmdstanr, brms.\nCmdStan (including Stan).\n\n\n2.1 Install the C++ toolchain\nSome of the software (CmdStan) used in the workshops require a working C++ toolchain for compilation.\nYou can find information on how to set up the C++ toolchain in Section 1.2.1 of the CmdStan User’s Guide.\nMake sure to follow the instructions for your operating system.\n\n\n2.2 Install the R packages\nAfter you have installed the C++ toolchain, you need to install the following R packages. Run the following in the Console.\ninstall.packages(\"remotes\")\nremotes::install_github(\"stan-dev/cmdstanr\")\ninstall.packages(c(\"brms\"))\ninstall.packages(c(\"tidybayes\", \"extraDistr\"))\nThe cmdstanr package is an interface between R and CmdStan (see below), while brms is the package you will use to run Bayesian linear models (think of it as the Bayesian equivalent of lme4).\nIt will take several minutes to install the packages, depending on your system and configuration.\nIf at any point you get asked about installing extra packages or software or update existing packages or software, please do so. In all cases, carefully read the message in the Console or in a pop-up window: they always tell you what to do or the options you have.\n\n\n2.3 Install CmdStan\nNow that you have installed the R packages, you need to install CmdStan.\nCmdStan is a shell interface to the programming language Stan.\nStan is what runs the Bayesian models, but you don’t have to know Stan, because you will use the R packages to run the models (those packages will communicate with Stan in your stead).\nTo install CmdStan, run the following command in the R console:\ncmdstanr::install_cmdstan(cores = parallel::detectCores(), overwrite = TRUE)\nIt will take several minutes and you will see a lot of text flashing in the Console.\n\n\n2.4 Check your installation\nRun the following in the RStudio Console.\nlibrary(cmdstanr)\nfile &lt;- file.path(cmdstan_path(), \"examples\", \"bernoulli\", \"bernoulli.stan\")\nmod &lt;- cmdstan_model(file, force_recompile = TRUE)\ndata_list &lt;- list(N = 10, y = c(0,1,0,0,0,0,0,0,0,1))\nfit &lt;- mod$sample(\n  data = data_list, \n  seed = 123, \n  chains = 4, \n  parallel_chains = 4,\n  refresh = 500 # print update every 500 iters\n)\nIf everything goes well you should see Compiling Stan program… and then Running MCMC with 4 parallel chains… followed by information on chains and iterations."
+  },
+  {
+    "objectID": "setup.html#troubleshoot",
+    "href": "setup.html#troubleshoot",
+    "title": "Set-up instructions",
+    "section": "3 Troubleshoot",
+    "text": "3 Troubleshoot\nIf you have issues with any of these steps, please get in touch on Piazza. I won’t have time to help you during the workshop."
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-the-study",
+    "href": "slides/lecture-w06.html#ota-2009-the-study",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: the study",
+    "text": "Ota 2009: the study\n\nFrom The KEY to the ROCK: Near-homophony in nonnative visual word recognition (10.1016/j.cognition.2008.12.007)\nVisual semantic-relatedness paradigm.\n\nLOCK/ROCK ~ KEY.\n\nJapanese data."
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-the-data",
+    "href": "slides/lecture-w06.html#ota-2009-the-data",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: the data",
+    "text": "Ota 2009: the data\n\n\n# A tibble: 2,338 × 11\n   Subject Procedure Version Contrast  Item Condition WordL   WordR   Words.ACC\n   &lt;fct&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;\n 1 1       TrialProc B2      PB           1 Unrelated HIT     BUNCH           1\n 2 1       TrialProc A2      LR           1 Unrelated FALSE   COLLECT         0\n 3 1       TrialProc A2      H           19 Unrelated HELLO   BUY             1\n 4 1       TrialProc B2      PB          18 Control   BACK    FAT             1\n 5 1       TrialProc B1      H            8 Unrelated SALE    SHIP            1\n 6 1       TrialProc B1      H           20 Control   HIRE    LISTEN          1\n 7 1       TrialProc B2      LR           3 Unrelated ORDER   RAW             1\n 8 1       TrialProc A2      PB          13 Control   PART    WIT             1\n 9 1       TrialProc A2      LR          13 Control   BEAM    DAY             1\n10 1       TrialProc B2      H           13 Control   SERVANT MAZE            1\n# ℹ 2,328 more rows\n# ℹ 2 more variables: Words.RT &lt;dbl&gt;, RT_log &lt;dbl&gt;"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-the-data-1",
+    "href": "slides/lecture-w06.html#ota-2009-the-data-1",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: the data",
+    "text": "Ota 2009: the data"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-subject-level-slopes",
+    "href": "slides/lecture-w06.html#ota-2009-subject-level-slopes",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: subject-level slopes",
+    "text": "Ota 2009: subject-level slopes"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-intercepts-and-slopes",
+    "href": "slides/lecture-w06.html#ota-2009-intercepts-and-slopes",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: intercepts and slopes",
+    "text": "Ota 2009: intercepts and slopes\n\nota_bm_3 &lt;- brm(\n  RT_log ~\n    Condition * Contrast +\n    (Condition * Contrast | Subject),\n  family = gaussian,\n  data = ota2009,\n  backend = \"cmdstanr\",\n  seed = my_seed,\n  file = \"data/cache/ota_bm_3\"\n)"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-intercepts-and-slopes-1",
+    "href": "slides/lecture-w06.html#ota-2009-intercepts-and-slopes-1",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: intercepts and slopes",
+    "text": "Ota 2009: intercepts and slopes\n\nota_bm_3_sdraws &lt;- ota_bm_3 %&gt;%\n  spread_draws(`b_.*`, regex = TRUE) %&gt;%\n  mutate(\n    LR_cond_dif = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastLR`\n  )\nota_bm_3_sdraws\n\n# A tibble: 4,000 × 10\n   .chain .iteration .draw b_Intercept b_ConditionUnrelated b_ContrastLR\n    &lt;int&gt;      &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;                &lt;dbl&gt;        &lt;dbl&gt;\n 1      1          1     1        7.59               0.0887       0.0689\n 2      1          2     2        7.62               0.0911       0.0777\n 3      1          3     3        7.63               0.102        0.0824\n 4      1          4     4        7.67               0.0790       0.0434\n 5      1          5     5        7.63               0.121        0.0679\n 6      1          6     6        7.71               0.0760       0.0909\n 7      1          7     7        7.64               0.138        0.0605\n 8      1          8     8        7.62               0.0477       0.0398\n 9      1          9     9        7.63               0.132        0.0137\n10      1         10    10        7.65               0.109        0.0426\n# ℹ 3,990 more rows\n# ℹ 4 more variables: b_ContrastPB &lt;dbl&gt;,\n#   `b_ConditionUnrelated:ContrastLR` &lt;dbl&gt;,\n#   `b_ConditionUnrelated:ContrastPB` &lt;dbl&gt;, LR_cond_dif &lt;dbl&gt;"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-difference-between-unrelated-and-control",
+    "href": "slides/lecture-w06.html#ota-2009-difference-between-unrelated-and-control",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: difference between unrelated and control",
+    "text": "Ota 2009: difference between unrelated and control"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-subject-level-intercepts",
+    "href": "slides/lecture-w06.html#ota-2009-subject-level-intercepts",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: subject-level intercepts",
+    "text": "Ota 2009: subject-level intercepts\n\nota_bm_3_group &lt;- ota_bm_3 %&gt;%\n  gather_draws(r_Subject[Subject,term])\nota_bm_3_group\n\n# A tibble: 480,000 × 7\n# Groups:   Subject, term, .variable [120]\n   Subject term               .chain .iteration .draw .variable    .value\n     &lt;int&gt; &lt;chr&gt;               &lt;int&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;         &lt;dbl&gt;\n 1       1 ConditionUnrelated      1          1     1 r_Subject -0.0774  \n 2       1 ConditionUnrelated      1          2     2 r_Subject  0.0342  \n 3       1 ConditionUnrelated      1          3     3 r_Subject  0.00957 \n 4       1 ConditionUnrelated      1          4     4 r_Subject  0.0416  \n 5       1 ConditionUnrelated      1          5     5 r_Subject  0.0710  \n 6       1 ConditionUnrelated      1          6     6 r_Subject  0.000872\n 7       1 ConditionUnrelated      1          7     7 r_Subject -0.0410  \n 8       1 ConditionUnrelated      1          8     8 r_Subject  0.0259  \n 9       1 ConditionUnrelated      1          9     9 r_Subject -0.00544 \n10       1 ConditionUnrelated      1         10    10 r_Subject -0.00213 \n# ℹ 479,990 more rows"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-subject-level-intercepts-1",
+    "href": "slides/lecture-w06.html#ota-2009-subject-level-intercepts-1",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: subject-level intercepts",
+    "text": "Ota 2009: subject-level intercepts"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-subject-level-intercepts-2",
+    "href": "slides/lecture-w06.html#ota-2009-subject-level-intercepts-2",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: subject-level intercepts",
+    "text": "Ota 2009: subject-level intercepts\n\n\n                                 Estimate  Est.Error           Q5        Q95\nIntercept                      7.62620715 0.02768641  7.581469000 7.67360300\nConditionUnrelated             0.10378715 0.03906175  0.038101615 0.16722745\nContrastLR                     0.06699781 0.03961116  0.002211786 0.13143145\nContrastPB                    -0.00571623 0.03891494 -0.069516300 0.05773055\nConditionUnrelated:ContrastLR -0.04495745 0.05472389 -0.133708800 0.04321842\nConditionUnrelated:ContrastPB -0.06209090 0.05630206 -0.155772200 0.03102230\n\n\n                                  Estimate  Est.Error          Q5        Q95\nIntercept                      7.621548095 0.08356667  7.48760400 7.75970050\nConditionUnrelated             0.099075849 0.03066349  0.04926464 0.15066960\nContrastLR                     0.066087400 0.03089749  0.01438070 0.11694320\nContrastPB                    -0.006520887 0.03029936 -0.05636766 0.04348480\nConditionUnrelated:ContrastLR -0.038271657 0.04353769 -0.11158875 0.03248090\nConditionUnrelated:ContrastPB -0.060051002 0.04276476 -0.13151040 0.01025244\n\n\n                                  Estimate  Est.Error          Q5        Q95\nIntercept                      7.626224000 0.08414085  7.49171150 7.76363400\nConditionUnrelated             0.099043192 0.03302016  0.04603290 0.15402335\nContrastLR                     0.065885179 0.03278463  0.01124751 0.12031130\nContrastPB                    -0.005606291 0.03313468 -0.05943498 0.04937544\nConditionUnrelated:ContrastLR -0.038259701 0.04768693 -0.11523140 0.04208453\nConditionUnrelated:ContrastPB -0.061523476 0.04541056 -0.13552675 0.01296733"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-conditional-effects-log-rt",
+    "href": "slides/lecture-w06.html#ota-2009-conditional-effects-log-rt",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: conditional effects (log-RT)",
+    "text": "Ota 2009: conditional effects (log-RT)"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#ota-2009-conditional-effects-accuracy",
+    "href": "slides/lecture-w06.html#ota-2009-conditional-effects-accuracy",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Ota 2009: conditional effects (accuracy)",
+    "text": "Ota 2009: conditional effects (accuracy)"
   }
 ]
