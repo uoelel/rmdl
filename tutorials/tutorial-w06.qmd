@@ -54,3 +54,9 @@ Answer the following question: **Do the months spent in Germany modulate the eff
 If you have time, run the same model but now with the H1-H2 difference `H1H2` as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).
 
 Now answer the following question: **Does being a music student modulate the effect of attitude on the H1-H2 difference?**
+
+## Reporting
+
+It is unusual to report the results of the group-level effects (not that it's necessarily a good practice), but you should mention the group-level effects you included when reporting the model specification. For example:
+
+> I fitted a Bayesian linear model to H1-H2 difference using a Gaussian family. As predictors, I included gender (femal or male), whether the participant is a student of music, how many months the participant has spent in Germany and the attitude (informal vs polite). Interactions between attitude and each of the other predictors were also included. As group-level effects, I added a by-participant intercept and by-participant slopes for all within-subject predictors (i.e. all except gender) including the interactions,

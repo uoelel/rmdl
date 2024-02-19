@@ -117,6 +117,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
   <li><a href="#mean-f0" id="toc-mean-f0" class="nav-link" data-scroll-target="#mean-f0"><span class="header-section-number">2</span> Mean f0</a></li>
   <li><a href="#h1-h2-difference" id="toc-h1-h2-difference" class="nav-link" data-scroll-target="#h1-h2-difference"><span class="header-section-number">3</span> H1-H2 difference</a></li>
+  <li><a href="#reporting" id="toc-reporting" class="nav-link" data-scroll-target="#reporting"><span class="header-section-number">4</span> Reporting</a></li>
   </ul>
 </nav>
     </div>
@@ -178,6 +179,13 @@ Warning
 <h2 data-number="3" class="anchored" data-anchor-id="h1-h2-difference"><span class="header-section-number">3</span> H1-H2 difference</h2>
 <p>If you have time, run the same model but now with the H1-H2 difference <code>H1H2</code> as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).</p>
 <p>Now answer the following question: <strong>Does being a music student modulate the effect of attitude on the H1-H2 difference?</strong></p>
+</section>
+<section id="reporting" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="reporting"><span class="header-section-number">4</span> Reporting</h2>
+<p>It is unusual to report the results of the group-level effects (not that it’s necessarily a good practice), but you should mention the group-level effects you included when reporting the model specification. For example:</p>
+<blockquote class="blockquote">
+<p>I fitted a Bayesian linear model to H1-H2 difference using a Gaussian family. As predictors, I included gender (femal or male), whether the participant is a student of music, how many months the participant has spent in Germany and the attitude (informal vs polite). Interactions between attitude and each of the other predictors were also included. As group-level effects, I added a by-participant intercept and by-participant slopes for all within-subject predictors (i.e.&nbsp;all except gender) including the interactions,</p>
+</blockquote>
 
 
 </section>
