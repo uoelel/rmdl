@@ -1,0 +1,56 @@
+---
+title: "QML –- Week 6"
+subtitle: "Group-level effects: Slopes"
+---
+
+```{r setup}
+#| label: setup
+#| message: false
+#| echo: false
+
+library(tidyverse)
+theme_set(theme_light())
+library(posterior)
+
+library(brms)
+library(broom.mixed)
+
+options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
+options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))
+
+options(dplyr.summarise.inform = FALSE)
+
+my_seed <- 8878
+```
+
+
+## Introduction
+
+::: callout-warning
+When working through these tutorials, **make sure you are in the course RStudio Project** you created.
+
+You know you are in an RStudio Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.
+
+If you see `Project (none)` in the top-right corner, that means **you are not** in an RStudio Project.
+
+To make sure you are in the RStudio project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
+:::
+
+For this tutorial you have to run a Bayesian model with the data from Winter 2012 (DOI [10.1016/j.wocn.2012.08.006](https://doi.org/10.1016/j.wocn.2012.08.006)) you modelled in Week 5, but now include group-level slopes!
+
+## Mean f0
+
+The model should have the following:
+
+- `f0mn` as the outcome variable.
+- `gender`, `musicstudent`, `months_ger` and `attitude` as predictors.
+- Two-way interactions between `attitude` and each of the other predictors (don't include 3/4-way interactions since there is probably not enough data to estimate those robustly).
+- Add group-level intercepts and slopes as needed.
+
+Answer the following question: **Do the months spent in Germany modulate the effect of attitude on mean f0?**
+
+## H1-H2 difference
+
+If you have time, run the same model but now with the H1-H2 difference `H1H2` as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).
+
+Now answer the following question: **Does being a music student modulate the effect of attitude on the H1-H2 difference?**

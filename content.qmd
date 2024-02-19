@@ -1,7 +1,7 @@
 ## Schedule overview
 
 | Week | Lecture                                                   | Lab                                    |     |
-|------|-----------------------------------------------------------|----------------------------------------|-----|
+|-----------|-------------------------------|-------------------|-----------|
 | 5    | [Group-level effects: Intercepts](slides/lecture-w05.qmd) | [Tutorial](tutorials/tutorial-w05.qmd) |     |
 | FL   | *No classes*                                              |                                        |     |
-| 6    | [Group-level effects: Slopes](slides/lecture-w06.qmd)     | Tutorial                               |     |
+| 6    | [Group-level effects: Slopes](slides/lecture-w06.qmd)     | [Tutorial](tutorials/tutorial-w06.qmd) |     |
