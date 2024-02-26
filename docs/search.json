@@ -35,6 +35,13 @@
     "text": "4 Reporting\nIt is unusual to report the results of the group-level effects (not that it’s necessarily a good practice), but you should mention the group-level effects you included when reporting the model specification. For example:\n\nI fitted a Bayesian linear model to H1-H2 difference using a Gaussian family. As predictors, I included gender (femal or male), whether the participant is a student of music, how many months the participant has spent in Germany and the attitude (informal vs polite). Interactions between attitude and each of the other predictors were also included. As group-level effects, I added a by-participant intercept and by-participant slopes for all within-subject predictors (i.e. all except gender) including the interactions,"
   },
   {
+    "objectID": "slides/lecture-w06.html#section",
+    "href": "slides/lecture-w06.html#section",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "",
+    "text": "Link: https://forms.office.com/e/r6xhDrmrDL"
+  },
+  {
     "objectID": "slides/lecture-w06.html#ota-2009-the-study",
     "href": "slides/lecture-w06.html#ota-2009-the-study",
     "title": "Research Methods in Developmental Linguistics – Week 6",

@@ -30,16 +30,21 @@ set.seed(my_seed)
 options(scipen=999)
 ```
 
+## 
+
+![](/img/QRCode for RMDL mid-term feedback.png){fig-align="center" width="400"}
+
+Link: <https://forms.office.com/e/r6xhDrmrDL>
 
 ## Ota 2009: the study
 
-- From *The KEY to the ROCK: Near-homophony in nonnative visual word recognition* ([10.1016/j.cognition.2008.12.007](https://doi.org/10.1016/j.cognition.2008.12.007))
+-   From *The KEY to the ROCK: Near-homophony in nonnative visual word recognition* ([10.1016/j.cognition.2008.12.007](https://doi.org/10.1016/j.cognition.2008.12.007))
 
-- Visual semantic-relatedness paradigm.
+-   Visual semantic-relatedness paradigm.
 
-  - LOCK/ROCK ~ KEY.
+    -   LOCK/ROCK \~ KEY.
 
-- Japanese data.
+-   Japanese data.
 
 ## Ota 2009: the data
 
@@ -217,4 +222,3 @@ ota_bm_acc <- brm(
 
 conditional_effects(ota_bm_acc, "Contrast:Condition")
 ```
-
