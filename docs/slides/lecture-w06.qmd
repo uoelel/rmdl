@@ -9,6 +9,9 @@ format:
     history: false
 execute: 
   echo: false
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
 ---
 
 ```{r setup, include=FALSE}
@@ -58,6 +61,13 @@ ota2009
 ```{r}
 #| label: contr-cond
 
+emo <- tibble(
+  label = c("☀️-🌙", "👦-🌙", "🔒-🔑", "🪨-🔑", "🍑-🍏", "🏖️-🍏"),
+  Condition = c(rep(c("control", "unrelated"), 3)),
+  Contrast = c(rep(c("H", "LR", "PB"), each = 2)),
+  RT_log = 6.5
+)
+
 ota2009 %>%
   ggplot(aes(Contrast, RT_log)) +
   geom_violin(aes(fill = Condition), alpha = 0.2) +
@@ -69,7 +79,8 @@ ota2009 %>%
     aes(group = Condition),
     position = position_dodge(width = 0.9),
     fun = "median", geom = "point", size = 3
-  )
+  ) +
+  geom_text(data = emo, aes(label = label, group = Condition), position = position_dodge(width = 0.9), size = 5)
 ```
 
 ## Ota 2009: subject-level slopes
