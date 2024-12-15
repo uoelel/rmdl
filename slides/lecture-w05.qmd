@@ -147,7 +147,7 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 ::: box-error
 -   Multiple observations from different participants.
 
--   Multiple observations from items.
+-   Multiple observations from different item lists.
 :::
 
 . . .
