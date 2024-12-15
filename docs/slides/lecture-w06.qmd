@@ -222,3 +222,117 @@ ota_bm_acc <- brm(
 
 conditional_effects(ota_bm_acc, "Contrast:Condition")
 ```
+
+## Song 2020
+
+-   From *Second language users exhibit shallow morphological processing* ([10.1017/S0272263120000170](https://doi.org/10.1017/S0272263120000170)).
+
+-   English L1 and L2 participants (L2 participants are native speakers of Cantonese).
+
+-   **Lexical decision task:** Is the word a real English word or not?
+
+-   Each trial:
+
+    -   **Prime**: *prolong* (unrelated), *unkind* (constituent), *kindness* (non-constituent).
+
+    -   **Target**: *unkindness* (*\[un-kind\]-ness*, not *un-\[kind-ness\]*).
+
+-   Data gathered: Reaction times and accuracy.
+
+## Song 2020
+
+```{r}
+#| label: shallow
+
+shallow <- read_csv("data/song2020/shallow.csv") |>
+  filter(Critical_Filler == "Critical")
+shallow
+```
+
+## Song 2020
+
+```{r}
+#| label: sha-bm-1
+#| echo: true
+
+sha_bm_1 <- brm(
+  ACC ~ Group * Relation_type * Branching,
+  family = bernoulli,
+  data = shallow,
+  cores = 4,
+  backend = "cmdstanr",
+  seed = my_seed,
+  file = "data/cache/sha_bm_1"
+)
+```
+
+```{r}
+#| label: sha-bm-1-sum
+
+fixef(sha_bm_1, probs = c(0.05, 0.95)) |>
+  as_tibble(rownames = "term") |>
+  filter(Estimate < 5, Estimate > -2)
+```
+
+## Song 2020
+
+```{r}
+#| label: sha-bm-1-conds
+
+sha_conds <- make_conditions(shallow, "Branching")
+
+conditional_effects(sha_bm_1, "Relation_type:Group", conditions = sha_conds)
+```
+
+## Song 2020
+
+```{r}
+#| label: sha-bm-2
+#| echo: true
+
+sha_bm_2 <- brm(
+  ACC ~ Group * Relation_type * Branching +
+    (1 | ID),
+  family = bernoulli,
+  data = shallow,
+  cores = 4,
+  backend = "cmdstanr",
+  seed = my_seed,
+  file = "data/cache/sha_bm_2"
+)
+```
+
+```{r}
+#| label: sha-bm-2-sum
+
+fixef(sha_bm_2, probs = c(0.05, 0.95)) |>
+  as_tibble(rownames = "term") |>
+  filter(Estimate < 5, Estimate > -2)
+```
+
+## Song 2020
+
+```{r sha-bm-2-conds}
+conditional_effects(sha_bm_2, "Relation_type:Group", conditions = sha_conds)
+```
+
+## Song 2020
+
+```{r}
+#| label: sha-bm-fixef
+
+fixef(sha_bm_1, probs = c(0.05, 0.95)) |>
+  as_tibble(rownames = "term") |>
+  filter(Estimate < 5, Estimate > -2)
+fixef(sha_bm_2, probs = c(0.05, 0.95)) |>
+  as_tibble(rownames = "term") |>
+  filter(Estimate < 5, Estimate > -2)
+```
+
+## Song 2020
+
+```{r}
+#| label: sha-bm-2-full-sum
+
+summary(sha_bm_2, prob = 0.9)
+```

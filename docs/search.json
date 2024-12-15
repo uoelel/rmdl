@@ -179,7 +179,7 @@
     "href": "slides/lecture-w05.html#ota-2009",
     "title": "Research Methods in Developmental Linguistics – Week 5",
     "section": "Ota 2009",
-    "text": "Ota 2009\n\nFrom The KEY to the ROCK: Near-homophony in nonnative visual word recognition (10.1016/j.cognition.2008.12.007)\nVisual semantic-relatedness paradigm.\n\nLOCK/ROCK ~ KEY.\n\nJapanese data."
+    "text": "Ota 2009\n\n\nData from Ota 2009.\nL2 lexical representation of “near-homophones”: ROCK/LOCK for Japanese speakers."
   },
   {
     "objectID": "slides/lecture-w05.html#ota-2009-1",
@@ -207,7 +207,7 @@
     "href": "slides/lecture-w05.html#ota-2009-4",
     "title": "Research Methods in Developmental Linguistics – Week 5",
     "section": "Ota 2009",
-    "text": "Ota 2009\n\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: RT_log ~ Condition * Contrast \n   Data: ota2009 (Number of observations: 2338) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nPopulation-Level Effects: \n                              Estimate Est.Error l-90% CI u-90% CI Rhat\nIntercept                         7.63      0.03     7.58     7.67 1.00\nConditionUnrelated                0.10      0.04     0.04     0.17 1.00\nContrastLR                        0.07      0.04     0.00     0.13 1.00\nContrastPB                       -0.01      0.04    -0.07     0.06 1.00\nConditionUnrelated:ContrastLR    -0.04      0.05    -0.13     0.04 1.00\nConditionUnrelated:ContrastPB    -0.06      0.06    -0.16     0.03 1.00\n                              Bulk_ESS Tail_ESS\nIntercept                         2191     2592\nConditionUnrelated                2050     2662\nContrastLR                        2202     2923\nContrastPB                        2343     2754\nConditionUnrelated:ContrastLR     2091     2490\nConditionUnrelated:ContrastPB     2233     2739\n\nFamily Specific Parameters: \n      Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS\nsigma     0.54      0.01     0.52     0.55 1.00     3538     2687\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+    "text": "Ota 2009\n\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: RT_log ~ Condition * Contrast \n   Data: ota2009 (Number of observations: 2338) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nRegression Coefficients:\n                              Estimate Est.Error l-90% CI u-90% CI Rhat\nIntercept                         7.63      0.03     7.58     7.67 1.00\nConditionUnrelated                0.10      0.04     0.04     0.17 1.00\nContrastLR                        0.07      0.04     0.00     0.13 1.00\nContrastPB                       -0.01      0.04    -0.07     0.06 1.00\nConditionUnrelated:ContrastLR    -0.04      0.05    -0.13     0.04 1.00\nConditionUnrelated:ContrastPB    -0.06      0.06    -0.16     0.03 1.00\n                              Bulk_ESS Tail_ESS\nIntercept                         2191     2592\nConditionUnrelated                2050     2662\nContrastLR                        2202     2923\nContrastPB                        2343     2754\nConditionUnrelated:ContrastLR     2091     2490\nConditionUnrelated:ContrastPB     2233     2739\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS\nsigma     0.54      0.01     0.52     0.55 1.00     3538     2687\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
   },
   {
     "objectID": "slides/lecture-w05.html#ota-2009-5",
@@ -256,7 +256,7 @@
     "href": "slides/lecture-w05.html#ota-2009-subject-level-intercepts-2",
     "title": "Research Methods in Developmental Linguistics – Week 5",
     "section": "Ota 2009: subject-level intercepts",
-    "text": "Ota 2009: subject-level intercepts\n\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: RT_log ~ Condition * Contrast + (1 | Subject) \n   Data: ota2009 (Number of observations: 2338) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nGroup-Level Effects: \n~Subject (Number of levels: 20) \n              Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.35      0.06     0.27     0.46 1.00      505     1265\n\nPopulation-Level Effects: \n                              Estimate Est.Error l-90% CI u-90% CI Rhat\nIntercept                         7.62      0.08     7.49     7.76 1.02\nConditionUnrelated                0.10      0.03     0.05     0.15 1.00\nContrastLR                        0.07      0.03     0.01     0.12 1.00\nContrastPB                       -0.01      0.03    -0.06     0.04 1.00\nConditionUnrelated:ContrastLR    -0.04      0.04    -0.11     0.03 1.00\nConditionUnrelated:ContrastPB    -0.06      0.04    -0.13     0.01 1.00\n                              Bulk_ESS Tail_ESS\nIntercept                          353      585\nConditionUnrelated                1174     2050\nContrastLR                        1448     1849\nContrastPB                        1339     2098\nConditionUnrelated:ContrastLR     1229     1795\nConditionUnrelated:ContrastPB     1215     2128\n\nFamily Specific Parameters: \n      Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS\nsigma     0.43      0.01     0.42     0.44 1.00     1915     1945\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+    "text": "Ota 2009: subject-level intercepts\n\n\n Family: gaussian \n  Links: mu = identity; sigma = identity \nFormula: RT_log ~ Condition * Contrast + (1 | Subject) \n   Data: ota2009 (Number of observations: 2338) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nMultilevel Hyperparameters:\n~Subject (Number of levels: 20) \n              Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.35      0.06     0.27     0.46 1.00      505     1265\n\nRegression Coefficients:\n                              Estimate Est.Error l-90% CI u-90% CI Rhat\nIntercept                         7.62      0.08     7.49     7.76 1.02\nConditionUnrelated                0.10      0.03     0.05     0.15 1.00\nContrastLR                        0.07      0.03     0.01     0.12 1.00\nContrastPB                       -0.01      0.03    -0.06     0.04 1.00\nConditionUnrelated:ContrastLR    -0.04      0.04    -0.11     0.03 1.00\nConditionUnrelated:ContrastPB    -0.06      0.04    -0.13     0.01 1.00\n                              Bulk_ESS Tail_ESS\nIntercept                          353      585\nConditionUnrelated                1174     2050\nContrastLR                        1448     1849\nContrastPB                        1339     2098\nConditionUnrelated:ContrastLR     1229     1795\nConditionUnrelated:ContrastPB     1215     2128\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS\nsigma     0.43      0.01     0.42     0.44 1.00     1915     1945\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
   },
   {
     "objectID": "slides/lecture-w05.html#ota-2009-subject-level-intercepts-3",
@@ -354,14 +354,14 @@
     "href": "slides/lecture-w05.html#song-2020-7",
     "title": "Research Methods in Developmental Linguistics – Week 5",
     "section": "Song 2020",
-    "text": "Song 2020\n\n\n Family: bernoulli \n  Links: mu = logit \nFormula: ACC ~ Group * Relation_type * Branching + (1 | ID) \n   Data: shallow (Number of observations: 1950) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nGroup-Level Effects: \n~ID (Number of levels: 65) \n              Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.79      0.12     0.61     1.01 1.00     1334     1953\n\nPopulation-Level Effects: \n                                                         Estimate\nIntercept                                                    1.99\nGroupL2                                                     -0.61\nRelation_typeNonConstituent                                 -0.66\nRelation_typeUnrelated                                      -0.86\nBranchingRight                                               1.08\nGroupL2:Relation_typeNonConstituent                          0.50\nGroupL2:Relation_typeUnrelated                               0.27\nGroupL2:BranchingRight                                       0.35\nRelation_typeNonConstituent:BranchingRight          -114426605.65\nRelation_typeUnrelated:BranchingRight                        0.76\nGroupL2:Relation_typeNonConstituent:BranchingRight 22143688139.09\nGroupL2:Relation_typeUnrelated:BranchingRight               -0.18\n                                                        Est.Error\nIntercept                                                    0.27\nGroupL2                                                      0.35\nRelation_typeNonConstituent                                  0.29\nRelation_typeUnrelated                                       0.29\nBranchingRight                                               0.41\nGroupL2:Relation_typeNonConstituent                          0.37\nGroupL2:Relation_typeUnrelated                               0.37\nGroupL2:BranchingRight                                       0.52\nRelation_typeNonConstituent:BranchingRight          1090974143.96\nRelation_typeUnrelated:BranchingRight                        0.54\nGroupL2:Relation_typeNonConstituent:BranchingRight 45565430280.81\nGroupL2:Relation_typeUnrelated:BranchingRight                0.70\n                                                         l-90% CI\nIntercept                                                    1.55\nGroupL2                                                     -1.19\nRelation_typeNonConstituent                                 -1.14\nRelation_typeUnrelated                                      -1.36\nBranchingRight                                               0.43\nGroupL2:Relation_typeNonConstituent                         -0.10\nGroupL2:Relation_typeUnrelated                              -0.32\nGroupL2:BranchingRight                                      -0.52\nRelation_typeNonConstituent:BranchingRight         -2476557500.00\nRelation_typeUnrelated:BranchingRight                       -0.12\nGroupL2:Relation_typeNonConstituent:BranchingRight -2156151000.00\nGroupL2:Relation_typeUnrelated:BranchingRight               -1.35\n                                                          u-90% CI Rhat\nIntercept                                                     2.43 1.00\nGroupL2                                                      -0.04 1.00\nRelation_typeNonConstituent                                  -0.20 1.00\nRelation_typeUnrelated                                       -0.40 1.00\nBranchingRight                                                1.76 1.00\nGroupL2:Relation_typeNonConstituent                           1.13 1.00\nGroupL2:Relation_typeUnrelated                                0.88 1.00\nGroupL2:BranchingRight                                        1.21 1.00\nRelation_typeNonConstituent:BranchingRight           1463468500.00 1.84\nRelation_typeUnrelated:BranchingRight                         1.65 1.00\nGroupL2:Relation_typeNonConstituent:BranchingRight 135947450000.00 3.25\nGroupL2:Relation_typeUnrelated:BranchingRight                 0.95 1.00\n                                                   Bulk_ESS Tail_ESS\nIntercept                                              1763     1795\nGroupL2                                                1615     1738\nRelation_typeNonConstituent                            2381     2295\nRelation_typeUnrelated                                 1927     2259\nBranchingRight                                         2143     2246\nGroupL2:Relation_typeNonConstituent                    2186     2303\nGroupL2:Relation_typeUnrelated                         2143     2153\nGroupL2:BranchingRight                                 2004     2019\nRelation_typeNonConstituent:BranchingRight                6       12\nRelation_typeUnrelated:BranchingRight                  2037     2114\nGroupL2:Relation_typeNonConstituent:BranchingRight        4       15\nGroupL2:Relation_typeUnrelated:BranchingRight          1892     2012\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+    "text": "Song 2020\n\n\n Family: bernoulli \n  Links: mu = logit \nFormula: ACC ~ Group * Relation_type * Branching + (1 | ID) \n   Data: shallow (Number of observations: 1950) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nMultilevel Hyperparameters:\n~ID (Number of levels: 65) \n              Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.79      0.12     0.61     1.01 1.00     1334     1953\n\nRegression Coefficients:\n                                                         Estimate\nIntercept                                                    1.99\nGroupL2                                                     -0.61\nRelation_typeNonConstituent                                 -0.66\nRelation_typeUnrelated                                      -0.86\nBranchingRight                                               1.08\nGroupL2:Relation_typeNonConstituent                          0.50\nGroupL2:Relation_typeUnrelated                               0.27\nGroupL2:BranchingRight                                       0.35\nRelation_typeNonConstituent:BranchingRight          -114426605.65\nRelation_typeUnrelated:BranchingRight                        0.76\nGroupL2:Relation_typeNonConstituent:BranchingRight 22143688139.09\nGroupL2:Relation_typeUnrelated:BranchingRight               -0.18\n                                                        Est.Error\nIntercept                                                    0.27\nGroupL2                                                      0.35\nRelation_typeNonConstituent                                  0.29\nRelation_typeUnrelated                                       0.29\nBranchingRight                                               0.41\nGroupL2:Relation_typeNonConstituent                          0.37\nGroupL2:Relation_typeUnrelated                               0.37\nGroupL2:BranchingRight                                       0.52\nRelation_typeNonConstituent:BranchingRight          1090974143.96\nRelation_typeUnrelated:BranchingRight                        0.54\nGroupL2:Relation_typeNonConstituent:BranchingRight 45565430280.81\nGroupL2:Relation_typeUnrelated:BranchingRight                0.70\n                                                         l-90% CI\nIntercept                                                    1.55\nGroupL2                                                     -1.19\nRelation_typeNonConstituent                                 -1.14\nRelation_typeUnrelated                                      -1.36\nBranchingRight                                               0.43\nGroupL2:Relation_typeNonConstituent                         -0.10\nGroupL2:Relation_typeUnrelated                              -0.32\nGroupL2:BranchingRight                                      -0.52\nRelation_typeNonConstituent:BranchingRight         -2476557500.00\nRelation_typeUnrelated:BranchingRight                       -0.12\nGroupL2:Relation_typeNonConstituent:BranchingRight -2156151000.00\nGroupL2:Relation_typeUnrelated:BranchingRight               -1.35\n                                                          u-90% CI Rhat\nIntercept                                                     2.43 1.00\nGroupL2                                                      -0.04 1.00\nRelation_typeNonConstituent                                  -0.20 1.00\nRelation_typeUnrelated                                       -0.40 1.00\nBranchingRight                                                1.76 1.00\nGroupL2:Relation_typeNonConstituent                           1.13 1.00\nGroupL2:Relation_typeUnrelated                                0.88 1.00\nGroupL2:BranchingRight                                        1.21 1.00\nRelation_typeNonConstituent:BranchingRight           1463468500.00 1.84\nRelation_typeUnrelated:BranchingRight                         1.65 1.00\nGroupL2:Relation_typeNonConstituent:BranchingRight 135947450000.00 3.25\nGroupL2:Relation_typeUnrelated:BranchingRight                 0.95 1.00\n                                                   Bulk_ESS Tail_ESS\nIntercept                                              1763     1795\nGroupL2                                                1615     1738\nRelation_typeNonConstituent                            2381     2295\nRelation_typeUnrelated                                 1927     2259\nBranchingRight                                         2143     2246\nGroupL2:Relation_typeNonConstituent                    2186     2303\nGroupL2:Relation_typeUnrelated                         2143     2153\nGroupL2:BranchingRight                                 2004     2019\nRelation_typeNonConstituent:BranchingRight                6       12\nRelation_typeUnrelated:BranchingRight                  2037     2114\nGroupL2:Relation_typeNonConstituent:BranchingRight        4       15\nGroupL2:Relation_typeUnrelated:BranchingRight          1892     2012\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
   },
   {
     "objectID": "slides/lecture-w05.html#summary",
     "href": "slides/lecture-w05.html#summary",
     "title": "Research Methods in Developmental Linguistics – Week 5",
     "section": "Summary",
-    "text": "Summary\n\nIf the data contains groupings other than the ones that were manipulated in the design, you need to account for it.\nThe model must account for the fact that some data is from within a specific member of the group (like a participant, a specific word, etc).\nYou can account for groupings in the data with group-level effects. You should always include group-level intercept to account for mean differences across members of the groups."
+    "text": "Summary\n\n\nYou should include varying terms if data is “hierarchical”, for example repeated measures from subjects or items.\nNot including varying terms (wrongly) inflates posterior certainty.\nFrequentist regression models with lme4 often don’t converge and researchers simplify the hierarchical structure of the model."
   },
   {
     "objectID": "tutorials/tutorial-w05.html",
@@ -390,5 +390,166 @@
     "title": "QML –- Week 5",
     "section": "3 H1-H2 difference",
     "text": "3 H1-H2 difference\nIf you have time, run the same model but now with the H1-H2 difference H1H2 as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).\nNow answer the following question: Does being a music student modulate the effect of attitude on the H1-H2 difference?"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#ota-2009-design",
+    "href": "slides/lecture-w05.html#ota-2009-design",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Ota 2009: design",
+    "text": "Ota 2009: design\n\n\nSemantic-relatedness task.\nPairs of written words presented visually.\n\nHomophones: SON/SUN ~ MOON\nNear-homophones: ROCK/LOCK ~ KEY\nMinimal pairs: PEAR/BEAR ~ FEAR\n\n\n\n\n\nResearch hypotheses\nH1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).\nH2. There is no difference in RTs in minimal pairs (PB)."
+  },
+  {
+    "objectID": "slides/lecture-w05.html#case-study-ota-2009",
+    "href": "slides/lecture-w05.html#case-study-ota-2009",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Case study: Ota 2009",
+    "text": "Case study: Ota 2009\n\n\nData from Ota 2009.\nL2 lexical representation of “near-homophones”: ROCK/LOCK for Japanese speakers."
+  },
+  {
+    "objectID": "slides/lecture-w05.html#ota-2009-the-data",
+    "href": "slides/lecture-w05.html#ota-2009-the-data",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Ota 2009: the data",
+    "text": "Ota 2009: the data\n\n\n# A tibble: 2,338 × 12\n   Subject Procedure Version Contrast  Item Condition WordL   WordR   Words.ACC\n   &lt;fct&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;\n 1 1       TrialProc B2      PB           1 Unrelated HIT     BUNCH           1\n 2 1       TrialProc A2      LR           1 Unrelated FALSE   COLLECT         0\n 3 1       TrialProc A2      H           19 Unrelated HELLO   BUY             1\n 4 1       TrialProc B2      PB          18 Control   BACK    FAT             1\n 5 1       TrialProc B1      H            8 Unrelated SALE    SHIP            1\n 6 1       TrialProc B1      H           20 Control   HIRE    LISTEN          1\n 7 1       TrialProc B2      LR           3 Unrelated ORDER   RAW             1\n 8 1       TrialProc A2      PB          13 Control   PART    WIT             1\n 9 1       TrialProc A2      LR          13 Control   BEAM    DAY             1\n10 1       TrialProc B2      H           13 Control   SERVANT MAZE            1\n# ℹ 2,328 more rows\n# ℹ 3 more variables: Words.RT &lt;dbl&gt;, RT_log &lt;dbl&gt;, Item_id &lt;chr&gt;"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#ota-2009-rts",
+    "href": "slides/lecture-w05.html#ota-2009-rts",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Ota 2009: RTs",
+    "text": "Ota 2009: RTs\n\n\nFigure 1"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#log-normal-regression-rts",
+    "href": "slides/lecture-w05.html#log-normal-regression-rts",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Log-normal regression (RTs)",
+    "text": "Log-normal regression (RTs)\n\nmy_seed &lt;- 9283\n\nota_bm_1 &lt;- brm(\n  Words.RT ~ 0 + Condition:Contrast,\n  family = lognormal,\n  data = ota2009,\n  seed = my_seed,\n  cores = 4,\n  file = \"data/cache/ota_bm_1\"\n)"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#log-normal-regression-summary",
+    "href": "slides/lecture-w05.html#log-normal-regression-summary",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Log-normal regression: summary",
+    "text": "Log-normal regression: summary\n\n\n Family: lognormal \n  Links: mu = identity; sigma = identity \nFormula: Words.RT ~ 0 + Condition:Contrast \n   Data: ota2009 (Number of observations: 2338) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nRegression Coefficients:\n                              Estimate Est.Error l-90% CI u-90% CI Rhat\nConditionControl:ContrastH        7.63      0.03     7.58     7.67 1.00\nConditionUnrelated:ContrastH      7.73      0.03     7.69     7.77 1.00\nConditionControl:ContrastLR       7.69      0.03     7.65     7.74 1.00\nConditionUnrelated:ContrastLR     7.75      0.03     7.71     7.80 1.00\nConditionControl:ContrastPB       7.62      0.03     7.58     7.67 1.00\nConditionUnrelated:ContrastPB     7.66      0.03     7.62     7.71 1.00\n                              Bulk_ESS Tail_ESS\nConditionControl:ContrastH        6912     3358\nConditionUnrelated:ContrastH      5402     3137\nConditionControl:ContrastLR       5442     2762\nConditionUnrelated:ContrastLR     5660     3092\nConditionControl:ContrastPB       6370     3379\nConditionUnrelated:ContrastPB     6001     3104\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS\nsigma     0.54      0.01     0.52     0.55 1.00     5427     3249\n\nDraws were sampled using sampling(NUTS). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+  },
+  {
+    "objectID": "slides/lecture-w05.html#log-normal-regression-expected-predictions",
+    "href": "slides/lecture-w05.html#log-normal-regression-expected-predictions",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Log-normal regression: expected predictions",
+    "text": "Log-normal regression: expected predictions"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#but",
+    "href": "slides/lecture-w05.html#but",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "BUT…",
+    "text": "BUT…\n\n\nMultiple observations from different participants.\nMultiple observations from items.\n\n\n\n\n\nWe need to include varying terms (also known as random or multilevel effects).\nRegression models with varying terms are variably known as mixed-effects, multilevel, hierarchical, nested… They are all the same thing."
+  },
+  {
+    "objectID": "slides/lecture-w05.html#by-subject-rts",
+    "href": "slides/lecture-w05.html#by-subject-rts",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "By-subject RTs",
+    "text": "By-subject RTs"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#by-list-rts",
+    "href": "slides/lecture-w05.html#by-list-rts",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "By-list RTs",
+    "text": "By-list RTs"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#by-subject-and-by-item-varying-terms",
+    "href": "slides/lecture-w05.html#by-subject-and-by-item-varying-terms",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "By-subject and by-item varying terms",
+    "text": "By-subject and by-item varying terms\n\n# took 80 seconds to fit\nota_bm_2 &lt;- brm(\n  Words.RT ~ 0 + Condition:Contrast +\n    (0 + Condition:Contrast | Subject) +\n    (0 + Condition:Contrast | Version),\n  family = lognormal,\n  data = ota2009,\n  seed = my_seed,\n  cores = 4,\n  file = \"data/cache/ota_bm_2\"\n)"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#by-subject-and-by-item-model-expected-predictions",
+    "href": "slides/lecture-w05.html#by-subject-and-by-item-model-expected-predictions",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "By-subject and by-item model: expected predictions",
+    "text": "By-subject and by-item model: expected predictions\n\nfixef(ota_bm_2, probs = c(0.05, 0.95))\n\n                              Estimate  Est.Error       Q5      Q95\nConditionControl:ContrastH    7.625015 0.09395207 7.476049 7.770602\nConditionUnrelated:ContrastH  7.723296 0.10391597 7.555802 7.887133\nConditionControl:ContrastLR   7.695946 0.09051165 7.561654 7.835997\nConditionUnrelated:ContrastLR 7.751183 0.07944943 7.622998 7.877910\nConditionControl:ContrastPB   7.620571 0.07357574 7.501065 7.736887\nConditionUnrelated:ContrastPB 7.658061 0.07802223 7.533287 7.783413"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#by-subject-and-by-item-model-expected-predictions-plot",
+    "href": "slides/lecture-w05.html#by-subject-and-by-item-model-expected-predictions-plot",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "By-subject and by-item model: expected predictions plot",
+    "text": "By-subject and by-item model: expected predictions plot"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#difference-between-unrelated-and-control",
+    "href": "slides/lecture-w05.html#difference-between-unrelated-and-control",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Difference between unrelated and control",
+    "text": "Difference between unrelated and control\n\nota_bm_2_draws &lt;- as_draws_df(ota_bm_2, variable = \"b_\", regex = TRUE)\nota_bm_2_draws\n\n# A draws_df: 1000 iterations, 4 chains, and 6 variables\n   b_ConditionControl:ContrastH b_ConditionUnrelated:ContrastH\n1                           7.6                            7.7\n2                           7.7                            7.7\n3                           7.5                            7.7\n4                           7.5                            7.7\n5                           7.5                            7.6\n6                           7.6                            7.6\n7                           7.6                            7.5\n8                           7.6                            7.7\n9                           7.6                            7.7\n10                          7.5                            7.7\n   b_ConditionControl:ContrastLR b_ConditionUnrelated:ContrastLR\n1                            7.6                             7.8\n2                            7.7                             7.7\n3                            7.6                             7.8\n4                            7.6                             7.8\n5                            7.6                             7.7\n6                            7.6                             7.7\n7                            7.6                             7.7\n8                            7.7                             7.7\n9                            7.7                             7.7\n10                           7.6                             7.7\n   b_ConditionControl:ContrastPB b_ConditionUnrelated:ContrastPB\n1                            7.6                             7.7\n2                            7.6                             7.7\n3                            7.6                             7.5\n4                            7.7                             7.6\n5                            7.6                             7.6\n6                            7.6                             7.6\n7                            7.6                             7.7\n8                            7.6                             7.6\n9                            7.7                             7.7\n10                           7.5                             7.7\n# ... with 3990 more draws\n# ... hidden reserved variables {'.chain', '.iteration', '.draw'}"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#difference-between-unrelated-and-control-1",
+    "href": "slides/lecture-w05.html#difference-between-unrelated-and-control-1",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Difference between unrelated and control",
+    "text": "Difference between unrelated and control"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#difference-between-unrelated-and-control-plot",
+    "href": "slides/lecture-w05.html#difference-between-unrelated-and-control-plot",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Difference between unrelated and control: plot",
+    "text": "Difference between unrelated and control: plot"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#difference-of-difference-lrh",
+    "href": "slides/lecture-w05.html#difference-of-difference-lrh",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Difference of difference LR/H",
+    "text": "Difference of difference LR/H"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#difference-between-unrelated-and-control-cris",
+    "href": "slides/lecture-w05.html#difference-between-unrelated-and-control-cris",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Difference between unrelated and control: CrIs",
+    "text": "Difference between unrelated and control: CrIs\n\nota_bm_2_draws |&gt; \n  pivot_longer(diff_h:diff_pb) |&gt; \n  select(name, value) |&gt; \n  group_by(name) |&gt; \n  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |&gt; \n  mutate(\n    across(where(is.numeric), ~round(.x, digits = 2))\n  )\n\n# A tibble: 3 × 4\n# Groups:   name [3]\n  name    variable  `5%` `95%`\n  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;\n1 diff_h  value    -0.08  0.28\n2 diff_lr value    -0.11  0.2 \n3 diff_pb value    -0.08  0.15"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#difference-of-difference-cris",
+    "href": "slides/lecture-w05.html#difference-of-difference-cris",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Difference of difference: CrIs",
+    "text": "Difference of difference: CrIs\n\nota_bm_2_draws |&gt; \n  select(diff_lr_h) |&gt; \n  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |&gt; \n  mutate(\n    across(where(is.numeric), ~round(.x, digits = 2))\n  )\n\n# A tibble: 1 × 3\n  variable   `5%` `95%`\n  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;\n1 diff_lr_h -0.27  0.18"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#results-overview",
+    "href": "slides/lecture-w05.html#results-overview",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "Results overview",
+    "text": "Results overview\n\nH1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).\n\nNot enough evidence to assess (CrI [-0.27, 0.18]).\n\nH2. There is no difference in RTs in minimal pairs (PB).\n\nNot enough evidence to assess (CrI [-0.08, 0.15])."
+  },
+  {
+    "objectID": "slides/lecture-w05.html#by-subject-and-by-list-varying-terms",
+    "href": "slides/lecture-w05.html#by-subject-and-by-list-varying-terms",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "By-subject and by-list varying terms",
+    "text": "By-subject and by-list varying terms\n\n# took 80 seconds to fit\nota_bm_2 &lt;- brm(\n  Words.RT ~ 0 + Condition:Contrast +\n    (0 + Condition:Contrast | Subject) +\n    (0 + Condition:Contrast | Version),\n  family = lognormal,\n  data = ota2009,\n  seed = my_seed,\n  cores = 4,\n  file = \"data/cache/ota_bm_2\"\n)"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#by-subject-and-by-list-model-expected-predictions",
+    "href": "slides/lecture-w05.html#by-subject-and-by-list-model-expected-predictions",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "By-subject and by-list model: expected predictions",
+    "text": "By-subject and by-list model: expected predictions\n\nfixef(ota_bm_2, probs = c(0.05, 0.95))\n\n                              Estimate  Est.Error       Q5      Q95\nConditionControl:ContrastH    7.625015 0.09395207 7.476049 7.770602\nConditionUnrelated:ContrastH  7.723296 0.10391597 7.555802 7.887133\nConditionControl:ContrastLR   7.695946 0.09051165 7.561654 7.835997\nConditionUnrelated:ContrastLR 7.751183 0.07944943 7.622998 7.877910\nConditionControl:ContrastPB   7.620571 0.07357574 7.501065 7.736887\nConditionUnrelated:ContrastPB 7.658061 0.07802223 7.533287 7.783413"
+  },
+  {
+    "objectID": "slides/lecture-w05.html#by-subject-and-by-list-model-expected-predictions-plot",
+    "href": "slides/lecture-w05.html#by-subject-and-by-list-model-expected-predictions-plot",
+    "title": "Research Methods in Developmental Linguistics – Week 5",
+    "section": "By-subject and by-list model: expected predictions plot",
+    "text": "By-subject and by-list model: expected predictions plot"
   }
 ]

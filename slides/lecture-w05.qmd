@@ -58,9 +58,9 @@ options(scipen=999)
 ::: box-warning
 **Research hypotheses**
 
-H1. The difference in RTs and accuracy between unrelated and control is the same in homophones (H) and near-homophones (LR).
+H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
-H2. There is no difference in RTs and accuracy in minimal pairs (PB).
+H2. There is no difference in RTs in minimal pairs (PB).
 :::
 
 ## Ota 2009: the data
@@ -204,7 +204,7 @@ ota2009 |>
   labs(title = "Log-RTs in the LR condition by list")
 ```
 
-## By-subject and by-item varying terms
+## By-subject and by-list varying terms
 
 ```{r}
 #| label: ota-bm-2
@@ -223,7 +223,7 @@ ota_bm_2 <- brm(
 )
 ```
 
-## By-subject and by-item model: expected predictions
+## By-subject and by-list model: expected predictions
 
 ```{r}
 #| label: ota-bm-2-sum
@@ -232,7 +232,7 @@ ota_bm_2 <- brm(
 fixef(ota_bm_2, probs = c(0.05, 0.95))
 ```
 
-## By-subject and by-item model: expected predictions plot
+## By-subject and by-list model: expected predictions plot
 
 ```{r}
 #| label: ota-bm-2-cond
@@ -243,6 +243,7 @@ conditional_effects(ota_bm_2, "Contrast:Condition")
 
 ```{r}
 #| label: ota-bm-2-draws
+#| echo: true
 ota_bm_2_draws <- as_draws_df(ota_bm_2, variable = "b_", regex = TRUE)
 ota_bm_2_draws
 ```
@@ -273,9 +274,27 @@ ota_bm_2_draws |>
   theme(legend.position = "none")
 ```
 
+## Difference between unrelated and control: CrIs
+
+```{r}
+#| label: ota-bm-2-draws-diff-cri
+#| echo: true
+
+ota_bm_2_draws |> 
+  pivot_longer(diff_h:diff_pb) |> 
+  select(name, value) |> 
+  group_by(name) |> 
+  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |> 
+  mutate(
+    across(where(is.numeric), ~round(.x, digits = 2))
+  )
+```
+
 ## Difference of difference LR/H
 
 ```{r}
+#| label: ota-bm-2-draws-diff-diff-diff-cri
+
 ota_bm_2_draws <- ota_bm_2_draws |> 
   mutate(diff_lr_h = diff_lr - diff_h)
 
@@ -285,13 +304,38 @@ ota_bm_2_draws |>
   stat_halfeye()
 ```
 
+## Difference of difference: CrIs
 
+```{r}
+#| label: ota-bm-2-draws-diff-diff-cri
+#| echo: true
 
+ota_bm_2_draws |> 
+  select(diff_lr_h) |> 
+  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |> 
+  mutate(
+    across(where(is.numeric), ~round(.x, digits = 2))
+  )
+```
+
+## Results overview
+
+::: box-note
+H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
+
+- Not enough evidence to assess (CrI [-0.27, 0.18]).
+
+H2. There is no difference in RTs in minimal pairs (PB).
+
+- Not enough evidence to assess (CrI [-0.08, 0.15]).
+:::
 
 ## Summary
 
--   If the data contains groupings other than the ones that were manipulated in the design, you need to account for it.
+::: box-tip
+-   You should include varying terms if data is "hierarchical", for example repeated measures from subjects or items.
 
--   The model must account for the fact that some data is from within a specific member of the group (like a participant, a specific word, etc).
+- Not including varying terms (wrongly) inflates posterior certainty.
 
--   You can account for groupings in the data with group-level effects. You should always include group-level intercept to account for mean differences across members of the groups.
+- Frequentist regression models with lme4 often don't converge and researchers simplify the hierarchical structure of the model.
+:::

@@ -9,6 +9,8 @@ format:
     history: false
 execute: 
   echo: false
+filters:
+  - tachyonsextra
 ---
 
 ```{r setup, include=FALSE}
@@ -22,43 +24,75 @@ options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
 options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))
 options(show.signif.stars = FALSE)
 
-my_seed <- 8878
+my_seed <- 9283
 set.seed(my_seed)
 options(scipen=999)
 ```
 
+## Case study: Ota 2009
 
-## Ota 2009
+::: box-note
+-   Data from [Ota 2009](https://doi.org/10.1016/j.cognition.2008.12.007).
 
-- From *The KEY to the ROCK: Near-homophony in nonnative visual word recognition* ([10.1016/j.cognition.2008.12.007](https://doi.org/10.1016/j.cognition.2008.12.007))
+-   L2 lexical representation of "near-homophones": ROCK/LOCK for Japanese speakers.
+:::
 
-- Visual semantic-relatedness paradigm.
+![](/img/l1-l2-reps.png){fig-align="center"}
 
-  - LOCK/ROCK ~ KEY.
+## Ota 2009: design
 
-- Japanese data.
+::: box-note
+-   Semantic-relatedness task.
 
-## Ota 2009
+-   Pairs of written words presented visually.
+
+    -   **Homophones**: SON/SUN \~ MOON
+
+    -   **Near-homophones**: ROCK/LOCK \~ KEY
+
+    -   **Minimal pairs**: PEAR/BEAR \~ FEAR
+:::
+
+. . .
+
+::: box-warning
+**Research hypotheses**
+
+H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
+
+H2. There is no difference in RTs in minimal pairs (PB).
+:::
+
+## Ota 2009: the data
 
 ```{r}
 #| label: ota2009
 
-ota2009 <- read_csv("data/ota2009/key-rock.csv") %>%
+ota2009 <- read_csv("data/ota2009/key-rock.csv") |>
   filter(
     Procedure == "TrialProc", Contrast != "F"
-  ) %>%
+  ) |>
   mutate(
-    Subject = as.factor(Subject), RT_log = log(Words.RT)
+    Subject = as.factor(Subject),
+    RT_log = log(Words.RT),
+    Item_id = paste(Version, Contrast, Item, sep = "_")
   )
 ota2009
 ```
 
-## Ota 2009
+## Ota 2009: RTs
 
 ```{r}
 #| label: fig-contr-cond
 
-ota2009 %>%
+emo <- tibble(
+  label = c("☀️-🌙", "👦-🌙", "🔒-🔑", "🪨-🔑", "🐻-😱", "🍐-😱"),
+  Condition = c(rep(c("control", "unrelated"), 3)),
+  Contrast = c(rep(c("H", "LR", "PB"), each = 2)),
+  RT_log = 6.5
+)
+
+ota2009 |> 
   ggplot(aes(Contrast, RT_log)) +
   geom_violin(aes(fill = Condition), alpha = 0.2) +
   geom_jitter(
@@ -69,26 +103,29 @@ ota2009 %>%
     aes(group = Condition),
     position = position_dodge(width = 0.9),
     fun = "median", geom = "point", size = 3
-  )
+  ) +
+  geom_text(data = emo, aes(label = label, group = Condition), position = position_dodge(width = 0.9), size = 5)
 ```
 
-## Ota 2009
+## Log-normal regression (RTs)
 
 ```{r}
 #| label: ota-bm-1
 #| echo: true
 
+my_seed <- 9283
+
 ota_bm_1 <- brm(
-  RT_log ~ Condition * Contrast,
-  family = gaussian,
+  Words.RT ~ 0 + Condition:Contrast,
+  family = lognormal,
   data = ota2009,
-  backend = "cmdstanr",
   seed = my_seed,
+  cores = 4,
   file = "data/cache/ota_bm_1"
 )
 ```
 
-## Ota 2009
+## Log-normal regression: summary
 
 ```{r}
 #| label: ota-bm-1-sum
@@ -96,303 +133,209 @@ ota_bm_1 <- brm(
 summary(ota_bm_1, prob = 0.9)
 ```
 
-## Ota 2009
+## Log-normal regression: expected predictions
 
 ```{r}
-#| label: ota-bm-1-gdraws
-#| echo: true
+#| label: ota-bm-1-cond
 
-ota_bm_1_gdraws <- ota_bm_1 %>%
-  gather_draws(`b_.*`, regex = TRUE)
-ota_bm_1_gdraws
+conditional_effects(ota_bm_1, effects = "Contrast:Condition")
+
 ```
 
-## Ota 2009
+## BUT...
+
+::: box-error
+-   Multiple observations from different participants.
+
+-   Multiple observations from items.
+:::
+
+. . .
+
+::: box-tip
+-   We need to include **varying terms** (also known as random or multilevel effects).
+
+-   Regression models with varying terms are variably known as mixed-effects, multilevel, hierarchical, nested... They are all the same thing.
+:::
+
+## By-subject RTs
 
 ```{r}
-#| label: fig-ota-bm-1-gdraws
-
-ota_bm_1_gdraws %>%
-  filter(.variable != "b_Intercept") %>%
-  ggplot(aes(.value, .variable, fill = .variable)) +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  stat_halfeye(slab_alpha = 0.5) +
-  theme(legend.position = "none")
-```
-
-## Ota 2009
-
-```{r ota-bm-1-sdraws}
-ota_bm_1_sdraws <- ota_bm_1 %>%
-  spread_draws(`b_.*`, regex = TRUE) %>%
-  mutate(
-    LR_cond_dif = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastLR`
-  )
-ota_bm_1_sdraws
-```
-
-## Ota 2009
-
-```{r}
-#| label: fig-ota-bm-1
-
-ota_bm_1_sdraws %>%
-  ggplot(aes(LR_cond_dif)) +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  stat_halfeye(slab_alpha = 0.5)
-```
-
-## Ota 2009: subject-level intercepts
-
-```{r}
-#| label: fig-subj-int
+#| label: subj-rts
 #| fig_asp: 0.5
 
-ota2009 %>%
-  filter(Contrast == "LR") %>%
-  ggplot(aes("a", RT_log)) +
-  geom_violin() +
+ota2009 |>
+  filter(Contrast == "LR") |>
+  ggplot(aes(Condition, RT_log)) +
   geom_jitter(
-    aes(colour = Subject), alpha = 0.4,
-    width = 0.1
+    aes(colour = Condition), alpha = 0.4,
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.9)
   ) +
   stat_summary(
+    aes(group = Condition),
     position = position_dodge(width = 0.9),
-    fun = "median", geom = "point"
+    fun.data = "mean_cl_boot"
   ) +
   facet_wrap(~ Subject, nrow = 2) +
-  labs(x = element_blank()) +
-  theme(
-    axis.text.x = element_blank(),
-    legend.position = "none"
-  )
+  theme(axis.text.x = element_blank(), legend.position = "bottom") +
+  labs(title = "Log-RTs in the LR condition by subject")
 ```
 
-## Ota 2009: subject-level intercepts
+## By-list RTs
+
+```{r}
+#| label: list-rts
+#| fig_asp: 0.5
+
+ota2009 |>
+  filter(Contrast == "LR") |>
+  ggplot(aes(Condition, RT_log)) +
+  geom_jitter(
+    aes(colour = Condition), alpha = 0.4,
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.9)
+  ) +
+  stat_summary(
+    aes(group = Condition),
+    position = position_dodge(width = 0.9),
+    fun.data = "mean_cl_boot"
+  ) +
+  facet_grid(cols = vars(Version)) +
+  theme(axis.text.x = element_blank(), legend.position = "bottom") +
+  labs(title = "Log-RTs in the LR condition by list")
+```
+
+## By-subject and by-list varying terms
 
 ```{r}
 #| label: ota-bm-2
 #| echo: true
 
+# took 80 seconds to fit
 ota_bm_2 <- brm(
-  RT_log ~
-    Condition * Contrast +
-    (1 | Subject),
-  family = gaussian,
+  Words.RT ~ 0 + Condition:Contrast +
+    (0 + Condition:Contrast | Subject) +
+    (0 + Condition:Contrast | Version),
+  family = lognormal,
   data = ota2009,
-  backend = "cmdstanr",
   seed = my_seed,
+  cores = 4,
   file = "data/cache/ota_bm_2"
 )
 ```
 
-## Ota 2009: subject-level intercepts
+## By-subject and by-list model: expected predictions
 
 ```{r}
 #| label: ota-bm-2-sum
-
-summary(ota_bm_2, prob = 0.9)
-```
-
-## Ota 2009: subject-level intercepts
-
-```{r}
-#| label: ota-bm-2-sdraws
 #| echo: true
 
-ota_bm_2_sdraws <- ota_bm_2 %>%
-  spread_draws(`b_.*`, regex = TRUE) %>%
-  mutate(
-    LR_cond_dif = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastLR`
-  )
-ota_bm_2_sdraws
-```
-
-## Ota 2009: subject-level intercepts
-
-```{r}
-#| label: fig-ota-bm-2
-
-ota_bm_2_sdraws %>%
-  ggplot(aes(LR_cond_dif)) +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  stat_halfeye(slab_alpha = 0.5)
-```
-
-## Ota 2009: subject-level intercepts
-
-```{r}
-#| label: ota-bm-2-int
-#| echo: true
-
-ota_bm_2_int <- ota_bm_2 %>%
-  gather_draws(r_Subject[Subject,term])
-ota_bm_2_int
-```
-
-## Ota 2009: subject-level intercepts
-
-```{r}
-#| label: fig-ota-bm-2-int
-
-ota_bm_2_int %>%
-  ggplot(aes(.value, reorder(as.factor(Subject), .value))) +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  stat_halfeye()
-```
-
-## Ota 2009: subject-level intercepts
-
-```{r}
-#| label: ota-bm-fixef
-#| echo: true
-
-fixef(ota_bm_1, probs = c(0.05, 0.95))
 fixef(ota_bm_2, probs = c(0.05, 0.95))
 ```
 
-## Ota 2009: subject-level slopes
+## By-subject and by-list model: expected predictions plot
 
 ```{r}
-#| label: fig-subj-slo
-#| fig_asp: 0.5
-
-ota2009 %>%
-  filter(Contrast == "LR") %>%
-  ggplot(aes(Condition, RT_log)) +
-  geom_violin(aes(fill = Condition), alpha = 0.5) +
-  # geom_jitter(
-  #   aes(colour = Condition), alpha = 0.4,
-  #   position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.9)
-  # ) +
-  stat_summary(
-    aes(group = Condition),
-    position = position_dodge(width = 0.9),
-    fun = "median", geom = "point"
-  ) +
-  facet_wrap(~ Subject, nrow = 2) +
-  theme(axis.text.x = element_blank(), legend.position = "bottom")
+#| label: ota-bm-2-cond
+conditional_effects(ota_bm_2, "Contrast:Condition")
 ```
 
-## Song 2020
-
-- From *Second language users exhibit shallow morphological processing* ([10.1017/S0272263120000170](https://doi.org/10.1017/S0272263120000170)).
-
-- English L1 and L2 participants (L2 participants are native speakers of Cantonese).
-
-- **Lexical decision task:** Is the word a real English word or not?
-
-- Each trial:
-
-  - **Prime**: *prolong* (unrelated), *unkind* (constituent), *kindness* (non-constituent).
-
-  - **Target**: *unkindness* (*[un-kind]-ness*, not *un-[kind-ness]*).
-
-- Data gathered: Reaction times and accuracy.
-
-## Song 2020
+## Difference between unrelated and control
 
 ```{r}
-#| label: shallow
-
-shallow <- read_csv("data/song2020/shallow.csv") %>%
-  filter(Critical_Filler == "Critical")
-shallow
+#| label: ota-bm-2-draws
+#| echo: true
+ota_bm_2_draws <- as_draws_df(ota_bm_2, variable = "b_", regex = TRUE)
+ota_bm_2_draws
 ```
 
-## Song 2020
+## Difference between unrelated and control
 
 ```{r}
-#| label: sha-bm-1
+#| label: ota-bm-2-draws-diff
+ota_bm_2_draws <- ota_bm_2_draws |> 
+  mutate(
+    diff_h = `b_ConditionUnrelated:ContrastH` - `b_ConditionControl:ContrastH`,
+    diff_lr = `b_ConditionUnrelated:ContrastLR` - `b_ConditionControl:ContrastLR`,
+    diff_pb = `b_ConditionUnrelated:ContrastPB` - `b_ConditionControl:ContrastPB`,
+  )
+```
+
+## Difference between unrelated and control: plot
+
+```{r}
+#| label: ota-bm-2-draws-diff-plot
+#| warning: false
+
+ota_bm_2_draws |> 
+  pivot_longer(diff_h:diff_pb) |> 
+  ggplot(aes(value, name, fill = name)) +
+  geom_vline(xintercept = 0) +
+  stat_halfeye() +
+  theme(legend.position = "none")
+```
+
+## Difference between unrelated and control: CrIs
+
+```{r}
+#| label: ota-bm-2-draws-diff-cri
 #| echo: true
 
-sha_bm_1 <- brm(
-  ACC ~ Group * Relation_type * Branching,
-  family = bernoulli,
-  data = shallow,
-  cores = 4,
-  backend = "cmdstanr",
-  seed = my_seed,
-  file = "data/cache/sha_bm_1"
-)
+ota_bm_2_draws |> 
+  pivot_longer(diff_h:diff_pb) |> 
+  select(name, value) |> 
+  group_by(name) |> 
+  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |> 
+  mutate(
+    across(where(is.numeric), ~round(.x, digits = 2))
+  )
 ```
 
-```{r}
-#| label: sha-bm-1-sum
+## Difference of difference LR/H
 
-fixef(sha_bm_1, probs = c(0.05, 0.95)) %>%
-  as_tibble(rownames = "term") %>%
-  filter(Estimate < 5, Estimate > -2)
+```{r}
+#| label: ota-bm-2-draws-diff-diff-diff-cri
+
+ota_bm_2_draws <- ota_bm_2_draws |> 
+  mutate(diff_lr_h = diff_lr - diff_h)
+
+ota_bm_2_draws |> 
+  ggplot(aes(diff_lr_h)) +
+  geom_vline(xintercept = 0) +
+  stat_halfeye()
 ```
 
-## Song 2020
+## Difference of difference: CrIs
 
 ```{r}
-#| label: sha-bm-1-conds
-
-sha_conds <- make_conditions(shallow, "Branching")
-
-conditional_effects(sha_bm_1, "Relation_type:Group", conditions = sha_conds)
-```
-
-## Song 2020
-
-```{r}
-#| label: sha-bm-2
+#| label: ota-bm-2-draws-diff-diff-cri
 #| echo: true
 
-sha_bm_2 <- brm(
-  ACC ~ Group * Relation_type * Branching +
-    (1 | ID),
-  family = bernoulli,
-  data = shallow,
-  cores = 4,
-  backend = "cmdstanr",
-  seed = my_seed,
-  file = "data/cache/sha_bm_2"
-)
+ota_bm_2_draws |> 
+  select(diff_lr_h) |> 
+  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |> 
+  mutate(
+    across(where(is.numeric), ~round(.x, digits = 2))
+  )
 ```
 
-```{r}
-#| label: sha-bm-2-sum
+## Results overview
 
-fixef(sha_bm_2, probs = c(0.05, 0.95)) %>%
-  as_tibble(rownames = "term") %>%
-  filter(Estimate < 5, Estimate > -2)
-```
+::: box-note
+H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
-## Song 2020
+- Not enough evidence to assess (CrI [-0.27, 0.18]).
 
-```{r sha-bm-2-conds}
-conditional_effects(sha_bm_2, "Relation_type:Group", conditions = sha_conds)
-```
+H2. There is no difference in RTs in minimal pairs (PB).
 
-
-## Song 2020
-
-```{r}
-#| label: sha-bm-fixef
-
-fixef(sha_bm_1, probs = c(0.05, 0.95)) %>%
-  as_tibble(rownames = "term") %>%
-  filter(Estimate < 5, Estimate > -2)
-fixef(sha_bm_2, probs = c(0.05, 0.95)) %>%
-  as_tibble(rownames = "term") %>%
-  filter(Estimate < 5, Estimate > -2)
-```
-
-## Song 2020
-
-```{r}
-#| label: sha-bm-2-full-sum
-
-summary(sha_bm_2, prob = 0.9)
-```
+- Not enough evidence to assess (CrI [-0.08, 0.15]).
+:::
 
 ## Summary
 
-- If the data contains groupings other than the ones that were manipulated in the design, you need to account for it.
+::: box-tip
+-   You should include varying terms if data is "hierarchical", for example repeated measures from subjects or items.
 
-- The model must account for the fact that some data is from within a specific member of the group (like a participant, a specific word, etc).
+- Not including varying terms (wrongly) inflates posterior certainty.
 
-- You can account for groupings in the data with group-level effects. You should always include group-level intercept to account for mean differences across members of the groups.
+- Frequentist regression models with lme4 often don't converge and researchers simplify the hierarchical structure of the model.
+:::
