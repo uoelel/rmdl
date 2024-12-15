@@ -1,6 +1,5 @@
 ---
 title: "Research Methods in Developmental Linguistics -- Week 5"
-subtitle: "Group-level effects: Intercepts"
 author: "Dr Stefano Coretta"
 institute: "University of Edinburgh"
 format:
@@ -147,7 +146,7 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 ::: box-error
 -   Multiple observations from different participants.
 
--   Multiple observations from items.
+-   Multiple observations from different item lists.
 :::
 
 . . .

@@ -1,6 +1,5 @@
 ---
 title: "Research Methods in Developmental Linguistics -- Week 6"
-subtitle: "Group-level effects: Slopes"
 author: "Dr Stefano Coretta"
 institute: "University of Edinburgh"
 format:
@@ -12,9 +11,15 @@ execute:
 knitr:
   opts_chunk:
     dev: "ragg_png"
+filters: ["tachyonsextra"]
 ---
 
-```{r setup, include=FALSE}
+## Song 2020
+
+```{r}
+#| label: setup
+#| include: false
+
 library(tidyverse)
 theme_set(theme_light())
 
@@ -29,8 +34,6 @@ my_seed <- 8878
 set.seed(my_seed)
 options(scipen=999)
 ```
-
-## Song 2020
 
 ::: box-note
 -   Data from [Song 2020](https://doi.org/10.1017/S0272263120000170).
@@ -127,7 +130,31 @@ conditional_effects(sha_bm_1, "Group:Relation_type")
 -   We need to include **varying terms**.
 :::
 
-## Song 2020
+## By-subject accuracy
+
+```{r}
+#| label: shallow-id
+
+shallow |> 
+  filter(Group == "L2") |> 
+  ggplot(aes(Relation_type, fill = accuracy)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~ID)
+```
+
+## By-target accuracy
+
+```{r}
+#| label: shallow-target
+
+shallow |> 
+  filter(Group == "L2") |> 
+  ggplot(aes(Relation_type, fill = accuracy)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~Target)
+```
+
+## By-subject and by-target varying terms
 
 ```{r}
 #| label: sha-bm-2
@@ -145,11 +172,34 @@ sha_bm_2 <- brm(
 )
 ```
 
-## Song 2020
+## By-subject and by-target model: expected predictions plot
 
 ```{r}
 #| label: sha-bm-2-conds
 conditional_effects(sha_bm_2, "Group:Relation_type")
 ```
 
-## 
+## Difference between non/constituent
+
+```{r}
+#| label: sha-bm-2-draws
+#| echo: false
+
+sha_bm_2_draws <- as_draws_df(sha_bm_2, variable = "b_", regex = TRUE)
+
+sha_bm_2_draws <- sha_bm_2_draws |> 
+  mutate(
+    diff_l2 = `b_GroupL2:Relation_typeNonConstituent` - `b_GroupL2:Relation_typeConstituent`
+  )
+```
+
+## Difference between non/constituent: plot
+
+```{r}
+#| label: sha-bm-diff-plot
+
+sha_bm_2_draws |> 
+  ggplot(aes(diff_l2)) +
+  geom_vline(xintercept = 0) +
+  stat_halfeye()
+```

@@ -1,6 +1,5 @@
 ---
 title: "Research Methods in Developmental Linguistics -- Week 5"
-subtitle: "Group-level effects: Intercepts"
 author: "Dr Stefano Coretta"
 institute: "University of Edinburgh"
 format:

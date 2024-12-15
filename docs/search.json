@@ -445,7 +445,7 @@
     "href": "slides/lecture-w05.html#but",
     "title": "Research Methods in Developmental Linguistics – Week 5",
     "section": "BUT…",
-    "text": "BUT…\n\n\nMultiple observations from different participants.\nMultiple observations from items.\n\n\n\n\n\nWe need to include varying terms (also known as random or multilevel effects).\nRegression models with varying terms are variably known as mixed-effects, multilevel, hierarchical, nested… They are all the same thing."
+    "text": "BUT…\n\n\nMultiple observations from different participants.\nMultiple observations from different item lists.\n\n\n\n\n\nWe need to include varying terms (also known as random or multilevel effects).\nRegression models with varying terms are variably known as mixed-effects, multilevel, hierarchical, nested… They are all the same thing."
   },
   {
     "objectID": "slides/lecture-w05.html#by-subject-rts",
@@ -551,5 +551,96 @@
     "title": "Research Methods in Developmental Linguistics – Week 5",
     "section": "By-subject and by-list model: expected predictions plot",
     "text": "By-subject and by-list model: expected predictions plot"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#song-2020",
+    "href": "slides/lecture-w06.html#song-2020",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Song 2020",
+    "text": "Song 2020\n\n\nData from Song 2020.\nShallow morphological representation in L2 speakers.\nLexical decision task: Is the word a real English word or not?\nPriming paradigm:\n\nPrime: prolong (unrelated), unkind (constituent), kindness (non-constituent).\nTarget: unkindness ([un-kind]-ness, not un-[kind-ness]).\n\nEnglish L1 and English L2/Cantonese L1 participants."
+  },
+  {
+    "objectID": "slides/lecture-w06.html#song-2020-hypotheses",
+    "href": "slides/lecture-w06.html#song-2020-hypotheses",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Song 2020: hypotheses",
+    "text": "Song 2020: hypotheses\n\nVague hypothesis:\n\nThe Shallow Structure Hypothesis (SSH) allows the possibility for nonnative speakers to show strong priming effects from nonconstituent and constituent primes equally because the shallow processing route, which relies more heavily on semantic and surface-level information than on structural information."
+  },
+  {
+    "objectID": "slides/lecture-w06.html#song-2020-the-data",
+    "href": "slides/lecture-w06.html#song-2020-the-data",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Song 2020: the data",
+    "text": "Song 2020: the data\n\nshallow &lt;- read_csv(\"data/song2020/shallow.csv\") |&gt;\n  filter(\n    Critical_Filler == \"Critical\",\n    Branching == \"Left\"\n  ) |&gt; \n  mutate(\n    accuracy = ifelse(ACC == 0, \"incorrect\", \"correct\"),\n    accuracy = factor(accuracy, levels = c(\"incorrect\", \"correct\"))\n  )\nshallow\n\n# A tibble: 1,170 × 12\n   Group ID    List  Target         ACC    RT logRT Critical_Filler Word_Nonword\n   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;       \n 1 L1    L1_01 A     unawareness      1   603  6.40 Critical        Word        \n 2 L1    L1_01 A     unholiness       1   739  6.61 Critical        Word        \n 3 L1    L1_01 A     unhappiness      1   370  5.91 Critical        Word        \n 4 L1    L1_01 A     unsharpness      1   821  6.71 Critical        Word        \n 5 L1    L1_01 A     unripeness       0  1035  6.94 Critical        Word        \n 6 L1    L1_01 A     unkindness       1   498  6.21 Critical        Word        \n 7 L1    L1_01 A     unwariness       1  1133  7.03 Critical        Word        \n 8 L1    L1_01 A     unclearness      1   513  6.24 Critical        Word        \n 9 L1    L1_01 A     reobtainable     0   964  6.87 Critical        Word        \n10 L1    L1_01 A     resealable       1   709  6.56 Critical        Word        \n# ℹ 1,160 more rows\n# ℹ 3 more variables: Relation_type &lt;chr&gt;, Branching &lt;chr&gt;, accuracy &lt;fct&gt;"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#song-2020-accuracy",
+    "href": "slides/lecture-w06.html#song-2020-accuracy",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Song 2020: accuracy",
+    "text": "Song 2020: accuracy"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#bernoulli-regression-accuracy",
+    "href": "slides/lecture-w06.html#bernoulli-regression-accuracy",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Bernoulli regression (accuracy)",
+    "text": "Bernoulli regression (accuracy)\n\nmy_seed &lt;- 4235\n\nsha_bm_1 &lt;- brm(\n  accuracy ~ 0 + Group:Relation_type,\n  family = bernoulli,\n  data = shallow,\n  cores = 4,\n  seed = my_seed,\n  file = \"data/cache/sha_bm_1\"\n)"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#bernoulli-regression-expected-predictions",
+    "href": "slides/lecture-w06.html#bernoulli-regression-expected-predictions",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Bernoulli regression: expected predictions",
+    "text": "Bernoulli regression: expected predictions"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#but",
+    "href": "slides/lecture-w06.html#but",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "BUT…",
+    "text": "BUT…\n\n\nMultiple observations from different participants.\nMultiple observations from different target words.\n\n\n\n\n\nWe need to include varying terms."
+  },
+  {
+    "objectID": "slides/lecture-w06.html#by-subject-accuracy",
+    "href": "slides/lecture-w06.html#by-subject-accuracy",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "By-subject accuracy",
+    "text": "By-subject accuracy"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#by-target-accuracy",
+    "href": "slides/lecture-w06.html#by-target-accuracy",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "By-target accuracy",
+    "text": "By-target accuracy"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#by-subject-and-by-target-varying-terms",
+    "href": "slides/lecture-w06.html#by-subject-and-by-target-varying-terms",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "By-subject and by-target varying terms",
+    "text": "By-subject and by-target varying terms\n\nsha_bm_2 &lt;- brm(\n  ACC ~ 0 + Group:Relation_type +\n    (0 + Relation_type | ID) +\n    (0 + Group:Relation_type | Target),\n  family = bernoulli,\n  data = shallow,\n  cores = 4,\n  seed = my_seed,\n  file = \"data/cache/sha_bm_2\"\n)"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#by-subject-and-by-target-model-expected-predictions-plot",
+    "href": "slides/lecture-w06.html#by-subject-and-by-target-model-expected-predictions-plot",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "By-subject and by-target model: expected predictions plot",
+    "text": "By-subject and by-target model: expected predictions plot"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#difference-between-nonconstituent",
+    "href": "slides/lecture-w06.html#difference-between-nonconstituent",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Difference between non/constituent",
+    "text": "Difference between non/constituent"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#difference-between-nonconstituent-plot",
+    "href": "slides/lecture-w06.html#difference-between-nonconstituent-plot",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Difference between non/constituent: plot",
+    "text": "Difference between non/constituent: plot"
   }
 ]
