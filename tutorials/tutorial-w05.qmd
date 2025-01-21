@@ -1,9 +1,9 @@
 ---
 title: "QML –- Week 5"
-subtitle: "Group-level effects: Intercepts"
+subtitle: "Multilevel effects I"
 ---
 
-```{r setup}
+```{r}
 #| label: setup
 #| message: false
 #| echo: false
@@ -27,36 +27,37 @@ my_seed <- 8878
 ## Introduction
 
 ::: callout-warning
-#### Create an RStudio project for this course
+#### Create a Quarto RStudio project for this course
 
 Create an RStudio project for the course and within that add the usual folders `data/` and `code/` (do not include the forward slash `/` in the name! It is just there to mark that those are folders.)
 
-When working through these tutorials, **make sure you are in the course RStudio Project** you created.
+When working through these tutorials, **make sure you are in the course Quarto/RStudio Project** you created.
 
-You know you are in an RStudio Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.
+You know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.
 
-If you see `Project (none)` in the top-right corner, that means **you are not** in an RStudio Project.
+If you see `Project (none)` in the top-right corner, that means **you are not** in a Quarto Project.
 
-To make sure you are in the RStudio project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
+To make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
 :::
 
 For this tutorial you have to run a Bayesian model with data from Winter 2012 (DOI [10.1016/j.wocn.2012.08.006](https://doi.org/10.1016/j.wocn.2012.08.006)).
 
-You can get the data [here](/data/winter2012/polite.csv) (right-click and download).
+You can get the data [here](/data/winter2012/polite.csv) (right-click and download). This page explains the meaning of the columns in the data: <https://uoelel.github.io/qml-data/data/winter2012/polite.html>.
 
 ## Mean f0
 
-The model should have the following:
+Fit a regression model to answer the following question:
+
+> Do the months spent in Germany modulate the effect of attitude on mean f0?
+
+The model should have the following variables:
 
 - `f0mn` as the outcome variable.
-- `gender`, `musicstudent`, `months_ger` and `attitude` as predictors.
-- Two-way interactions between `attitude` and each of the other predictors (don't include 3/4-way interactions since there is probably not enough data to estimate those robustly).
-- Add group-level intercepts as needed.
-
-Answer the following question: **Do the months spent in Germany modulate the effect of attitude on mean f0?**
+- `gender`, `months_ger` and `attitude` as predictors. Use indexing (`0 +`).
+- Add multilevel effects as needed.
 
 ## H1-H2 difference
 
-If you have time, run the same model but now with the H1-H2 difference `H1H2` as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).
+If you have time, run a new model with the H1-H2 difference `H1H2` as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).
 
 Now answer the following question: **Does being a music student modulate the effect of attitude on the H1-H2 difference?**

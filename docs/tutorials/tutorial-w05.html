@@ -126,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">QML –- Week 5</h1>
-<p class="subtitle lead">Group-level effects: Intercepts</p>
+<p class="subtitle lead">Multilevel effects I</p>
 </div>
 
 
@@ -151,30 +151,33 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Create an RStudio project for this course
+Create a Quarto RStudio project for this course
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Create an RStudio project for the course and within that add the usual folders <code>data/</code> and <code>code/</code> (do not include the forward slash <code>/</code> in the name! It is just there to mark that those are folders.)</p>
-<p>When working through these tutorials, <strong>make sure you are in the course RStudio Project</strong> you created.</p>
-<p>You know you are in an RStudio Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.</p>
-<p>If you see <code>Project (none)</code> in the top-right corner, that means <strong>you are not</strong> in an RStudio Project.</p>
-<p>To make sure you are in the RStudio project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the <code>.Rproj</code> file.</p>
+<p>When working through these tutorials, <strong>make sure you are in the course Quarto/RStudio Project</strong> you created.</p>
+<p>You know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.</p>
+<p>If you see <code>Project (none)</code> in the top-right corner, that means <strong>you are not</strong> in a Quarto Project.</p>
+<p>To make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the <code>.Rproj</code> file.</p>
 </div>
 </div>
 <p>For this tutorial you have to run a Bayesian model with data from Winter 2012 (DOI <a href="https://doi.org/10.1016/j.wocn.2012.08.006">10.1016/j.wocn.2012.08.006</a>).</p>
-<p>You can get the data <a href="../data/winter2012/polite.csv">here</a> (right-click and download).</p>
+<p>You can get the data <a href="../data/winter2012/polite.csv">here</a> (right-click and download). This page explains the meaning of the columns in the data: <a href="https://uoelel.github.io/qml-data/data/winter2012/polite.html" class="uri">https://uoelel.github.io/qml-data/data/winter2012/polite.html</a>.</p>
 </section>
 <section id="mean-f0" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="mean-f0"><span class="header-section-number">2</span> Mean f0</h2>
-<p>The model should have the following:</p>
+<p>Fit a regression model to answer the following question:</p>
+<blockquote class="blockquote">
+<p>Do the months spent in Germany modulate the effect of attitude on mean f0?</p>
+</blockquote>
+<p>The model should have the following variables:</p>
 <ul>
 <li><code>f0mn</code> as the outcome variable.</li>
 <li><code>gender</code>, <code>musicstudent</code>, <code>months_ger</code> and <code>attitude</code> as predictors.</li>
 <li>Two-way interactions between <code>attitude</code> and each of the other predictors (don’t include 3/4-way interactions since there is probably not enough data to estimate those robustly).</li>
 <li>Add group-level intercepts as needed.</li>
 </ul>
-<p>Answer the following question: <strong>Do the months spent in Germany modulate the effect of attitude on mean f0?</strong></p>
 </section>
 <section id="h1-h2-difference" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="h1-h2-difference"><span class="header-section-number">3</span> H1-H2 difference</h2>
