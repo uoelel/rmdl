@@ -1,6 +1,6 @@
 ---
 title: "QML –- Week 6"
-subtitle: "Group-level effects: Slopes"
+subtitle: "Varying effects II"
 ---
 
 ```{r setup}
@@ -27,36 +27,14 @@ my_seed <- 8878
 ## Introduction
 
 ::: callout-warning
-When working through these tutorials, **make sure you are in the course RStudio Project** you created.
+When working through these tutorials, **make sure you are in the course Quarto Project** you created.
 
-You know you are in an RStudio Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.
+You know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.
 
-If you see `Project (none)` in the top-right corner, that means **you are not** in an RStudio Project.
+If you see `Project (none)` in the top-right corner, that means **you are not** in a Quarto Project.
 
-To make sure you are in the RStudio project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
+To make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
 :::
 
-For this tutorial you have to run a Bayesian model with the data from Winter 2012 (DOI [10.1016/j.wocn.2012.08.006](https://doi.org/10.1016/j.wocn.2012.08.006)) you modelled in Week 5, but now include group-level slopes!
+In this tutorial you will run a Bayesian model with the data from Martin 2020 (DOI [10.1177/0956797620931108](https://doi.org/10.1177/0956797620931108)).
 
-## Mean f0
-
-The model should have the following:
-
-- `f0mn` as the outcome variable.
-- `gender`, `musicstudent`, `months_ger` and `attitude` as predictors.
-- Two-way interactions between `attitude` and each of the other predictors (don't include 3/4-way interactions since there is probably not enough data to estimate those robustly).
-- Add group-level intercepts and slopes as needed.
-
-Answer the following question: **Do the months spent in Germany modulate the effect of attitude on mean f0?**
-
-## H1-H2 difference
-
-If you have time, run the same model but now with the H1-H2 difference `H1H2` as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).
-
-Now answer the following question: **Does being a music student modulate the effect of attitude on the H1-H2 difference?**
-
-## Reporting
-
-It is unusual to report the results of the group-level effects (not that it's necessarily a good practice), but you should mention the group-level effects you included when reporting the model specification. For example:
-
-> I fitted a Bayesian linear model to H1-H2 difference using a Gaussian family. As predictors, I included gender (femal or male), whether the participant is a student of music, how many months the participant has spent in Germany and the attitude (informal vs polite). Interactions between attitude and each of the other predictors were also included. As group-level effects, I added a by-participant intercept and by-participant slopes for all within-subject predictors (i.e. all except gender) including the interactions,

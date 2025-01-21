@@ -115,9 +115,6 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#mean-f0" id="toc-mean-f0" class="nav-link" data-scroll-target="#mean-f0"><span class="header-section-number">2</span> Mean f0</a></li>
-  <li><a href="#h1-h2-difference" id="toc-h1-h2-difference" class="nav-link" data-scroll-target="#h1-h2-difference"><span class="header-section-number">3</span> H1-H2 difference</a></li>
-  <li><a href="#reporting" id="toc-reporting" class="nav-link" data-scroll-target="#reporting"><span class="header-section-number">4</span> Reporting</a></li>
   </ul>
 </nav>
     </div>
@@ -127,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">QML –- Week 6</h1>
-<p class="subtitle lead">Group-level effects: Slopes</p>
+<p class="subtitle lead">Varying effects II</p>
 </div>
 
 
@@ -156,36 +153,13 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>When working through these tutorials, <strong>make sure you are in the course RStudio Project</strong> you created.</p>
-<p>You know you are in an RStudio Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.</p>
-<p>If you see <code>Project (none)</code> in the top-right corner, that means <strong>you are not</strong> in an RStudio Project.</p>
-<p>To make sure you are in the RStudio project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the <code>.Rproj</code> file.</p>
+<p>When working through these tutorials, <strong>make sure you are in the course Quarto Project</strong> you created.</p>
+<p>You know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.</p>
+<p>If you see <code>Project (none)</code> in the top-right corner, that means <strong>you are not</strong> in a Quarto Project.</p>
+<p>To make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the <code>.Rproj</code> file.</p>
 </div>
 </div>
-<p>For this tutorial you have to run a Bayesian model with the data from Winter 2012 (DOI <a href="https://doi.org/10.1016/j.wocn.2012.08.006">10.1016/j.wocn.2012.08.006</a>) you modelled in Week 5, but now include group-level slopes!</p>
-</section>
-<section id="mean-f0" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="mean-f0"><span class="header-section-number">2</span> Mean f0</h2>
-<p>The model should have the following:</p>
-<ul>
-<li><code>f0mn</code> as the outcome variable.</li>
-<li><code>gender</code>, <code>musicstudent</code>, <code>months_ger</code> and <code>attitude</code> as predictors.</li>
-<li>Two-way interactions between <code>attitude</code> and each of the other predictors (don’t include 3/4-way interactions since there is probably not enough data to estimate those robustly).</li>
-<li>Add group-level intercepts and slopes as needed.</li>
-</ul>
-<p>Answer the following question: <strong>Do the months spent in Germany modulate the effect of attitude on mean f0?</strong></p>
-</section>
-<section id="h1-h2-difference" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="h1-h2-difference"><span class="header-section-number">3</span> H1-H2 difference</h2>
-<p>If you have time, run the same model but now with the H1-H2 difference <code>H1H2</code> as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).</p>
-<p>Now answer the following question: <strong>Does being a music student modulate the effect of attitude on the H1-H2 difference?</strong></p>
-</section>
-<section id="reporting" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="reporting"><span class="header-section-number">4</span> Reporting</h2>
-<p>It is unusual to report the results of the group-level effects (not that it’s necessarily a good practice), but you should mention the group-level effects you included when reporting the model specification. For example:</p>
-<blockquote class="blockquote">
-<p>I fitted a Bayesian linear model to H1-H2 difference using a Gaussian family. As predictors, I included gender (femal or male), whether the participant is a student of music, how many months the participant has spent in Germany and the attitude (informal vs polite). Interactions between attitude and each of the other predictors were also included. As group-level effects, I added a by-participant intercept and by-participant slopes for all within-subject predictors (i.e.&nbsp;all except gender) including the interactions,</p>
-</blockquote>
+<p>In this tutorial you will run a Bayesian model with the data from Martin 2020 (DOI <a href="https://doi.org/10.1177/0956797620931108">10.1177/0956797620931108</a>).</p>
 
 
 </section>

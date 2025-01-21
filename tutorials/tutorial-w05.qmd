@@ -1,6 +1,6 @@
 ---
 title: "QML –- Week 5"
-subtitle: "Multilevel effects I"
+subtitle: "Varying effects I"
 ---
 
 ```{r}
@@ -40,7 +40,7 @@ If you see `Project (none)` in the top-right corner, that means **you are not** 
 To make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
 :::
 
-For this tutorial you have to run a Bayesian model with data from Winter 2012 (DOI [10.1016/j.wocn.2012.08.006](https://doi.org/10.1016/j.wocn.2012.08.006)).
+In this tutorial, you have to run Bayesian regression models with data from Winter 2012 (DOI [10.1016/j.wocn.2012.08.006](https://doi.org/10.1016/j.wocn.2012.08.006)).
 
 You can get the data [here](/data/winter2012/polite.csv) (right-click and download). This page explains the meaning of the columns in the data: <https://uoelel.github.io/qml-data/data/winter2012/polite.html>.
 
@@ -58,6 +58,14 @@ The model should have the following variables:
 
 ## H1-H2 difference
 
-If you have time, run a new model with the H1-H2 difference `H1H2` as the outcome variable (the H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality).
+If you have time, run another regression model to answer the following research question:
 
-Now answer the following question: **Does being a music student modulate the effect of attitude on the H1-H2 difference?**
+> Does being a music student modulate the effect of attitude on the H1-H2 difference?
+
+The H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality.
+
+## Reporting
+
+It is unusual to report the results of the varying effects (not that this is necessarily a good practice), but you should at least mention the varying effects you included when reporting the model specification. For example, if the model has `(A | participant)`:
+
+> As multilevel (aka random) effects, I included by-participant varying intercepts and by-participant varying slopes for A.
