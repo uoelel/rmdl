@@ -179,11 +179,11 @@ sha_bm_2 <- brm(
 conditional_effects(sha_bm_2, "Group:Relation_type")
 ```
 
-## Difference between non/constituent
+## Difference between non/constituent in L2
 
 ```{r}
 #| label: sha-bm-2-draws
-#| echo: false
+#| echo: true
 
 sha_bm_2_draws <- as_draws_df(sha_bm_2, variable = "b_", regex = TRUE)
 
@@ -193,7 +193,7 @@ sha_bm_2_draws <- sha_bm_2_draws |>
   )
 ```
 
-## Difference between non/constituent: plot
+## Difference between non/constituent in L2: plot
 
 ```{r}
 #| label: sha-bm-diff-plot
@@ -203,3 +203,38 @@ sha_bm_2_draws |>
   geom_vline(xintercept = 0) +
   stat_halfeye()
 ```
+
+## Difference between non/constituent in L2: CrIs
+
+```{r}
+#| label: sha-bm-diff-diff-cri
+#| echo: true
+
+sha_bm_2_draws |> 
+  select(diff_l2) |> 
+  summarise_draws(~quantile(.x, probs = c(0.05, 0.95, 0.5, 0.85))) |> 
+  mutate(
+    across(where(is.numeric), ~round(.x, digits = 2))
+  )
+```
+
+## Results overview
+
+::: box-note
+> The Shallow Structure Hypothesis (SSH) allows the possibility for nonnative speakers to show strong priming effects from nonconstituent and constituent primes equally because the shallow processing route, which relies more heavily on semantic and surface-level information than on structural information.
+
+- The 90% CrI of the difference between nonconstituent and constituent in L2 is [-1.3, 0.26].
+
+- At 70% probability, the log-odds of the priming effect on accuracy between nonconstituent and constituent in L2 participants differs between -0.01 and -0.47.
+
+:::
+
+## Summary
+
+::: box-tip
+-   You should include varying terms if data is "hierarchical", for example repeated measures from participants or items.
+
+- Not including varying terms (wrongly) inflates posterior certainty.
+
+- Frequentist regression models with lme4 often don't converge and researchers simplify the hierarchical structure of the model.
+:::

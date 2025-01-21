@@ -2,6 +2,6 @@
 
 | Week | Lecture                                                   | Lab                                    |     |
 |-----------|-------------------------------|-------------------|-----------|
-| 5    | [Group-level effects: Intercepts](slides/lecture-w05.qmd) | [Tutorial](tutorials/tutorial-w05.qmd) |     |
+| 5    | [Multilevel effects I](slides/lecture-w05.qmd) | [Tutorial](tutorials/tutorial-w05.qmd) |     |
 | FL   | *No classes*                                              |                                        |     |
-| 6    | [Group-level effects: Slopes](slides/lecture-w06.qmd)     | [Tutorial](tutorials/tutorial-w06.qmd) |     |
+| 6    | [Multilevel effects II](slides/lecture-w06.qmd)     | [Tutorial](tutorials/tutorial-w06.qmd) |     |
