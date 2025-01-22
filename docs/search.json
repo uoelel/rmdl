@@ -112,11 +112,39 @@
     "text": "Difference between non/constituent in L2: CrIs\n\nsha_bm_2_draws |&gt; \n  select(diff_l2) |&gt; \n  summarise_draws(~quantile(.x, probs = c(0.05, 0.95, 0.5, 0.85))) |&gt; \n  mutate(\n    across(where(is.numeric), ~round(.x, digits = 2))\n  )\n\n# A tibble: 1 × 5\n  variable  `5%` `95%` `50%` `85%`\n  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 diff_l2   -1.3  0.26 -0.47 -0.01"
   },
   {
+    "objectID": "slides/lecture-w06.html#expected-predictions-by-subject",
+    "href": "slides/lecture-w06.html#expected-predictions-by-subject",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Expected predictions by subject",
+    "text": "Expected predictions by subject\n\nsha_bm_2_draws &lt;- as_draws_df(sha_bm_2, variable = c(\"^b_.*\"), regex = TRUE) |&gt; \n  pivot_longer(\n    `b_GroupL1:Relation_typeConstituent`:`b_GroupL2:Relation_typeUnrelated`,\n    names_to = c(\"Group\", \"Relation_type\"),\n    names_pattern = \"b_Group(.*):(.*)\"\n  )\nsha_bm_2_r &lt;- spread_draws(sha_bm_2, r_ID[ID,Relation_type]) |&gt; \n  mutate(\n    Group = str_sub(ID, 1, 2)\n  )\n\nsha_bm_2_draws_r &lt;- left_join(sha_bm_2_draws, sha_bm_2_r) |&gt; \n  mutate(\n    epred = value + r_ID\n  )"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#expected-predictions-by-subject-plot",
+    "href": "slides/lecture-w06.html#expected-predictions-by-subject-plot",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Expected predictions by subject: plot",
+    "text": "Expected predictions by subject: plot"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#difference-between-expected-predictions-by-subject",
+    "href": "slides/lecture-w06.html#difference-between-expected-predictions-by-subject",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Difference between expected predictions by-subject",
+    "text": "Difference between expected predictions by-subject\n\nsha_bm_2_draws_r_wide &lt;- sha_bm_2_draws_r |&gt;\n  select(-value, -r_ID) |&gt; \n  pivot_wider(names_from = Relation_type, values_from = epred) |&gt; \n  mutate(\n    ncon_con = Relation_typeNonConstituent - Relation_typeConstituent\n  )"
+  },
+  {
+    "objectID": "slides/lecture-w06.html#difference-between-expected-predictions-by-subject-plot",
+    "href": "slides/lecture-w06.html#difference-between-expected-predictions-by-subject-plot",
+    "title": "Research Methods in Developmental Linguistics – Week 6",
+    "section": "Difference between expected predictions by-subject: plot",
+    "text": "Difference between expected predictions by-subject: plot"
+  },
+  {
     "objectID": "slides/lecture-w06.html#results-overview",
     "href": "slides/lecture-w06.html#results-overview",
     "title": "Research Methods in Developmental Linguistics – Week 6",
     "section": "Results overview",
-    "text": "Results overview\n\n\nThe Shallow Structure Hypothesis (SSH) allows the possibility for nonnative speakers to show strong priming effects from nonconstituent and constituent primes equally because the shallow processing route, which relies more heavily on semantic and surface-level information than on structural information.\n\n\nThe 90% CrI of the difference between nonconstituent and constituent in L2 is [-1.3, 0.26].\nAt 70% probability, the log-odds of the priming effect on accuracy between nonconstituent and constituent in L2 participants differs between -0.01 and -0.47."
+    "text": "Results overview\n\n\nThe Shallow Structure Hypothesis (SSH) allows the possibility for nonnative speakers to show strong priming effects from nonconstituent and constituent primes equally because the shallow processing route, which relies more heavily on semantic and surface-level information than on structural information.\n\n\nThe 90% CrI of the difference between nonconstituent and constituent in L2 is [-1.3, 0.26].\nAt 70% probability, the log-odds of the priming effect on accuracy between nonconstituent and constituent in L2 participants differs between -0.01 and -0.47.\nThere is a lot of uncertainty in the expected predictions of individual participants, although there is a tendency for negative differences between nonconstituent and constituent."
   },
   {
     "objectID": "slides/lecture-w06.html#summary",
@@ -354,6 +382,6 @@
     "href": "tutorials/tutorial-w05.html#reporting",
     "title": "QML –- Week 5",
     "section": "4 Reporting",
-    "text": "4 Reporting\nIt is unusual to report the results of the varying effects (not that this is necessarily a good practice), but you should at least mention the varying effects you included when reporting the model specification. For example, if the model has (A | participant):\n\nAs multilevel (aka random) effects, I included by-participant varying intercepts and by-participant varying slopes for A."
+    "text": "4 Reporting\nYou should mention the varying effects you included when reporting the model specification. For example, for the following model:\nota_bm_2 &lt;- brm(\n  Words.RT ~ 0 + Condition:Contrast +\n    (0 + Condition:Contrast | Subject) +\n    (0 + Condition:Contrast | Version),\n  family = lognormal,\n  data = ota2009,\n  seed = my_seed,\n  cores = 4,\n  file = \"data/cache/ota_bm_2\"\n)\n\nAs varying (aka random) effects, we included by-participant and by-list varying terms for the interaction between condition and contrast."
   }
 ]

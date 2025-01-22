@@ -362,6 +362,45 @@ Dr Stefano Coretta
 </div>
 </div>
 </section>
+<section id="expected-predictions-by-subject" class="slide level2">
+<h2>Expected predictions by subject</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>sha_bm_2_draws <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(sha_bm_2, <span class="at">variable =</span> <span class="fu">c</span>(<span class="st">"^b_.*"</span>), <span class="at">regex =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb8-3"><a></a>    <span class="st">`</span><span class="at">b_GroupL1:Relation_typeConstituent</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">b_GroupL2:Relation_typeUnrelated</span><span class="st">`</span>,</span>
+<span id="cb8-4"><a></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"Group"</span>, <span class="st">"Relation_type"</span>),</span>
+<span id="cb8-5"><a></a>    <span class="at">names_pattern =</span> <span class="st">"b_Group(.*):(.*)"</span></span>
+<span id="cb8-6"><a></a>  )</span>
+<span id="cb8-7"><a></a>sha_bm_2_r <span class="ot">&lt;-</span> <span class="fu">spread_draws</span>(sha_bm_2, r_ID[ID,Relation_type]) <span class="sc">|&gt;</span> </span>
+<span id="cb8-8"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-9"><a></a>    <span class="at">Group =</span> <span class="fu">str_sub</span>(ID, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb8-10"><a></a>  )</span>
+<span id="cb8-11"><a></a></span>
+<span id="cb8-12"><a></a>sha_bm_2_draws_r <span class="ot">&lt;-</span> <span class="fu">left_join</span>(sha_bm_2_draws, sha_bm_2_r) <span class="sc">|&gt;</span> </span>
+<span id="cb8-13"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-14"><a></a>    <span class="at">epred =</span> value <span class="sc">+</span> r_ID</span>
+<span id="cb8-15"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="expected-predictions-by-subject-plot" class="slide level2">
+<h2>Expected predictions by subject: plot</h2>
+
+<img data-src="lecture-w06_files/figure-revealjs/sha-bm-subj-plot-1.png" width="960" class="r-stretch"></section>
+<section id="difference-between-expected-predictions-by-subject" class="slide level2">
+<h2>Difference between expected predictions by-subject</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>sha_bm_2_draws_r_wide <span class="ot">&lt;-</span> sha_bm_2_draws_r <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>value, <span class="sc">-</span>r_ID) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Relation_type, <span class="at">values_from =</span> epred) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-5"><a></a>    <span class="at">ncon_con =</span> Relation_typeNonConstituent <span class="sc">-</span> Relation_typeConstituent</span>
+<span id="cb9-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="difference-between-expected-predictions-by-subject-plot" class="slide level2">
+<h2>Difference between expected predictions by-subject: plot</h2>
+
+<img data-src="lecture-w06_files/figure-revealjs/sha-bm-epred-plot-1.png" width="960" class="r-stretch"></section>
 <section id="results-overview" class="slide level2">
 <h2>Results overview</h2>
 <div class="box-note">
@@ -371,6 +410,7 @@ Dr Stefano Coretta
 <ul>
 <li><p>The 90% CrI of the difference between nonconstituent and constituent in L2 is [-1.3, 0.26].</p></li>
 <li><p>At 70% probability, the log-odds of the priming effect on accuracy between nonconstituent and constituent in L2 participants differs between -0.01 and -0.47.</p></li>
+<li><p>There is a lot of uncertainty in the expected predictions of individual participants, although there is a tendency for negative differences between nonconstituent and constituent.</p></li>
 </ul>
 </div>
 </section>

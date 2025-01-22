@@ -66,6 +66,19 @@ The H1-H2 difference is correlated with breathiness: the higher the difference, 
 
 ## Reporting
 
-It is unusual to report the results of the varying effects (not that this is necessarily a good practice), but you should at least mention the varying effects you included when reporting the model specification. For example, if the model has `(A | participant)`:
+You should mention the varying effects you included when reporting the model specification. For example, for the following model:
 
-> As multilevel (aka random) effects, I included by-participant varying intercepts and by-participant varying slopes for A.
+```r
+ota_bm_2 <- brm(
+  Words.RT ~ 0 + Condition:Contrast +
+    (0 + Condition:Contrast | Subject) +
+    (0 + Condition:Contrast | Version),
+  family = lognormal,
+  data = ota2009,
+  seed = my_seed,
+  cores = 4,
+  file = "data/cache/ota_bm_2"
+)
+```
+
+> As varying (aka random) effects, we included by-participant and by-list varying terms for the interaction between condition and contrast.
