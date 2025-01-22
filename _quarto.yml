@@ -9,11 +9,15 @@ project:
     - "slides/"
     - "img/"
     - "data/"
+    - "data.zip"
 
 website:
   title: "RMDL"
   navbar:
     background: dark
+    tools:
+      - icon: github
+        href: "https://github.com/uoelel/rmdl"
     left:
       - href: index.qmd
         text: Home

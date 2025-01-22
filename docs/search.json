@@ -2,16 +2,16 @@
   {
     "objectID": "tutorials/tutorial-w06.html",
     "href": "tutorials/tutorial-w06.html",
-    "title": "QML –- Week 6",
+    "title": "QML – Week 6",
     "section": "",
-    "text": "Warning\n\n\n\nWhen working through these tutorials, make sure you are in the course Quarto Project you created.\nYou know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.\nIf you see Project (none) in the top-right corner, that means you are not in a Quarto Project.\nTo make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the .Rproj file.\n\n\nIn this tutorial you will run a Bayesian model with the data from Martin 2020 (DOI 10.1177/0956797620931108)."
+    "text": "Warning\n\n\n\nWhen working through these tutorials, make sure you are in the course Quarto Project you created.\nYou know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.\nIf you see Project (none) in the top-right corner, that means you are not in a Quarto Project.\nTo make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the .Rproj file.\n\n\nIn this tutorial you will run a Bayesian model with the data from Martin 2020 (DOI 10.1177/0956797620931108). You can get the data by downloading the zip file with all the data from this course. The Martin 2020 data is in martin2020/data_anonymized. The file martin2020/data_anonymized/README.txt contains information on the columns found in the data. You will have to bind the English and Kîîtharaka data.\nFilter the data to have only “post-pre” trials (trial_type) and address the following research question:\n\nDo both English and Kîîtharaka show a preference for post-changed items (i.e. greater accuracy) in both conditions (words and shapes)?"
   },
   {
     "objectID": "tutorials/tutorial-w06.html#introduction",
     "href": "tutorials/tutorial-w06.html#introduction",
-    "title": "QML –- Week 6",
+    "title": "QML – Week 6",
     "section": "",
-    "text": "Warning\n\n\n\nWhen working through these tutorials, make sure you are in the course Quarto Project you created.\nYou know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.\nIf you see Project (none) in the top-right corner, that means you are not in a Quarto Project.\nTo make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the .Rproj file.\n\n\nIn this tutorial you will run a Bayesian model with the data from Martin 2020 (DOI 10.1177/0956797620931108)."
+    "text": "Warning\n\n\n\nWhen working through these tutorials, make sure you are in the course Quarto Project you created.\nYou know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.\nIf you see Project (none) in the top-right corner, that means you are not in a Quarto Project.\nTo make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the .Rproj file.\n\n\nIn this tutorial you will run a Bayesian model with the data from Martin 2020 (DOI 10.1177/0956797620931108). You can get the data by downloading the zip file with all the data from this course. The Martin 2020 data is in martin2020/data_anonymized. The file martin2020/data_anonymized/README.txt contains information on the columns found in the data. You will have to bind the English and Kîîtharaka data.\nFilter the data to have only “post-pre” trials (trial_type) and address the following research question:\n\nDo both English and Kîîtharaka show a preference for post-changed items (i.e. greater accuracy) in both conditions (words and shapes)?"
   },
   {
     "objectID": "slides/lecture-w06.html#song-2020",
@@ -352,35 +352,35 @@
   {
     "objectID": "tutorials/tutorial-w05.html",
     "href": "tutorials/tutorial-w05.html",
-    "title": "QML –- Week 5",
+    "title": "QML – Week 5",
     "section": "",
     "text": "Create a Quarto RStudio project for this course\n\n\n\nCreate an RStudio project for the course and within that add the usual folders data/ and code/ (do not include the forward slash / in the name! It is just there to mark that those are folders.)\nWhen working through these tutorials, make sure you are in the course Quarto/RStudio Project you created.\nYou know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.\nIf you see Project (none) in the top-right corner, that means you are not in a Quarto Project.\nTo make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the .Rproj file.\n\n\nIn this tutorial, you have to run Bayesian regression models with data from Winter 2012 (DOI 10.1016/j.wocn.2012.08.006).\nYou can get the data here (right-click and download). This page explains the meaning of the columns in the data: https://uoelel.github.io/qml-data/data/winter2012/polite.html."
   },
   {
     "objectID": "tutorials/tutorial-w05.html#introduction",
     "href": "tutorials/tutorial-w05.html#introduction",
-    "title": "QML –- Week 5",
+    "title": "QML – Week 5",
     "section": "",
     "text": "Create a Quarto RStudio project for this course\n\n\n\nCreate an RStudio project for the course and within that add the usual folders data/ and code/ (do not include the forward slash / in the name! It is just there to mark that those are folders.)\nWhen working through these tutorials, make sure you are in the course Quarto/RStudio Project you created.\nYou know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.\nIf you see Project (none) in the top-right corner, that means you are not in a Quarto Project.\nTo make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the .Rproj file.\n\n\nIn this tutorial, you have to run Bayesian regression models with data from Winter 2012 (DOI 10.1016/j.wocn.2012.08.006).\nYou can get the data here (right-click and download). This page explains the meaning of the columns in the data: https://uoelel.github.io/qml-data/data/winter2012/polite.html."
   },
   {
     "objectID": "tutorials/tutorial-w05.html#mean-f0",
     "href": "tutorials/tutorial-w05.html#mean-f0",
-    "title": "QML –- Week 5",
+    "title": "QML – Week 5",
     "section": "2 Mean f0",
     "text": "2 Mean f0\nFit a regression model to answer the following question:\n\nDo the months spent in Germany modulate the effect of attitude on mean f0?\n\nThe model should have the following variables:\n\nf0mn as the outcome variable.\ngender, months_ger and attitude as predictors. Use indexing (0 +).\nAdd multilevel effects as needed."
   },
   {
     "objectID": "tutorials/tutorial-w05.html#h1-h2-difference",
     "href": "tutorials/tutorial-w05.html#h1-h2-difference",
-    "title": "QML –- Week 5",
+    "title": "QML – Week 5",
     "section": "3 H1-H2 difference",
     "text": "3 H1-H2 difference\nIf you have time, run another regression model to answer the following research question:\n\nDoes being a music student modulate the effect of attitude on the H1-H2 difference?\n\nThe H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality."
   },
   {
     "objectID": "tutorials/tutorial-w05.html#reporting",
     "href": "tutorials/tutorial-w05.html#reporting",
-    "title": "QML –- Week 5",
+    "title": "QML – Week 5",
     "section": "4 Reporting",
     "text": "4 Reporting\nYou should mention the varying effects you included when reporting the model specification. For example, for the following model:\nota_bm_2 &lt;- brm(\n  Words.RT ~ 0 + Condition:Contrast +\n    (0 + Condition:Contrast | Subject) +\n    (0 + Condition:Contrast | Version),\n  family = lognormal,\n  data = ota2009,\n  seed = my_seed,\n  cores = 4,\n  file = \"data/cache/ota_bm_2\"\n)\n\nAs varying (aka random) effects, we included by-participant and by-list varying terms for the interaction between condition and contrast."
   }
