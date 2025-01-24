@@ -23,7 +23,6 @@ options(dplyr.summarise.inform = FALSE)
 my_seed <- 8878
 ```
 
-
 ## Introduction
 
 ::: callout-warning
@@ -52,15 +51,19 @@ Fit a regression model to answer the following question:
 
 The model should have the following variables:
 
-- `f0mn` as the outcome variable.
-- `gender`, `months_ger` and `attitude` as predictors. Use indexing (`0 +`).
-- Add varying effects as needed.
+-   `f0mn` as the outcome variable.
+-   `gender`, `months_ger` and `attitude` as predictors. Use indexing (`0 +`).
+-   Add varying effects as needed.
 
 ```{r}
+#| label: polite
 polite <- read_csv("data/winter2012/polite.csv")
 ```
 
+We fit a Bayesian regression model with mean f0 as the outcome variable, using a Gaussian family. As predictors, we include gender, attitude and months spent in germany. We also model an interaction between gender and attitude and between gender, attitude and months in germany. We also let the effect of attitude to vary by subject. (The effects of gender and months in Germany cannot vary by subject because they are within-subject variables).
+
 ```{r}
+#| label: f0-bm
 f0_bm <- brm(
   f0mn ~ 0 + gender:attitude + gender:attitude:months_ger +
     (0 + attitude | subject),
@@ -71,18 +74,22 @@ f0_bm <- brm(
 )
 ```
 
-
 ```{r}
+#| label: f0-bm-summary
 summary(f0_bm)
 ```
 
+The 95% CrI of the effect of months in Germany on mean f0 when the attitude is polite and gender is female is \[-0.4, +0.1\], while it is \[-0.33, +0.2\] when the attitude is informal. The CrIs for gender male are much more uncertain. Given the level of uncertainty of the effect of months spent in Germany it is not wise to make any inference in relation to the research question and further comparisons will not be attempted. See @fig-f0 for the expected mean f0 based on the model.
+
 ```{r}
+#| label: fig-f0-bm
+#| fig-cap: "Expected mean f0."
+
 plot(
   conditional_effects(f0_bm, "months_ger:attitude", conditions = make_conditions(polite, "gender")),
   points = TRUE
 )
 ```
-
 
 ## H1-H2 difference
 
@@ -92,7 +99,10 @@ If you have time, run another regression model to answer the following research 
 
 The H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality.
 
+We fit a Bayesian regression with H1-H2 difference as the outcome variable, with a Gaussian family. As predictors, the model has attitude, gender and whether the participant is a music student. We let the affect of attitude to vary by participant. @fig-h1h2-bm shows the expected H1-H2 difference depending on attitude, gender and music student based on the model.
+
 ```{r}
+#| label: h1h2-bm
 h1h2_bm <- brm(
   H1H2 ~ 0 + attitude:musicstudent:gender + (0 + attitude | subject),
   data = polite,
@@ -103,14 +113,26 @@ h1h2_bm <- brm(
 ```
 
 ```{r}
+#| label: h1h2-bm-summ
 summary(h1h2_bm)
 ```
 
 ```{r}
+#| label: fig-h1h2-bm
+#| fig-cap: "Expected H1-H2 difference"
 conditional_effects(h1h2_bm, "musicstudent:attitude", conditions = make_conditions(polite, "gender"))
 ```
 
+To answer the RQ of whether the difference between informal and polite attitude is affected by whether the participant is a music student, we calculate the following estimands:
+
+-   Difference between H1-H2 in informal vs polite in female participants, separately for music students (`mus_f`) vs non-music students (`nomus_f`).
+
+-   Difference between H1-H2 in informal vs polite in male participants, separately for music students (`mus_m`) vs non-music students (`nomus_m`).
+
+-   Difference between the differences for female and male participants (`no_mus_f` and `no_mus_m`). This estimand is the one we need to answer the RQ.
+
 ```{r}
+#| label: h1h2-fraws
 h1h2_draws <- as_draws_df(h1h2_bm, "^b_", regex = TRUE)
 h1h2_draws <- h1h2_draws |> 
   mutate(
@@ -122,33 +144,42 @@ h1h2_draws <- h1h2_draws |>
     no_mus_m = mus_m - nomus_m,
   )
 
+# Pivot for plotting
 h1h2_music_diff <- h1h2_draws |> 
   select(no_mus_f, no_mus_m) |> 
   pivot_longer(everything())
 ```
 
+@fig-h1h2-music-diff shows the estimated difference between the by-attitude H1-H2 difference in music vs non-music students, separately for female and male students. There is some indication of a difference for female participants, but not so much for male participants. Let's calculate 95, 80, and 60% CrI.
+
 ```{r}
+#| label: fig-h1h2-music-diff
+#| fig-cap: "Music-student difference of attitude difference in H1-H2 in female and male participants."
 h1h2_music_diff |> 
   ggplot(aes(value, fill = name)) +
   geom_vline(xintercept = 0) +
   geom_density(alpha = 0.5)
 ```
 
+The 80% CrI [-2.16, -0.04] for femal participants suggests a difference based on whether the participant is a music student or not, at 80% confidence, although the magnitude of the difference is quite uncertain and if a difference is indeed present it is 2 db or smaller.
+
 ```{r}
+#| label: h1h2-music-diff-cri
 h1h2_music_diff |> 
   group_by(name) |> 
   summarise(
-    ci = list(quantile2(value, probs = c(0.05, 0.1, 0.2, 0.8, 0.9, 0.95)))
+    ci = list(round(quantile2(value, probs = c(0.05, 0.1, 0.2, 0.8, 0.9, 0.95)), 2))
   ) |> 
   unnest_wider(ci)
 ```
 
+In sum, the results are inconclusive as to which being a music student makes a difference in H1-H2 differences between polite and informal speech, particularly for male speakers. For female speakers, there might be a slightly greater difference in the H1-H2 difference of polite vs informal speech when they are music students relative to non-music students, but the effect could be anything between 2 and almost 0 db.
 
 ## Reporting
 
 You should mention the varying effects you included when reporting the model specification. For example, for the following model:
 
-```r
+``` r
 ota_bm_2 <- brm(
   Words.RT ~ 0 + Condition:Contrast +
     (0 + Condition:Contrast | Subject) +
