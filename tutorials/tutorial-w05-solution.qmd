@@ -1,0 +1,164 @@
+---
+title: "QML -- Week 5"
+subtitle: "Varying effects I"
+---
+
+```{r}
+#| label: setup
+#| message: false
+#| echo: false
+
+library(tidyverse)
+theme_set(theme_light())
+library(posterior)
+
+library(brms)
+library(broom.mixed)
+
+options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
+options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))
+
+options(dplyr.summarise.inform = FALSE)
+
+my_seed <- 8878
+```
+
+
+## Introduction
+
+::: callout-warning
+#### Create a Quarto RStudio project for this course
+
+Create an RStudio project for the course and within that add the usual folders `data/` and `code/` (do not include the forward slash `/` in the name! It is just there to mark that those are folders.)
+
+When working through these tutorials, **make sure you are in the course Quarto/RStudio Project** you created.
+
+You know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.
+
+If you see `Project (none)` in the top-right corner, that means **you are not** in a Quarto Project.
+
+To make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
+:::
+
+In this tutorial, you have to run Bayesian regression models with data from Winter 2012 (DOI [10.1016/j.wocn.2012.08.006](https://doi.org/10.1016/j.wocn.2012.08.006)).
+
+You can get the data [here](/data/winter2012/polite.csv) (right-click and download). This page explains the meaning of the columns in the data: <https://uoelel.github.io/qml-data/data/winter2012/polite.html>.
+
+## Mean f0
+
+Fit a regression model to answer the following question:
+
+> Do the months spent in Germany modulate the effect of attitude on mean f0?
+
+The model should have the following variables:
+
+- `f0mn` as the outcome variable.
+- `gender`, `months_ger` and `attitude` as predictors. Use indexing (`0 +`).
+- Add varying effects as needed.
+
+```{r}
+polite <- read_csv("data/winter2012/polite.csv")
+```
+
+```{r}
+f0_bm <- brm(
+  f0mn ~ 0 + gender:attitude + gender:attitude:months_ger +
+    (0 + attitude | subject),
+  data = polite,
+  cores = 4,
+  seed = my_seed,
+  file = "data/cache/f0_bm"
+)
+```
+
+
+```{r}
+summary(f0_bm)
+```
+
+```{r}
+plot(
+  conditional_effects(f0_bm, "months_ger:attitude", conditions = make_conditions(polite, "gender")),
+  points = TRUE
+)
+```
+
+
+## H1-H2 difference
+
+If you have time, run another regression model to answer the following research question:
+
+> Does being a music student modulate the effect of attitude on the H1-H2 difference?
+
+The H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality.
+
+```{r}
+h1h2_bm <- brm(
+  H1H2 ~ 0 + attitude:musicstudent:gender + (0 + attitude | subject),
+  data = polite,
+  cores = 4,
+  seed = my_seed,
+  file = "data/cache/h1h2_bm"
+)
+```
+
+```{r}
+summary(h1h2_bm)
+```
+
+```{r}
+conditional_effects(h1h2_bm, "musicstudent:attitude", conditions = make_conditions(polite, "gender"))
+```
+
+```{r}
+h1h2_draws <- as_draws_df(h1h2_bm, "^b_", regex = TRUE)
+h1h2_draws <- h1h2_draws |> 
+  mutate(
+    nomus_f = `b_attitudepol:musicstudentno:genderF` - `b_attitudeinf:musicstudentno:genderF`,
+    mus_f = `b_attitudepol:musicstudentyes:genderF` - `b_attitudeinf:musicstudentyes:genderF`,
+    no_mus_f = mus_f - nomus_f,
+    nomus_m = `b_attitudepol:musicstudentno:genderM` - `b_attitudeinf:musicstudentno:genderM`,
+    mus_m = `b_attitudepol:musicstudentyes:genderM` - `b_attitudeinf:musicstudentyes:genderM`,
+    no_mus_m = mus_m - nomus_m,
+  )
+
+h1h2_music_diff <- h1h2_draws |> 
+  select(no_mus_f, no_mus_m) |> 
+  pivot_longer(everything())
+```
+
+```{r}
+h1h2_music_diff |> 
+  ggplot(aes(value, fill = name)) +
+  geom_vline(xintercept = 0) +
+  geom_density(alpha = 0.5)
+```
+
+```{r}
+h1h2_music_diff |> 
+  group_by(name) |> 
+  summarise(
+    ci = list(quantile2(value, probs = c(0.05, 0.1, 0.2, 0.8, 0.9, 0.95)))
+  ) |> 
+  unnest_wider(ci)
+```
+
+
+## Reporting
+
+You should mention the varying effects you included when reporting the model specification. For example, for the following model:
+
+```r
+ota_bm_2 <- brm(
+  Words.RT ~ 0 + Condition:Contrast +
+    (0 + Condition:Contrast | Subject) +
+    (0 + Condition:Contrast | Version),
+  family = lognormal,
+  data = ota2009,
+  seed = my_seed,
+  cores = 4,
+  file = "data/cache/ota_bm_2"
+)
+```
+
+> As varying (aka random) effects, we included by-participant and by-list varying terms for the interaction between condition and contrast.

@@ -165,6 +165,13 @@ Warning
 <blockquote class="blockquote">
 <p>Do both English and Kîîtharaka show a preference for post-changed items (i.e.&nbsp;greater accuracy) in both conditions (words and shapes)?</p>
 </blockquote>
+<p>Does the model converge (or did you get a warning about divergent transitions, convergence, ESS being too low)? If it did not converge, the warning includes the following suggestions, related to the MCMC algorithm:</p>
+<ul>
+<li>Increase the number of iterations (2000 by default): for example, <code>iter = 4000</code>.</li>
+<li>Increase <code>adapt_delta</code> (number between 0 and 1, 0.8 by default): for example, <code>control = list(adapt_delta = 0.9999)</code>.</li>
+<li>Increase <code>max_treedepth</code> (10 by default): for example, <code>control = list(max_treedepth = 15)</code>.</li>
+<li>Specify more informative priors. You might have not covered priors in QML, but if you did, you can specify weakly informative priors (the default prior are uninformative).</li>
+</ul>
 
 
 </section>

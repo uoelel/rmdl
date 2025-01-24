@@ -42,5 +42,10 @@ Filter the data to have only "post-pre" trials (`trial_type`) and address the fo
 
 > Do both English and Kîîtharaka show a preference for post-changed items (i.e. greater accuracy) in both conditions (words and shapes)?
 
+Does the model converge (or did you get a warning about divergent transitions, convergence, ESS being too low)? If it did not converge, the warning includes the following suggestions, related to the MCMC algorithm:
 
+- Increase the number of iterations (2000 by default): for example, `iter = 4000`.
+- Increase `adapt_delta` (number between 0 and 1, 0.8 by default): for example, `control = list(adapt_delta = 0.9999)`.
+- Increase `max_treedepth` (10 by default): for example, `control = list(max_treedepth = 15)`.
+- Specify more informative priors. You might have not covered priors in QML, but if you did, you can specify weakly informative priors (the default prior are uninformative).
 

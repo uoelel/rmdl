@@ -1,0 +1,76 @@
+---
+title: "QML -- Week 6"
+subtitle: "Varying effects II"
+---
+
+```{r setup}
+#| label: setup
+#| message: false
+#| echo: false
+
+library(tidyverse)
+theme_set(theme_light())
+library(posterior)
+
+library(brms)
+library(broom.mixed)
+
+options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
+options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))
+
+options(dplyr.summarise.inform = FALSE)
+
+my_seed <- 8878
+```
+
+## Introduction
+
+::: callout-warning
+When working through these tutorials, **make sure you are in the course Quarto Project** you created.
+
+You know you are in a Quarto Project because you can see the name of the Project in the top-right corner of RStudio, next to the light-blue cube icon.
+
+If you see `Project (none)` in the top-right corner, that means **you are not** in a Quarto Project.
+
+To make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
+:::
+
+In this tutorial you will run a Bayesian model with the data from Martin 2020 (DOI [10.1177/0956797620931108](https://doi.org/10.1177/0956797620931108)). You can get the data by downloading the [zip file](data.zip) with all the data from this course. The Martin 2020 data is in `martin2020/data_anonymized`. The file `martin2020/data_anonymized/README.txt` contains information on the columns found in the data. You will have to bind the English and Kîîtharaka data.
+
+Filter the data to have only "post-pre" trials (`trial_type`) and address the following research question:
+
+> Do both English and Kîîtharaka show a preference for post-changed items (i.e. greater accuracy) in both conditions (words and shapes)?
+
+```{r}
+eng <- read_csv("data/martin2020/data_anonymized/English_anon.csv") |> 
+  mutate(language = "English")
+kii <- read_csv("data/martin2020/data_anonymized/Kiitharaka_anon.csv") |> 
+  mutate(language = "Kiitharaka")
+
+pre_post <- bind_rows(eng, kii) |> 
+  filter(trial_type == "post-pre") |> 
+  mutate(
+    condition = ifelse(condition == "syllables", "words", condition)
+  )
+```
+
+```{r}
+pre_post_bm <- brm(
+  accuracy ~ 0 + condition:language + (0 + condition || subjID),
+  family = bernoulli,
+  data = pre_post,
+  iter = 4000,
+  control = list(adapt_delta = 0.9999),
+  cores = 4,
+  seed = my_seed,
+  file = "data/cache/pre_post_bm"
+)
+```
+
+```{r}
+summary(pre_post_bm)
+```
+
+```{r}
+conditional_effects(pre_post_bm, "language:condition")
+```

@@ -1,7 +1,7 @@
 ## Schedule overview
 
-| Week | Lecture                                                   | Lab                                    |     |
-|-----------|-------------------------------|-------------------|-----------|
-| 5    | [Multilevel effects I](slides/lecture-w05.qmd) | [Tutorial](tutorials/tutorial-w05.qmd) |     |
-| FL   | *No classes*                                              |                                        |     |
-| 6    | [Multilevel effects II](slides/lecture-w06.qmd)     | [Tutorial](tutorials/tutorial-w06.qmd) |     |
+| Week | Lecture | Lab |   |
+|---------------|---------------------------|----------------|---------------|
+| 5 | [Varying effects I](slides/lecture-w05.qmd) | [Tutorial](tutorials/tutorial-w05.qmd) |  |
+| FL | *No classes* |  |  |
+| 6 | [Varying effects II](slides/lecture-w06.qmd) | [Tutorial](tutorials/tutorial-w06.qmd) |  |
