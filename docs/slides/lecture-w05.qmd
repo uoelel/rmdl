@@ -10,6 +10,9 @@ execute:
   echo: false
 filters:
   - tachyonsextra
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
 ---
 
 ```{r setup, include=FALSE}
