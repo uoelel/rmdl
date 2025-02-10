@@ -241,6 +241,16 @@ Dr Stefano Coretta
 <section id="ota-2009-the-data" class="slide level2">
 <h2>Ota 2009: the data</h2>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>ota2009 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ota2009/key-rock.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a></a>  <span class="fu">filter</span>(</span>
+<span id="cb1-3"><a></a>    Procedure <span class="sc">==</span> <span class="st">"TrialProc"</span>, Contrast <span class="sc">!=</span> <span class="st">"F"</span></span>
+<span id="cb1-4"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-6"><a></a>    <span class="at">Subject =</span> <span class="fu">as.factor</span>(Subject),</span>
+<span id="cb1-7"><a></a>    <span class="at">RT_log =</span> <span class="fu">log</span>(Words.RT),</span>
+<span id="cb1-8"><a></a>    <span class="at">Item_id =</span> <span class="fu">paste</span>(Version, Contrast, Item, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb1-9"><a></a>  )</span>
+<span id="cb1-10"><a></a>ota2009</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,338 × 12
    Subject Procedure Version Contrast  Item Condition WordL   WordR   Words.ACC
@@ -269,21 +279,22 @@ Figure&nbsp;1
 <section id="log-normal-regression-rts" class="slide level2">
 <h2>Log-normal regression (RTs)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>my_seed <span class="ot">&lt;-</span> <span class="dv">9283</span></span>
-<span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a>ota_bm_1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb2-4"><a></a>  Words.RT <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Condition<span class="sc">:</span>Contrast,</span>
-<span id="cb2-5"><a></a>  <span class="at">family =</span> lognormal,</span>
-<span id="cb2-6"><a></a>  <span class="at">data =</span> ota2009,</span>
-<span id="cb2-7"><a></a>  <span class="at">seed =</span> my_seed,</span>
-<span id="cb2-8"><a></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb2-9"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_1"</span></span>
-<span id="cb2-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>my_seed <span class="ot">&lt;-</span> <span class="dv">9283</span></span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a>ota_bm_1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb3-4"><a></a>  Words.RT <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Condition<span class="sc">:</span>Contrast,</span>
+<span id="cb3-5"><a></a>  <span class="at">family =</span> lognormal,</span>
+<span id="cb3-6"><a></a>  <span class="at">data =</span> ota2009,</span>
+<span id="cb3-7"><a></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb3-8"><a></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb3-9"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_1"</span></span>
+<span id="cb3-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="log-normal-regression-summary" class="slide level2">
 <h2>Log-normal regression: summary</h2>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">summary</span>(ota_bm_1, <span class="at">prob =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: lognormal 
   Links: mu = identity; sigma = identity 
@@ -320,7 +331,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="log-normal-regression-expected-predictions" class="slide level2">
 <h2>Log-normal regression: expected predictions</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">conditional_effects</span>(ota_bm_1, <span class="at">effects =</span> <span class="st">"Contrast:Condition"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
 <img data-src="lecture-w05_files/figure-revealjs/ota-bm-1-cond-1.png" width="960" class="r-stretch"></section>
 <section id="but" class="slide level2">
 <h2>BUT…</h2>
@@ -350,23 +364,23 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="by-subject-and-by-list-varying-terms" class="slide level2">
 <h2>By-subject and by-list varying terms</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># took 80 seconds to fit</span></span>
-<span id="cb4-2"><a></a>ota_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb4-3"><a></a>  Words.RT <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Condition<span class="sc">:</span>Contrast <span class="sc">+</span></span>
-<span id="cb4-4"><a></a>    (<span class="dv">0</span> <span class="sc">+</span> Condition<span class="sc">:</span>Contrast <span class="sc">|</span> Subject) <span class="sc">+</span></span>
-<span id="cb4-5"><a></a>    (<span class="dv">0</span> <span class="sc">+</span> Condition<span class="sc">:</span>Contrast <span class="sc">|</span> Version),</span>
-<span id="cb4-6"><a></a>  <span class="at">family =</span> lognormal,</span>
-<span id="cb4-7"><a></a>  <span class="at">data =</span> ota2009,</span>
-<span id="cb4-8"><a></a>  <span class="at">seed =</span> my_seed,</span>
-<span id="cb4-9"><a></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb4-10"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_2"</span></span>
-<span id="cb4-11"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># took 80 seconds to fit</span></span>
+<span id="cb7-2"><a></a>ota_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb7-3"><a></a>  Words.RT <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Condition<span class="sc">:</span>Contrast <span class="sc">+</span></span>
+<span id="cb7-4"><a></a>    (<span class="dv">0</span> <span class="sc">+</span> Condition<span class="sc">:</span>Contrast <span class="sc">|</span> Subject) <span class="sc">+</span></span>
+<span id="cb7-5"><a></a>    (<span class="dv">0</span> <span class="sc">+</span> Condition<span class="sc">:</span>Contrast <span class="sc">|</span> Version),</span>
+<span id="cb7-6"><a></a>  <span class="at">family =</span> lognormal,</span>
+<span id="cb7-7"><a></a>  <span class="at">data =</span> ota2009,</span>
+<span id="cb7-8"><a></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb7-9"><a></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb7-10"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/ota_bm_2"</span></span>
+<span id="cb7-11"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="by-subject-and-by-list-model-expected-predictions" class="slide level2">
 <h2>By-subject and by-list model: expected predictions</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">fixef</span>(ota_bm_2, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">fixef</span>(ota_bm_2, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                              Estimate  Est.Error       Q5      Q95
 ConditionControl:ContrastH    7.625015 0.09395207 7.476049 7.770602
@@ -380,13 +394,16 @@ ConditionUnrelated:ContrastPB 7.658061 0.07802223 7.533287 7.783413</code></pre>
 </section>
 <section id="by-subject-and-by-list-model-expected-predictions-plot" class="slide level2">
 <h2>By-subject and by-list model: expected predictions plot</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">conditional_effects</span>(ota_bm_2, <span class="st">"Contrast:Condition"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
 <img data-src="lecture-w05_files/figure-revealjs/ota-bm-2-cond-1.png" width="960" class="r-stretch"></section>
 <section id="difference-between-unrelated-and-control" class="slide level2">
 <h2>Difference between unrelated and control</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>ota_bm_2_draws <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(ota_bm_2, <span class="at">variable =</span> <span class="st">"b_"</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-2"><a></a>ota_bm_2_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>ota_bm_2_draws <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(ota_bm_2, <span class="at">variable =</span> <span class="st">"b_"</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-2"><a></a>ota_bm_2_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A draws_df: 1000 iterations, 4 chains, and 6 variables
    b_ConditionControl:ContrastH b_ConditionUnrelated:ContrastH
@@ -429,6 +446,64 @@ ConditionUnrelated:ContrastPB 7.658061 0.07802223 7.533287 7.783413</code></pre>
 </section>
 <section id="difference-between-unrelated-and-control-1" class="slide level2">
 <h2>Difference between unrelated and control</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>ota_bm_2_draws <span class="ot">&lt;-</span> ota_bm_2_draws <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-3"><a></a>    <span class="at">diff_h =</span> <span class="st">`</span><span class="at">b_ConditionUnrelated:ContrastH</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">b_ConditionControl:ContrastH</span><span class="st">`</span>,</span>
+<span id="cb13-4"><a></a>    <span class="at">diff_lr =</span> <span class="st">`</span><span class="at">b_ConditionUnrelated:ContrastLR</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">b_ConditionControl:ContrastLR</span><span class="st">`</span>,</span>
+<span id="cb13-5"><a></a>    <span class="at">diff_pb =</span> <span class="st">`</span><span class="at">b_ConditionUnrelated:ContrastPB</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">b_ConditionControl:ContrastPB</span><span class="st">`</span>,</span>
+<span id="cb13-6"><a></a>  )</span>
+<span id="cb13-7"><a></a>ota_bm_2_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A draws_df: 1000 iterations, 4 chains, and 9 variables
+   b_ConditionControl:ContrastH b_ConditionUnrelated:ContrastH
+1                           7.6                            7.7
+2                           7.7                            7.7
+3                           7.5                            7.7
+4                           7.5                            7.7
+5                           7.5                            7.6
+6                           7.6                            7.6
+7                           7.6                            7.5
+8                           7.6                            7.7
+9                           7.6                            7.7
+10                          7.5                            7.7
+   b_ConditionControl:ContrastLR b_ConditionUnrelated:ContrastLR
+1                            7.6                             7.8
+2                            7.7                             7.7
+3                            7.6                             7.8
+4                            7.6                             7.8
+5                            7.6                             7.7
+6                            7.6                             7.7
+7                            7.6                             7.7
+8                            7.7                             7.7
+9                            7.7                             7.7
+10                           7.6                             7.7
+   b_ConditionControl:ContrastPB b_ConditionUnrelated:ContrastPB diff_h
+1                            7.6                             7.7  0.105
+2                            7.6                             7.7  0.036
+3                            7.6                             7.5  0.224
+4                            7.7                             7.6  0.147
+5                            7.6                             7.6  0.067
+6                            7.6                             7.6  0.033
+7                            7.6                             7.7 -0.053
+8                            7.6                             7.6  0.071
+9                            7.7                             7.7  0.141
+10                           7.5                             7.7  0.155
+    diff_lr
+1   0.11971
+2   0.00021
+3   0.14216
+4   0.13556
+5   0.06029
+6   0.10575
+7   0.10938
+8  -0.01188
+9  -0.00317
+10  0.03514
+# ... with 3990 more draws, and 1 more variables
+# ... hidden reserved variables {'.chain', '.iteration', '.draw'}</code></pre>
+</div>
+</div>
 </section>
 <section id="difference-between-unrelated-and-control-plot" class="slide level2">
 <h2>Difference between unrelated and control: plot</h2>
@@ -437,14 +512,14 @@ ConditionUnrelated:ContrastPB 7.658061 0.07802223 7.533287 7.783413</code></pre>
 <section id="difference-between-unrelated-and-control-cris" class="slide level2">
 <h2>Difference between unrelated and control: CrIs</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>ota_bm_2_draws <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a></a>  <span class="fu">pivot_longer</span>(diff_h<span class="sc">:</span>diff_pb) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a></a>  <span class="fu">select</span>(name, value) <span class="sc">|&gt;</span> </span>
-<span id="cb9-4"><a></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span> </span>
-<span id="cb9-5"><a></a>  <span class="fu">summarise_draws</span>(<span class="sc">~</span><span class="fu">quantile</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb9-6"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-7"><a></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">round</span>(.x, <span class="at">digits =</span> <span class="dv">2</span>))</span>
-<span id="cb9-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>ota_bm_2_draws <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a></a>  <span class="fu">pivot_longer</span>(diff_h<span class="sc">:</span>diff_pb) <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a></a>  <span class="fu">select</span>(name, value) <span class="sc">|&gt;</span> </span>
+<span id="cb15-4"><a></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span> </span>
+<span id="cb15-5"><a></a>  <span class="fu">summarise_draws</span>(<span class="sc">~</span><span class="fu">quantile</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb15-6"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-7"><a></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">round</span>(.x, <span class="at">digits =</span> <span class="dv">2</span>))</span>
+<span id="cb15-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
 # Groups:   name [3]
@@ -458,17 +533,26 @@ ConditionUnrelated:ContrastPB 7.658061 0.07802223 7.533287 7.783413</code></pre>
 </section>
 <section id="difference-of-difference-lrh" class="slide level2">
 <h2>Difference of difference LR/H</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>ota_bm_2_draws <span class="ot">&lt;-</span> ota_bm_2_draws <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a></a>  <span class="fu">mutate</span>(<span class="at">diff_lr_h =</span> diff_lr <span class="sc">-</span> diff_h)</span>
+<span id="cb17-3"><a></a></span>
+<span id="cb17-4"><a></a>ota_bm_2_draws <span class="sc">|&gt;</span> </span>
+<span id="cb17-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(diff_lr_h)) <span class="sc">+</span></span>
+<span id="cb17-6"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb17-7"><a></a>  <span class="fu">stat_halfeye</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
 <img data-src="lecture-w05_files/figure-revealjs/ota-bm-2-draws-diff-diff-diff-cri-1.png" width="960" class="r-stretch"></section>
 <section id="difference-of-difference-cris" class="slide level2">
 <h2>Difference of difference: CrIs</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>ota_bm_2_draws <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a></a>  <span class="fu">select</span>(diff_lr_h) <span class="sc">|&gt;</span> </span>
-<span id="cb11-3"><a></a>  <span class="fu">summarise_draws</span>(<span class="sc">~</span><span class="fu">quantile</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb11-4"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb11-5"><a></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">round</span>(.x, <span class="at">digits =</span> <span class="dv">2</span>))</span>
-<span id="cb11-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>ota_bm_2_draws <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a></a>  <span class="fu">select</span>(diff_lr_h) <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a></a>  <span class="fu">summarise_draws</span>(<span class="sc">~</span><span class="fu">quantile</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb18-4"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-5"><a></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">round</span>(.x, <span class="at">digits =</span> <span class="dv">2</span>))</span>
+<span id="cb18-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   variable   `5%` `95%`

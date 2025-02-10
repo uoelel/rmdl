@@ -7,7 +7,7 @@ format:
     theme: [default, custom.scss]
     history: false
 execute: 
-  echo: false
+  echo: true
 filters:
   - tachyonsextra
 knitr:
@@ -86,6 +86,7 @@ ota2009
 
 ```{r}
 #| label: fig-contr-cond
+#| echo: false
 
 emo <- tibble(
   label = c("☀️-🌙", "👦-🌙", "🔒-🔑", "🪨-🔑", "🐻-😱", "🍐-😱"),
@@ -165,6 +166,7 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 ```{r}
 #| label: subj-rts
 #| fig_asp: 0.5
+#| echo: false
 
 ota2009 |>
   filter(Contrast == "LR") |>
@@ -188,6 +190,7 @@ ota2009 |>
 ```{r}
 #| label: list-rts
 #| fig_asp: 0.5
+#| echo: false
 
 ota2009 |>
   filter(Contrast == "LR") |>
@@ -260,6 +263,7 @@ ota_bm_2_draws <- ota_bm_2_draws |>
     diff_lr = `b_ConditionUnrelated:ContrastLR` - `b_ConditionControl:ContrastLR`,
     diff_pb = `b_ConditionUnrelated:ContrastPB` - `b_ConditionControl:ContrastPB`,
   )
+ota_bm_2_draws
 ```
 
 ## Difference between unrelated and control: plot
@@ -267,6 +271,7 @@ ota_bm_2_draws <- ota_bm_2_draws |>
 ```{r}
 #| label: ota-bm-2-draws-diff-plot
 #| warning: false
+#| echo: false
 
 ota_bm_2_draws |> 
   pivot_longer(diff_h:diff_pb) |> 
