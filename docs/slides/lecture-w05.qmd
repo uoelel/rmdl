@@ -325,11 +325,11 @@ ota_bm_2_draws |>
 ::: box-note
 H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
-- Not enough evidence to assess (CrI [-0.27, 0.18]).
+-   Not enough evidence to assess (CrI \[-0.27, 0.18\]).
 
 H2. There is no difference in RTs in minimal pairs (PB).
 
-- Not enough evidence to assess (CrI [-0.08, 0.15]).
+-   Not enough evidence to assess (CrI \[-0.08, 0.15\]).
 :::
 
 ## Summary
@@ -337,7 +337,7 @@ H2. There is no difference in RTs in minimal pairs (PB).
 ::: box-tip
 -   You should include varying terms if data is "hierarchical", for example repeated measures from subjects or items.
 
-- Not including varying terms (wrongly) inflates posterior certainty.
+-   Not including varying terms (wrongly) inflates posterior certainty.
 
-- Frequentist regression models with lme4 often don't converge and researchers simplify the hierarchical structure of the model.
+-   Frequentist regression models with lme4 often don't converge and researchers simplify the hierarchical structure of the model.
 :::
