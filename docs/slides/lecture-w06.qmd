@@ -111,6 +111,7 @@ sha_bm_1 <- brm(
 
 ```{r}
 #| label: sha-bm-1-cond
+#| echo: true
 
 conditional_effects(sha_bm_1, "Group:Relation_type")
 
@@ -137,6 +138,7 @@ conditional_effects(sha_bm_1, "Group:Relation_type")
 
 shallow |> 
   filter(Group == "L2") |> 
+  mutate(Relation_type = str_sub(Relation_type, 1, 3)) |> 
   ggplot(aes(Relation_type, fill = accuracy)) +
   geom_bar(position = "fill") +
   facet_wrap(~ID)
@@ -149,6 +151,7 @@ shallow |>
 
 shallow |> 
   filter(Group == "L2") |> 
+  mutate(Relation_type = str_sub(Relation_type, 1, 3)) |> 
   ggplot(aes(Relation_type, fill = accuracy)) +
   geom_bar(position = "fill") +
   facet_wrap(~Target)
@@ -170,6 +173,8 @@ sha_bm_2 <- brm(
   seed = my_seed,
   file = "data/cache/sha_bm_2"
 )
+
+summary(sha_bm_2)
 ```
 
 ## By-subject and by-target model: expected predictions plot
@@ -191,6 +196,8 @@ sha_bm_2_draws <- sha_bm_2_draws |>
   mutate(
     diff_l2 = `b_GroupL2:Relation_typeNonConstituent` - `b_GroupL2:Relation_typeConstituent`
   )
+
+sha_bm_2_draws
 ```
 
 ## Difference between non/constituent in L2: plot
@@ -212,16 +219,16 @@ sha_bm_2_draws |>
 
 sha_bm_2_draws |> 
   select(diff_l2) |> 
-  summarise_draws(~quantile(.x, probs = c(0.05, 0.95, 0.5, 0.85))) |> 
+  summarise_draws(~quantile(.x, probs = c(0.05, 0.95, 0.15, 0.85))) |> 
   mutate(
     across(where(is.numeric), ~round(.x, digits = 2))
   )
 ```
 
-## Expected predictions by subject
+## Expected predictions by subject: get draws of constant terms
 
 ```{r}
-#| label: sha-bm-subj
+#| label: sha-bm-subj-1
 #| echo: true
 
 sha_bm_2_draws <- as_draws_df(sha_bm_2, variable = c("^b_.*"), regex = TRUE) |> 
@@ -230,15 +237,34 @@ sha_bm_2_draws <- as_draws_df(sha_bm_2, variable = c("^b_.*"), regex = TRUE) |>
     names_to = c("Group", "Relation_type"),
     names_pattern = "b_Group(.*):(.*)"
   )
+
+sha_bm_2_draws
+```
+
+## Expected predictions by subject: get draws of varying terms
+
+```{r}
+#| label: sha-bm-subj-2
+#| echo: true
 sha_bm_2_r <- spread_draws(sha_bm_2, r_ID[ID,Relation_type]) |> 
   mutate(
     Group = str_sub(ID, 1, 2)
   )
 
+sha_bm_2_r
+```
+
+## Expected predictions by subject: join
+
+```{r}
+#| label: sha-bm-subj-3
+#| echo: true
 sha_bm_2_draws_r <- left_join(sha_bm_2_draws, sha_bm_2_r) |> 
   mutate(
     epred = value + r_ID
   )
+
+sha_bm_2_draws_r
 ```
 
 ## Expected predictions by subject: plot
@@ -248,8 +274,12 @@ sha_bm_2_draws_r <- left_join(sha_bm_2_draws, sha_bm_2_r) |>
 sha_bm_2_draws_r |> 
   filter(Group == "L2") |> 
   ggplot(aes(epred)) +
+  geom_vline(xintercept = 0) +
   geom_density(aes(fill = Relation_type), alpha = 0.5) +
-  facet_wrap(vars(ID))
+  facet_wrap(vars(ID)) +
+  labs(
+    x = "Predicted log-odds"
+  )
 ```
 
 ## Difference between expected predictions by-subject
@@ -264,6 +294,8 @@ sha_bm_2_draws_r_wide <- sha_bm_2_draws_r |>
   mutate(
     ncon_con = Relation_typeNonConstituent - Relation_typeConstituent
   )
+
+sha_bm_2_draws_r_wide
 ```
 
 ## Difference between expected predictions by-subject: plot
@@ -289,7 +321,7 @@ sha_bm_2_draws_r_wide |>
 
 -   The 90% CrI of the difference between nonconstituent and constituent in L2 is \[-1.3, 0.26\].
 
--   At 70% probability, the log-odds of the priming effect on accuracy between nonconstituent and constituent in L2 participants differs between -0.01 and -0.47.
+-   At 70% probability, the log-odds of the priming effect on accuracy between nonconstituent and constituent in L2 participants differs between -0.98 and -0.01.
 
 -   There is a lot of uncertainty in the expected predictions of individual participants, although there is a tendency for negative differences between nonconstituent and constituent.
 :::
