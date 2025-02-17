@@ -1,5 +1,5 @@
 ---
-title: "QML -- Week 5"
+title: "RMDL -- Week 5"
 subtitle: "Varying effects I"
 ---
 
