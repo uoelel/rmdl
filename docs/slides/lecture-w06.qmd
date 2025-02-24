@@ -105,6 +105,8 @@ sha_bm_1 <- brm(
   seed = my_seed,
   file = "data/cache/sha_bm_1"
 )
+
+sha_bm_1
 ```
 
 ## Bernoulli regression: expected predictions
@@ -183,6 +185,14 @@ summary(sha_bm_2)
 #| label: sha-bm-2-conds
 conditional_effects(sha_bm_2, "Group:Relation_type")
 ```
+
+## Song 2020: hypotheses
+
+::: box-warning
+Vague hypothesis:
+
+> The Shallow Structure Hypothesis (SSH) allows the possibility for nonnative speakers to show strong priming effects from nonconstituent and constituent primes equally because the shallow processing route, which relies more heavily on semantic and surface-level information than on structural information.
+:::
 
 ## Difference between non/constituent in L2
 

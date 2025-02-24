@@ -6,9 +6,9 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-48ffa3e5b9d089919c6712c39e5b00f2.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="../site_libs/quarto-contrib/tachyonsextra-0.0.1/tachyonsextra.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.40">
+  <meta name="generator" content="quarto-1.6.41">
 
   <meta name="author" content="Dr Stefano Coretta">
   <title>RMDL – Research Methods in Developmental Linguistics – Week 6</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-637760dff13da2e0ed9f0d9c73365ebb.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-669b5f9152513be6145c8dd02a7d0a44.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -280,13 +280,43 @@ Dr Stefano Coretta
 <span id="cb3-7"><a></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
 <span id="cb3-8"><a></a>  <span class="at">seed =</span> my_seed,</span>
 <span id="cb3-9"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_1"</span></span>
-<span id="cb3-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-10"><a></a>)</span>
+<span id="cb3-11"><a></a></span>
+<span id="cb3-12"><a></a>sha_bm_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: bernoulli 
+  Links: mu = logit 
+Formula: accuracy ~ 0 + Group:Relation_type 
+   Data: shallow (Number of observations: 1170) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Regression Coefficients:
+                                    Estimate Est.Error l-95% CI u-95% CI Rhat
+GroupL1:Relation_typeConstituent        1.80      0.22     1.39     2.24 1.00
+GroupL2:Relation_typeConstituent        1.24      0.16     0.94     1.55 1.00
+GroupL1:Relation_typeNonConstituent     1.18      0.18     0.85     1.55 1.00
+GroupL2:Relation_typeNonConstituent     1.08      0.16     0.78     1.40 1.00
+GroupL1:Relation_typeUnrelated          1.00      0.17     0.67     1.35 1.00
+GroupL2:Relation_typeUnrelated          0.69      0.14     0.42     0.97 1.00
+                                    Bulk_ESS Tail_ESS
+GroupL1:Relation_typeConstituent        5974     2708
+GroupL2:Relation_typeConstituent        6326     3196
+GroupL1:Relation_typeNonConstituent     5886     2697
+GroupL2:Relation_typeNonConstituent     6350     2842
+GroupL1:Relation_typeUnrelated          5117     3098
+GroupL2:Relation_typeUnrelated          5487     2761
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
 </div>
 </section>
 <section id="bernoulli-regression-expected-predictions" class="slide level2">
 <h2>Bernoulli regression: expected predictions</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">conditional_effects</span>(sha_bm_1, <span class="st">"Group:Relation_type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">conditional_effects</span>(sha_bm_1, <span class="st">"Group:Relation_type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="lecture-w06_files/figure-revealjs/sha-bm-1-cond-1.png" width="960" class="r-stretch"></section>
@@ -317,18 +347,18 @@ Dr Stefano Coretta
 <section id="by-subject-and-by-target-varying-terms" class="slide level2">
 <h2>By-subject and by-target varying terms</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>sha_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb5-2"><a></a>  ACC <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Group<span class="sc">:</span>Relation_type <span class="sc">+</span></span>
-<span id="cb5-3"><a></a>    (<span class="dv">0</span> <span class="sc">+</span> Relation_type <span class="sc">|</span> ID) <span class="sc">+</span></span>
-<span id="cb5-4"><a></a>    (<span class="dv">0</span> <span class="sc">+</span> Group<span class="sc">:</span>Relation_type <span class="sc">|</span> Target),</span>
-<span id="cb5-5"><a></a>  <span class="at">family =</span> bernoulli,</span>
-<span id="cb5-6"><a></a>  <span class="at">data =</span> shallow,</span>
-<span id="cb5-7"><a></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb5-8"><a></a>  <span class="at">seed =</span> my_seed,</span>
-<span id="cb5-9"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_2"</span></span>
-<span id="cb5-10"><a></a>)</span>
-<span id="cb5-11"><a></a></span>
-<span id="cb5-12"><a></a><span class="fu">summary</span>(sha_bm_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>sha_bm_2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb6-2"><a></a>  ACC <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Group<span class="sc">:</span>Relation_type <span class="sc">+</span></span>
+<span id="cb6-3"><a></a>    (<span class="dv">0</span> <span class="sc">+</span> Relation_type <span class="sc">|</span> ID) <span class="sc">+</span></span>
+<span id="cb6-4"><a></a>    (<span class="dv">0</span> <span class="sc">+</span> Group<span class="sc">:</span>Relation_type <span class="sc">|</span> Target),</span>
+<span id="cb6-5"><a></a>  <span class="at">family =</span> bernoulli,</span>
+<span id="cb6-6"><a></a>  <span class="at">data =</span> shallow,</span>
+<span id="cb6-7"><a></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb6-8"><a></a>  <span class="at">seed =</span> my_seed,</span>
+<span id="cb6-9"><a></a>  <span class="at">file =</span> <span class="st">"data/cache/sha_bm_2"</span></span>
+<span id="cb6-10"><a></a>)</span>
+<span id="cb6-11"><a></a></span>
+<span id="cb6-12"><a></a><span class="fu">summary</span>(sha_bm_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: bernoulli 
   Links: mu = logit 
@@ -550,17 +580,26 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>By-subject and by-target model: expected predictions plot</h2>
 
 <img data-src="lecture-w06_files/figure-revealjs/sha-bm-2-conds-1.png" width="960" class="r-stretch"></section>
+<section id="song-2020-hypotheses-1" class="slide level2">
+<h2>Song 2020: hypotheses</h2>
+<div class="box-warning">
+<p>Vague hypothesis:</p>
+<blockquote>
+<p>The Shallow Structure Hypothesis (SSH) allows the possibility for nonnative speakers to show strong priming effects from nonconstituent and constituent primes equally because the shallow processing route, which relies more heavily on semantic and surface-level information than on structural information.</p>
+</blockquote>
+</div>
+</section>
 <section id="difference-between-nonconstituent-in-l2" class="slide level2">
 <h2>Difference between non/constituent in L2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>sha_bm_2_draws <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(sha_bm_2, <span class="at">variable =</span> <span class="st">"b_"</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-2"><a></a></span>
-<span id="cb7-3"><a></a>sha_bm_2_draws <span class="ot">&lt;-</span> sha_bm_2_draws <span class="sc">|&gt;</span> </span>
-<span id="cb7-4"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb7-5"><a></a>    <span class="at">diff_l2 =</span> <span class="st">`</span><span class="at">b_GroupL2:Relation_typeNonConstituent</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">b_GroupL2:Relation_typeConstituent</span><span class="st">`</span></span>
-<span id="cb7-6"><a></a>  )</span>
-<span id="cb7-7"><a></a></span>
-<span id="cb7-8"><a></a>sha_bm_2_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>sha_bm_2_draws <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(sha_bm_2, <span class="at">variable =</span> <span class="st">"b_"</span>, <span class="at">regex =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-2"><a></a></span>
+<span id="cb8-3"><a></a>sha_bm_2_draws <span class="ot">&lt;-</span> sha_bm_2_draws <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-5"><a></a>    <span class="at">diff_l2 =</span> <span class="st">`</span><span class="at">b_GroupL2:Relation_typeNonConstituent</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">b_GroupL2:Relation_typeConstituent</span><span class="st">`</span></span>
+<span id="cb8-6"><a></a>  )</span>
+<span id="cb8-7"><a></a></span>
+<span id="cb8-8"><a></a>sha_bm_2_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A draws_df: 1000 iterations, 4 chains, and 7 variables
    b_GroupL1:Relation_typeConstituent b_GroupL2:Relation_typeConstituent
@@ -608,12 +647,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="difference-between-nonconstituent-in-l2-cris" class="slide level2">
 <h2>Difference between non/constituent in L2: CrIs</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>sha_bm_2_draws <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a></a>  <span class="fu">select</span>(diff_l2) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a></a>  <span class="fu">summarise_draws</span>(<span class="sc">~</span><span class="fu">quantile</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="fl">0.15</span>, <span class="fl">0.85</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb9-4"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-5"><a></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">round</span>(.x, <span class="at">digits =</span> <span class="dv">2</span>))</span>
-<span id="cb9-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>sha_bm_2_draws <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a></a>  <span class="fu">select</span>(diff_l2) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a></a>  <span class="fu">summarise_draws</span>(<span class="sc">~</span><span class="fu">quantile</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="fl">0.15</span>, <span class="fl">0.85</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-5"><a></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">round</span>(.x, <span class="at">digits =</span> <span class="dv">2</span>))</span>
+<span id="cb10-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
   variable  `5%` `95%` `15%` `85%`
@@ -625,14 +664,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="expected-predictions-by-subject-get-draws-of-constant-terms" class="slide level2">
 <h2>Expected predictions by subject: get draws of constant terms</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>sha_bm_2_draws <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(sha_bm_2, <span class="at">variable =</span> <span class="fu">c</span>(<span class="st">"^b_.*"</span>), <span class="at">regex =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb11-3"><a></a>    <span class="st">`</span><span class="at">b_GroupL1:Relation_typeConstituent</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">b_GroupL2:Relation_typeUnrelated</span><span class="st">`</span>,</span>
-<span id="cb11-4"><a></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"Group"</span>, <span class="st">"Relation_type"</span>),</span>
-<span id="cb11-5"><a></a>    <span class="at">names_pattern =</span> <span class="st">"b_Group(.*):(.*)"</span></span>
-<span id="cb11-6"><a></a>  )</span>
-<span id="cb11-7"><a></a></span>
-<span id="cb11-8"><a></a>sha_bm_2_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>sha_bm_2_draws <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(sha_bm_2, <span class="at">variable =</span> <span class="fu">c</span>(<span class="st">"^b_.*"</span>), <span class="at">regex =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb12-3"><a></a>    <span class="st">`</span><span class="at">b_GroupL1:Relation_typeConstituent</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">b_GroupL2:Relation_typeUnrelated</span><span class="st">`</span>,</span>
+<span id="cb12-4"><a></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"Group"</span>, <span class="st">"Relation_type"</span>),</span>
+<span id="cb12-5"><a></a>    <span class="at">names_pattern =</span> <span class="st">"b_Group(.*):(.*)"</span></span>
+<span id="cb12-6"><a></a>  )</span>
+<span id="cb12-7"><a></a></span>
+<span id="cb12-8"><a></a>sha_bm_2_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 24,000 × 6
    .chain .iteration .draw Group Relation_type               value
@@ -654,12 +693,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="expected-predictions-by-subject-get-draws-of-varying-terms" class="slide level2">
 <h2>Expected predictions by subject: get draws of varying terms</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>sha_bm_2_r <span class="ot">&lt;-</span> <span class="fu">spread_draws</span>(sha_bm_2, r_ID[ID,Relation_type]) <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb13-3"><a></a>    <span class="at">Group =</span> <span class="fu">str_sub</span>(ID, <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb13-4"><a></a>  )</span>
-<span id="cb13-5"><a></a></span>
-<span id="cb13-6"><a></a>sha_bm_2_r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>sha_bm_2_r <span class="ot">&lt;-</span> <span class="fu">spread_draws</span>(sha_bm_2, r_ID[ID,Relation_type]) <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a></a>    <span class="at">Group =</span> <span class="fu">str_sub</span>(ID, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb14-4"><a></a>  )</span>
+<span id="cb14-5"><a></a></span>
+<span id="cb14-6"><a></a>sha_bm_2_r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 780,000 × 7
 # Groups:   ID, Relation_type [195]
@@ -682,12 +721,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="expected-predictions-by-subject-join" class="slide level2">
 <h2>Expected predictions by subject: join</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>sha_bm_2_draws_r <span class="ot">&lt;-</span> <span class="fu">left_join</span>(sha_bm_2_draws, sha_bm_2_r) <span class="sc">|&gt;</span> </span>
-<span id="cb15-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb15-3"><a></a>    <span class="at">epred =</span> value <span class="sc">+</span> r_ID</span>
-<span id="cb15-4"><a></a>  )</span>
-<span id="cb15-5"><a></a></span>
-<span id="cb15-6"><a></a>sha_bm_2_draws_r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>sha_bm_2_draws_r <span class="ot">&lt;-</span> <span class="fu">left_join</span>(sha_bm_2_draws, sha_bm_2_r) <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-3"><a></a>    <span class="at">epred =</span> value <span class="sc">+</span> r_ID</span>
+<span id="cb16-4"><a></a>  )</span>
+<span id="cb16-5"><a></a></span>
+<span id="cb16-6"><a></a>sha_bm_2_draws_r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 780,000 × 9
    .chain .iteration .draw Group Relation_type         value ID       r_ID epred
@@ -713,14 +752,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="difference-between-expected-predictions-by-subject" class="slide level2">
 <h2>Difference between expected predictions by-subject</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>sha_bm_2_draws_r_wide <span class="ot">&lt;-</span> sha_bm_2_draws_r <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>value, <span class="sc">-</span>r_ID) <span class="sc">|&gt;</span> </span>
-<span id="cb17-3"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Relation_type, <span class="at">values_from =</span> epred) <span class="sc">|&gt;</span> </span>
-<span id="cb17-4"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-5"><a></a>    <span class="at">ncon_con =</span> Relation_typeNonConstituent <span class="sc">-</span> Relation_typeConstituent</span>
-<span id="cb17-6"><a></a>  )</span>
-<span id="cb17-7"><a></a></span>
-<span id="cb17-8"><a></a>sha_bm_2_draws_r_wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>sha_bm_2_draws_r_wide <span class="ot">&lt;-</span> sha_bm_2_draws_r <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span>value, <span class="sc">-</span>r_ID) <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Relation_type, <span class="at">values_from =</span> epred) <span class="sc">|&gt;</span> </span>
+<span id="cb18-4"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-5"><a></a>    <span class="at">ncon_con =</span> Relation_typeNonConstituent <span class="sc">-</span> Relation_typeConstituent</span>
+<span id="cb18-6"><a></a>  )</span>
+<span id="cb18-7"><a></a></span>
+<span id="cb18-8"><a></a>sha_bm_2_draws_r_wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 260,000 × 9
    .chain .iteration .draw Group ID    Relation_typeConstituent
