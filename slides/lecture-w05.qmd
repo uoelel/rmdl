@@ -2,14 +2,8 @@
 title: "Research Methods in Developmental Linguistics -- Week 5"
 author: "Dr Stefano Coretta"
 institute: "University of Edinburgh"
-format:
-  mono-light-revealjs:
-    theme: [default, custom.scss]
-    history: false
 execute: 
   echo: true
-filters:
-  - tachyonsextra
 knitr:
   opts_chunk:
     dev: "ragg_png"
@@ -33,7 +27,7 @@ options(scipen=999)
 
 ## Case study: Ota 2009
 
-::: box-note
+::: {.callout-note appearance="simple"}
 -   Data from [Ota 2009](https://doi.org/10.1016/j.cognition.2008.12.007).
 
 -   L2 lexical representation of "near-homophones": ROCK/LOCK for Japanese speakers.
@@ -43,7 +37,7 @@ options(scipen=999)
 
 ## Ota 2009: design
 
-::: box-note
+::: {.callout-note appearance="simple"}
 -   Semantic-relatedness task.
 
 -   Pairs of written words presented visually.
@@ -57,8 +51,8 @@ options(scipen=999)
 
 . . .
 
-::: box-warning
-**Research hypotheses**
+::: callout-warning
+## Research hypotheses
 
 H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
@@ -86,6 +80,7 @@ ota2009
 
 ```{r}
 #| label: fig-contr-cond
+#| fig-cap: "Logged RTs in three contrasts and two conditions."
 #| echo: false
 
 emo <- tibble(
@@ -119,7 +114,8 @@ ota2009 |>
 my_seed <- 9283
 
 ota_bm_1 <- brm(
-  Words.RT ~ 0 + Condition:Contrast,
+  # Word.RT ~ Condition + Contrast + Condition:Contrast
+  Words.RT ~ Condition * Contrast,
   family = lognormal,
   data = ota2009,
   seed = my_seed,
@@ -136,7 +132,7 @@ ota_bm_1 <- brm(
 summary(ota_bm_1, prob = 0.9)
 ```
 
-## Log-normal regression: expected predictions
+## Log-normal regression: expected values
 
 ```{r}
 #| label: ota-bm-1-cond
@@ -147,7 +143,7 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 
 ## BUT...
 
-::: box-error
+::: {.callout-error appearance="simple"}
 -   Multiple observations from different participants.
 
 -   Multiple observations from different item lists.
@@ -155,7 +151,7 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 
 . . .
 
-::: box-tip
+::: {.callout-tip appearance="simple"}
 -   We need to include **varying terms** (also known as random or multilevel effects).
 
 -   Regression models with varying terms are variably known as mixed-effects, multilevel, hierarchical, nested... They are all the same thing.
@@ -165,6 +161,7 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 
 ```{r}
 #| label: subj-rts
+#| fig-cap: "Log-RTs in the LR condition by subject"
 #| fig_asp: 0.5
 #| echo: false
 
@@ -181,14 +178,14 @@ ota2009 |>
     fun.data = "mean_cl_boot"
   ) +
   facet_wrap(~ Subject, nrow = 2) +
-  theme(axis.text.x = element_blank(), legend.position = "bottom") +
-  labs(title = "Log-RTs in the LR condition by subject")
+  theme(axis.text.x = element_blank(), legend.position = "bottom")
 ```
 
 ## By-list RTs
 
 ```{r}
 #| label: list-rts
+#| fig-cap: "Log-RTs in the LR condition by list"
 #| fig_asp: 0.5
 #| echo: false
 
@@ -205,21 +202,17 @@ ota2009 |>
     fun.data = "mean_cl_boot"
   ) +
   facet_grid(cols = vars(Version)) +
-  theme(axis.text.x = element_blank(), legend.position = "bottom") +
-  labs(title = "Log-RTs in the LR condition by list")
+  theme(axis.text.x = element_blank(), legend.position = "bottom")
 ```
 
-## By-subject and by-list varying terms
+## By-subject varying intercept
 
 ```{r}
 #| label: ota-bm-2
 #| echo: true
 
-# took 80 seconds to fit
 ota_bm_2 <- brm(
-  Words.RT ~ 0 + Condition:Contrast +
-    (0 + Condition:Contrast | Subject) +
-    (0 + Condition:Contrast | Version),
+  Words.RT ~ 1 + (1 | Subject),
   family = lognormal,
   data = ota2009,
   seed = my_seed,
@@ -227,6 +220,30 @@ ota_bm_2 <- brm(
   file = "data/cache/ota_bm_2"
 )
 ```
+
+
+## By-subject and by-list varying terms
+
+```{r}
+#| label: ota-bm-2a
+#| echo: true
+
+# took 80 seconds to fit
+ota_bm_2 <- brm(
+  Words.RT ~ Condition * Contrast +
+    (Condition * Contrast | Subject) +
+    (Condition * Contrast | Version),
+  family = lognormal,
+  data = ota2009,
+  seed = my_seed,
+  cores = 4,
+  file = "data/cache/ota_bm_2"
+)
+```
+
+## Varying intercepts and varying slopes
+
+...
 
 ## By-subject and by-list model: expected predictions
 
@@ -327,7 +344,7 @@ ota_bm_2_draws |>
 
 ## Results overview
 
-::: box-note
+::: {.callout-note appearance="simple"}
 H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
 -   Not enough evidence to assess (CrI \[-0.27, 0.18\]).
@@ -339,7 +356,7 @@ H2. There is no difference in RTs in minimal pairs (PB).
 
 ## Summary
 
-::: box-tip
+::: {.callout-tip appearance="simple"}
 -   You should include varying terms if data is "hierarchical", for example repeated measures from subjects or items.
 
 -   Not including varying terms (wrongly) inflates posterior certainty.
