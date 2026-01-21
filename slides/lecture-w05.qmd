@@ -22,7 +22,7 @@ options(show.signif.stars = FALSE)
 
 my_seed <- 9283
 set.seed(my_seed)
-options(scipen=999)
+options(scipen = 999)
 ```
 
 ## Case study: Ota 2009
@@ -54,9 +54,11 @@ options(scipen=999)
 ::: callout-warning
 ## Research hypotheses
 
-H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
+H1.
+The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
-H2. There is no difference in RTs in minimal pairs (PB).
+H2.
+There is no difference in RTs in minimal pairs (PB).
 :::
 
 ## Ota 2009: the data
@@ -154,7 +156,8 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 ::: {.callout-tip appearance="simple"}
 -   We need to include **varying terms** (also known as random or multilevel effects).
 
--   Regression models with varying terms are variably known as mixed-effects, multilevel, hierarchical, nested... They are all the same thing.
+-   Regression models with varying terms are variably known as mixed-effects, multilevel, hierarchical, nested...
+    They are all the same thing.
 :::
 
 ## By-subject RTs
@@ -221,135 +224,164 @@ ota_bm_2 <- brm(
 )
 ```
 
-
-## By-subject and by-list varying terms
-
-```{r}
-#| label: ota-bm-2a
-#| echo: true
-
-# took 80 seconds to fit
-ota_bm_2 <- brm(
-  Words.RT ~ Condition * Contrast +
-    (Condition * Contrast | Subject) +
-    (Condition * Contrast | Version),
-  family = lognormal,
-  data = ota2009,
-  seed = my_seed,
-  cores = 4,
-  file = "data/cache/ota_bm_2"
-)
-```
-
-## Varying intercepts and varying slopes
-
-...
-
-## By-subject and by-list model: expected predictions
+## Model summary
 
 ```{r}
-#| label: ota-bm-2-sum
-#| echo: true
+#| label: ota-bm-2-summ
 
-fixef(ota_bm_2, probs = c(0.05, 0.95))
+summary(ota_bm_2, prob = 0.9)
 ```
 
-## By-subject and by-list model: expected predictions plot
-
-```{r}
-#| label: ota-bm-2-cond
-conditional_effects(ota_bm_2, "Contrast:Condition")
-```
-
-## Difference between unrelated and control
+## Model draws
 
 ```{r}
 #| label: ota-bm-2-draws
 #| echo: true
-ota_bm_2_draws <- as_draws_df(ota_bm_2, variable = "b_", regex = TRUE)
+
+ota_bm_2_draws <- as_draws_df(ota_bm_2)
 ota_bm_2_draws
 ```
 
-## Difference between unrelated and control
+## Model plot
 
 ```{r}
-#| label: ota-bm-2-draws-diff
-ota_bm_2_draws <- ota_bm_2_draws |> 
+#| label: ota-bm-2-plot
+
+plot(ota_bm_2)
+```
+
+
+## By-subject varying intercept and slope
+
+```{r}
+#| label: ota-bm-3
+#| echo: true
+
+ota_bm_3 <- brm(
+  Words.RT ~ Condition +
+    (Condition | Subject),
+  family = lognormal,
+  data = ota2009,
+  seed = my_seed,
+  cores = 4,
+  file = "data/cache/ota_bm_3"
+)
+```
+
+## Model summary
+
+```{r}
+#| label: ota-bm-3-summ
+#| echo: true
+
+summary(ota_bm_3, prob = 0.9)
+```
+
+## Model draws
+
+```{r}
+#| label: ota-bm-3-draws
+
+ota_bm_3_draws <- as_draws_df(ota_bm_3)
+ota_bm_3_draws
+```
+
+
+## Expected values
+
+```{r}
+#| label: ota-bm-3-cond
+
+conditional_effects(ota_bm_3)
+```
+
+## By-subject varying intercept and slopes
+
+```{r}
+#| label: ota-bm-4
+#| echo: true
+
+ota_bm_4 <- brm(
+  Words.RT ~ Condition * Contrast +
+    (Condition * Contrast | Subject),
+  family = lognormal,
+  data = ota2009,
+  seed = my_seed,
+  cores = 4,
+  file = "data/cache/ota_bm_4"
+)
+```
+
+## Model summary
+
+```{r}
+#| label: ota-bm-4-summ
+
+summary(ota_bm_4, prob = 0.9)
+```
+
+## Expected values
+
+```{r}
+#| label: ota-bm-4-cond
+
+conditional_effects(ota_bm_4, "Contrast:Condition")
+```
+
+```{r}
+#| label: ota-bm-1-cond-2
+
+conditional_effects(ota_bm_1, effects = "Contrast:Condition")
+
+```
+
+## Constant (fixed) effects
+
+```{r}
+#| label: ota-bm-4-fixef
+#| echo: true
+
+fixef(ota_bm_4, probs = c(0.05, 0.95)) |> round(2)
+```
+
+## Effect of condition in PB: calculate
+
+```{r}
+ota_bm_4_draws <- as_draws_df(ota_bm_4) |> 
   mutate(
-    diff_h = `b_ConditionUnrelated:ContrastH` - `b_ConditionControl:ContrastH`,
-    diff_lr = `b_ConditionUnrelated:ContrastLR` - `b_ConditionControl:ContrastLR`,
-    diff_pb = `b_ConditionUnrelated:ContrastPB` - `b_ConditionControl:ContrastPB`,
+    unrel_h = b_ConditionUnrelated,
+    unrel_lr = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastLR`,
+    unrel_pb = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastPB`
   )
-ota_bm_2_draws
 ```
 
-## Difference between unrelated and control: plot
+## Effect of condition in PB: plot
 
 ```{r}
-#| label: ota-bm-2-draws-diff-plot
-#| warning: false
+#| label: fig-cond-effect
+#| fig-cap: "Effect of 'unrelated' in three contrasts."
 #| echo: false
+#| warning: false
 
-ota_bm_2_draws |> 
-  pivot_longer(diff_h:diff_pb) |> 
-  ggplot(aes(value, name, fill = name)) +
+ota_bm_4_draws |> 
+  pivot_longer(unrel_h:unrel_pb) |> 
+  ggplot(aes(value, name)) +
   geom_vline(xintercept = 0) +
   stat_halfeye() +
-  theme(legend.position = "none")
+  xlim(-0.1, 0.25)
 ```
 
-## Difference between unrelated and control: CrIs
-
-```{r}
-#| label: ota-bm-2-draws-diff-cri
-#| echo: true
-
-ota_bm_2_draws |> 
-  pivot_longer(diff_h:diff_pb) |> 
-  select(name, value) |> 
-  group_by(name) |> 
-  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |> 
-  mutate(
-    across(where(is.numeric), ~round(.x, digits = 2))
-  )
-```
-
-## Difference of difference LR/H
-
-```{r}
-#| label: ota-bm-2-draws-diff-diff-diff-cri
-
-ota_bm_2_draws <- ota_bm_2_draws |> 
-  mutate(diff_lr_h = diff_lr - diff_h)
-
-ota_bm_2_draws |> 
-  ggplot(aes(diff_lr_h)) +
-  geom_vline(xintercept = 0) +
-  stat_halfeye()
-```
-
-## Difference of difference: CrIs
-
-```{r}
-#| label: ota-bm-2-draws-diff-diff-cri
-#| echo: true
-
-ota_bm_2_draws |> 
-  select(diff_lr_h) |> 
-  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |> 
-  mutate(
-    across(where(is.numeric), ~round(.x, digits = 2))
-  )
-```
 
 ## Results overview
 
 ::: {.callout-note appearance="simple"}
-H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
+H1.
+The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
 -   Not enough evidence to assess (CrI \[-0.27, 0.18\]).
 
-H2. There is no difference in RTs in minimal pairs (PB).
+H2.
+There is no difference in RTs in minimal pairs (PB).
 
 -   Not enough evidence to assess (CrI \[-0.08, 0.15\]).
 :::
