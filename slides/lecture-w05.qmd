@@ -15,6 +15,7 @@ theme_set(theme_light())
 
 library(brms)
 library(tidybayes)
+library(posterior)
 
 options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
 options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))
@@ -64,7 +65,7 @@ There is no difference in RTs in minimal pairs (PB).
 ## Ota 2009: the data
 
 ```{r}
-#| label: ota2009
+#| label: ota2009-read
 
 ota2009 <- read_csv("data/ota2009/key-rock.csv") |>
   filter(
@@ -75,8 +76,16 @@ ota2009 <- read_csv("data/ota2009/key-rock.csv") |>
     RT_log = log(Words.RT),
     Item_id = paste(Version, Contrast, Item, sep = "_")
   )
+```
+
+## Ota 2009: the data
+
+```{r}
+#| label: ota2009
+
 ota2009
 ```
+
 
 ## Ota 2009: RTs
 
@@ -163,7 +172,7 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 ## By-subject RTs
 
 ```{r}
-#| label: subj-rts
+#| label: fig-subj-rts
 #| fig-cap: "Log-RTs in the LR condition by subject"
 #| fig_asp: 0.5
 #| echo: false
@@ -187,7 +196,7 @@ ota2009 |>
 ## By-list RTs
 
 ```{r}
-#| label: list-rts
+#| label: fig-list-rts
 #| fig-cap: "Log-RTs in the LR condition by list"
 #| fig_asp: 0.5
 #| echo: false
@@ -328,6 +337,8 @@ summary(ota_bm_4, prob = 0.9)
 conditional_effects(ota_bm_4, "Contrast:Condition")
 ```
 
+## Expected values (without varying terms)
+
 ```{r}
 #| label: ota-bm-1-cond-2
 
@@ -342,6 +353,8 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 #| echo: true
 
 fixef(ota_bm_4, probs = c(0.05, 0.95)) |> round(2)
+
+fixef(ota_bm_1, probs = c(0.05, 0.95)) |> round(2)
 ```
 
 ## Effect of condition in PB: calculate
@@ -353,6 +366,8 @@ ota_bm_4_draws <- as_draws_df(ota_bm_4) |>
     unrel_lr = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastLR`,
     unrel_pb = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastPB`
   )
+
+quantile2(ota_bm_4_draws$unrel_pb) |> round(2)
 ```
 
 ## Effect of condition in PB: plot
@@ -371,6 +386,17 @@ ota_bm_4_draws |>
   xlim(-0.1, 0.25)
 ```
 
+## Difference of effect of condition in H and LR
+
+```{r}
+ota_bm_4_draws <- ota_bm_4_draws |> 
+  mutate(
+    unrel_h_lr = unrel_h - unrel_lr
+  )
+
+quantile2(ota_bm_4_draws$unrel_h_lr) |> round(2)
+```
+
 
 ## Results overview
 
@@ -378,12 +404,12 @@ ota_bm_4_draws |>
 H1.
 The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
--   Not enough evidence to assess (CrI \[-0.27, 0.18\]).
+-   **Not enough evidence to assess** (90% CrI \[-0.4, 0.12\]).
 
 H2.
 There is no difference in RTs in minimal pairs (PB).
 
--   Not enough evidence to assess (CrI \[-0.08, 0.15\]).
+-   **Not enough evidence to assess** (90% CrI \[-0.02, 0.10\]).
 :::
 
 ## Summary
