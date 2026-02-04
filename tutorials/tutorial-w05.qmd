@@ -1,6 +1,7 @@
 ---
 title: "RMDL -- Week 5"
 subtitle: "Varying effects I"
+bibliography: references.bib
 ---
 
 ```{r}
@@ -23,7 +24,6 @@ options(dplyr.summarise.inform = FALSE)
 my_seed <- 8878
 ```
 
-
 ## Introduction
 
 ::: callout-warning
@@ -40,9 +40,10 @@ If you see `Project (none)` in the top-right corner, that means **you are not** 
 To make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
 :::
 
-In this tutorial, you have to run Bayesian regression models with data from Winter 2012 (DOI [10.1016/j.wocn.2012.08.006](https://doi.org/10.1016/j.wocn.2012.08.006)).
+In this tutorial, you have to run Bayesian regression models with data from @winter2012.
 
-You can get the data [here](/data/winter2012/polite.csv) (right-click and download). This page explains the meaning of the columns in the data: <https://uoelel.github.io/qml-data/data/winter2012/polite.html>.
+You can get the data [here](/data/winter2012/polite.csv) (right-click and download).
+This page explains the meaning of the columns in the data: <https://uoelel.github.io/qml-data/data/winter2012/polite.html>.
 
 ## Mean f0
 
@@ -52,9 +53,9 @@ Fit a regression model to answer the following question:
 
 The model should have the following variables:
 
-- `f0mn` as the outcome variable.
-- `gender`, `months_ger` and `attitude` as predictors. Use indexing (`0 +`).
-- Add multilevel effects as needed.
+-   `f0mn` as the outcome variable.
+-   `gender`, `months_ger` and `attitude` as predictors.
+-   Add varying terms/multilevel effects as needed.
 
 ## H1-H2 difference
 
@@ -66,13 +67,14 @@ The H1-H2 difference is correlated with breathiness: the higher the difference, 
 
 ## Reporting
 
-You should mention the varying effects you included when reporting the model specification. For example, for the following model:
+You should mention the varying effects you included when reporting the model specification.
+For example, for the following model:
 
-```r
+``` r
 ota_bm_2 <- brm(
-  Words.RT ~ 0 + Condition:Contrast +
-    (0 + Condition:Contrast | Subject) +
-    (0 + Condition:Contrast | Version),
+  Words.RT ~ Condition * Contrast +
+    (Condition * Contrast | Subject) +
+    (Condition * Contrast | Version),
   family = lognormal,
   data = ota2009,
   seed = my_seed,
@@ -81,4 +83,6 @@ ota_bm_2 <- brm(
 )
 ```
 
-> As varying (aka random) effects, we included by-participant and by-list varying terms for the interaction between condition and contrast.
+> As varying (aka random) effects, we included by-participant and by-list varying intercepts and by-participant and by-list varying slopes for condition, contrast and their interaction.
+
+### References

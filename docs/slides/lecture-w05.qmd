@@ -2,14 +2,8 @@
 title: "Research Methods in Developmental Linguistics -- Week 5"
 author: "Dr Stefano Coretta"
 institute: "University of Edinburgh"
-format:
-  mono-light-revealjs:
-    theme: [default, custom.scss]
-    history: false
 execute: 
   echo: true
-filters:
-  - tachyonsextra
 knitr:
   opts_chunk:
     dev: "ragg_png"
@@ -21,6 +15,7 @@ theme_set(theme_light())
 
 library(brms)
 library(tidybayes)
+library(posterior)
 
 options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
 options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))
@@ -28,12 +23,12 @@ options(show.signif.stars = FALSE)
 
 my_seed <- 9283
 set.seed(my_seed)
-options(scipen=999)
+options(scipen = 999)
 ```
 
 ## Case study: Ota 2009
 
-::: box-note
+::: {.callout-note appearance="simple"}
 -   Data from [Ota 2009](https://doi.org/10.1016/j.cognition.2008.12.007).
 
 -   L2 lexical representation of "near-homophones": ROCK/LOCK for Japanese speakers.
@@ -43,7 +38,7 @@ options(scipen=999)
 
 ## Ota 2009: design
 
-::: box-note
+::: {.callout-note appearance="simple"}
 -   Semantic-relatedness task.
 
 -   Pairs of written words presented visually.
@@ -57,18 +52,20 @@ options(scipen=999)
 
 . . .
 
-::: box-warning
-**Research hypotheses**
+::: callout-warning
+## Research hypotheses
 
-H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
+H1.
+The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
-H2. There is no difference in RTs in minimal pairs (PB).
+H2.
+There is no difference in RTs in minimal pairs (PB).
 :::
 
 ## Ota 2009: the data
 
 ```{r}
-#| label: ota2009
+#| label: ota2009-read
 
 ota2009 <- read_csv("data/ota2009/key-rock.csv") |>
   filter(
@@ -79,13 +76,22 @@ ota2009 <- read_csv("data/ota2009/key-rock.csv") |>
     RT_log = log(Words.RT),
     Item_id = paste(Version, Contrast, Item, sep = "_")
   )
+```
+
+## Ota 2009: the data
+
+```{r}
+#| label: ota2009
+
 ota2009
 ```
+
 
 ## Ota 2009: RTs
 
 ```{r}
 #| label: fig-contr-cond
+#| fig-cap: "Logged RTs in three contrasts and two conditions."
 #| echo: false
 
 emo <- tibble(
@@ -119,7 +125,8 @@ ota2009 |>
 my_seed <- 9283
 
 ota_bm_1 <- brm(
-  Words.RT ~ 0 + Condition:Contrast,
+  # Word.RT ~ Condition + Contrast + Condition:Contrast
+  Words.RT ~ Condition * Contrast,
   family = lognormal,
   data = ota2009,
   seed = my_seed,
@@ -136,7 +143,7 @@ ota_bm_1 <- brm(
 summary(ota_bm_1, prob = 0.9)
 ```
 
-## Log-normal regression: expected predictions
+## Log-normal regression: expected values
 
 ```{r}
 #| label: ota-bm-1-cond
@@ -147,7 +154,7 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 
 ## BUT...
 
-::: box-error
+::: {.callout-error appearance="simple"}
 -   Multiple observations from different participants.
 
 -   Multiple observations from different item lists.
@@ -155,16 +162,18 @@ conditional_effects(ota_bm_1, effects = "Contrast:Condition")
 
 . . .
 
-::: box-tip
+::: {.callout-tip appearance="simple"}
 -   We need to include **varying terms** (also known as random or multilevel effects).
 
--   Regression models with varying terms are variably known as mixed-effects, multilevel, hierarchical, nested... They are all the same thing.
+-   Regression models with varying terms are variably known as mixed-effects, multilevel, hierarchical, nested...
+    They are all the same thing.
 :::
 
 ## By-subject RTs
 
 ```{r}
-#| label: subj-rts
+#| label: fig-subj-rts
+#| fig-cap: "Log-RTs in the LR condition by subject"
 #| fig_asp: 0.5
 #| echo: false
 
@@ -181,14 +190,14 @@ ota2009 |>
     fun.data = "mean_cl_boot"
   ) +
   facet_wrap(~ Subject, nrow = 2) +
-  theme(axis.text.x = element_blank(), legend.position = "bottom") +
-  labs(title = "Log-RTs in the LR condition by subject")
+  theme(axis.text.x = element_blank(), legend.position = "bottom")
 ```
 
 ## By-list RTs
 
 ```{r}
-#| label: list-rts
+#| label: fig-list-rts
+#| fig-cap: "Log-RTs in the LR condition by list"
 #| fig_asp: 0.5
 #| echo: false
 
@@ -205,21 +214,17 @@ ota2009 |>
     fun.data = "mean_cl_boot"
   ) +
   facet_grid(cols = vars(Version)) +
-  theme(axis.text.x = element_blank(), legend.position = "bottom") +
-  labs(title = "Log-RTs in the LR condition by list")
+  theme(axis.text.x = element_blank(), legend.position = "bottom")
 ```
 
-## By-subject and by-list varying terms
+## By-subject varying intercept
 
 ```{r}
 #| label: ota-bm-2
 #| echo: true
 
-# took 80 seconds to fit
 ota_bm_2 <- brm(
-  Words.RT ~ 0 + Condition:Contrast +
-    (0 + Condition:Contrast | Subject) +
-    (0 + Condition:Contrast | Version),
+  Words.RT ~ 1 + (1 | Subject),
   family = lognormal,
   data = ota2009,
   seed = my_seed,
@@ -228,118 +233,188 @@ ota_bm_2 <- brm(
 )
 ```
 
-## By-subject and by-list model: expected predictions
+## Model summary
 
 ```{r}
-#| label: ota-bm-2-sum
-#| echo: true
+#| label: ota-bm-2-summ
 
-fixef(ota_bm_2, probs = c(0.05, 0.95))
+summary(ota_bm_2, prob = 0.9)
 ```
 
-## By-subject and by-list model: expected predictions plot
-
-```{r}
-#| label: ota-bm-2-cond
-conditional_effects(ota_bm_2, "Contrast:Condition")
-```
-
-## Difference between unrelated and control
+## Model draws
 
 ```{r}
 #| label: ota-bm-2-draws
 #| echo: true
-ota_bm_2_draws <- as_draws_df(ota_bm_2, variable = "b_", regex = TRUE)
+
+ota_bm_2_draws <- as_draws_df(ota_bm_2)
 ota_bm_2_draws
 ```
 
-## Difference between unrelated and control
+## Model plot
 
 ```{r}
-#| label: ota-bm-2-draws-diff
-ota_bm_2_draws <- ota_bm_2_draws |> 
+#| label: ota-bm-2-plot
+
+plot(ota_bm_2)
+```
+
+
+## By-subject varying intercept and slope
+
+```{r}
+#| label: ota-bm-3
+#| echo: true
+
+ota_bm_3 <- brm(
+  Words.RT ~ Condition +
+    (Condition | Subject),
+  family = lognormal,
+  data = ota2009,
+  seed = my_seed,
+  cores = 4,
+  file = "data/cache/ota_bm_3"
+)
+```
+
+## Model summary
+
+```{r}
+#| label: ota-bm-3-summ
+#| echo: true
+
+summary(ota_bm_3, prob = 0.9)
+```
+
+## Model draws
+
+```{r}
+#| label: ota-bm-3-draws
+
+ota_bm_3_draws <- as_draws_df(ota_bm_3)
+ota_bm_3_draws
+```
+
+
+## Expected values
+
+```{r}
+#| label: ota-bm-3-cond
+
+conditional_effects(ota_bm_3)
+```
+
+## By-subject varying intercept and slopes
+
+```{r}
+#| label: ota-bm-4
+#| echo: true
+
+ota_bm_4 <- brm(
+  Words.RT ~ Condition * Contrast +
+    (Condition * Contrast | Subject),
+  family = lognormal,
+  data = ota2009,
+  seed = my_seed,
+  cores = 4,
+  file = "data/cache/ota_bm_4"
+)
+```
+
+## Model summary
+
+```{r}
+#| label: ota-bm-4-summ
+
+summary(ota_bm_4, prob = 0.9)
+```
+
+## Expected values
+
+```{r}
+#| label: ota-bm-4-cond
+
+conditional_effects(ota_bm_4, "Contrast:Condition")
+```
+
+## Expected values (without varying terms)
+
+```{r}
+#| label: ota-bm-1-cond-2
+
+conditional_effects(ota_bm_1, effects = "Contrast:Condition")
+
+```
+
+## Constant (fixed) effects
+
+```{r}
+#| label: ota-bm-4-fixef
+#| echo: true
+
+fixef(ota_bm_4, probs = c(0.05, 0.95)) |> round(2)
+
+fixef(ota_bm_1, probs = c(0.05, 0.95)) |> round(2)
+```
+
+## Effect of condition in PB: calculate
+
+```{r}
+ota_bm_4_draws <- as_draws_df(ota_bm_4) |> 
   mutate(
-    diff_h = `b_ConditionUnrelated:ContrastH` - `b_ConditionControl:ContrastH`,
-    diff_lr = `b_ConditionUnrelated:ContrastLR` - `b_ConditionControl:ContrastLR`,
-    diff_pb = `b_ConditionUnrelated:ContrastPB` - `b_ConditionControl:ContrastPB`,
+    unrel_h = b_ConditionUnrelated,
+    unrel_lr = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastLR`,
+    unrel_pb = b_ConditionUnrelated + `b_ConditionUnrelated:ContrastPB`
   )
-ota_bm_2_draws
+
+quantile2(ota_bm_4_draws$unrel_pb) |> round(2)
 ```
 
-## Difference between unrelated and control: plot
+## Effect of condition in PB: plot
 
 ```{r}
-#| label: ota-bm-2-draws-diff-plot
-#| warning: false
+#| label: fig-cond-effect
+#| fig-cap: "Effect of 'unrelated' in three contrasts."
 #| echo: false
+#| warning: false
 
-ota_bm_2_draws |> 
-  pivot_longer(diff_h:diff_pb) |> 
-  ggplot(aes(value, name, fill = name)) +
+ota_bm_4_draws |> 
+  pivot_longer(unrel_h:unrel_pb) |> 
+  ggplot(aes(value, name)) +
   geom_vline(xintercept = 0) +
   stat_halfeye() +
-  theme(legend.position = "none")
+  xlim(-0.1, 0.25)
 ```
 
-## Difference between unrelated and control: CrIs
+## Difference of effect of condition in H and LR
 
 ```{r}
-#| label: ota-bm-2-draws-diff-cri
-#| echo: true
-
-ota_bm_2_draws |> 
-  pivot_longer(diff_h:diff_pb) |> 
-  select(name, value) |> 
-  group_by(name) |> 
-  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |> 
+ota_bm_4_draws <- ota_bm_4_draws |> 
   mutate(
-    across(where(is.numeric), ~round(.x, digits = 2))
+    unrel_h_lr = unrel_h - unrel_lr
   )
+
+quantile2(ota_bm_4_draws$unrel_h_lr) |> round(2)
 ```
 
-## Difference of difference LR/H
-
-```{r}
-#| label: ota-bm-2-draws-diff-diff-diff-cri
-
-ota_bm_2_draws <- ota_bm_2_draws |> 
-  mutate(diff_lr_h = diff_lr - diff_h)
-
-ota_bm_2_draws |> 
-  ggplot(aes(diff_lr_h)) +
-  geom_vline(xintercept = 0) +
-  stat_halfeye()
-```
-
-## Difference of difference: CrIs
-
-```{r}
-#| label: ota-bm-2-draws-diff-diff-cri
-#| echo: true
-
-ota_bm_2_draws |> 
-  select(diff_lr_h) |> 
-  summarise_draws(~quantile(.x, probs = c(0.05, 0.95))) |> 
-  mutate(
-    across(where(is.numeric), ~round(.x, digits = 2))
-  )
-```
 
 ## Results overview
 
-::: box-note
-H1. The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
+::: {.callout-note appearance="simple"}
+H1.
+The difference in RTs between unrelated and control is the same in homophones (H) and near-homophones (LR).
 
--   Not enough evidence to assess (CrI \[-0.27, 0.18\]).
+-   **Not enough evidence to assess** (90% CrI \[-0.4, 0.12\]).
 
-H2. There is no difference in RTs in minimal pairs (PB).
+H2.
+There is no difference in RTs in minimal pairs (PB).
 
--   Not enough evidence to assess (CrI \[-0.08, 0.15\]).
+-   **Not enough evidence to assess** (90% CrI \[-0.02, 0.10\]).
 :::
 
 ## Summary
 
-::: box-tip
+::: {.callout-tip appearance="simple"}
 -   You should include varying terms if data is "hierarchical", for example repeated measures from subjects or items.
 
 -   Not including varying terms (wrongly) inflates posterior certainty.

@@ -2,16 +2,11 @@
 title: "Research Methods in Developmental Linguistics -- Week 6"
 author: "Dr Stefano Coretta"
 institute: "University of Edinburgh"
-format:
-  mono-light-revealjs:
-    theme: [default, custom.scss]
-    history: false
 execute: 
   echo: false
 knitr:
   opts_chunk:
     dev: "ragg_png"
-filters: ["tachyonsextra"]
 ---
 
 ## Song 2020
@@ -35,7 +30,7 @@ set.seed(my_seed)
 options(scipen=999)
 ```
 
-::: box-note
+::: callout-note
 -   Data from [Song 2020](https://doi.org/10.1017/S0272263120000170).
 
 -   Shallow morphological representation in L2 speakers.
@@ -53,7 +48,7 @@ options(scipen=999)
 
 ## Song 2020: hypotheses
 
-::: box-warning
+::: callout-warning
 Vague hypothesis:
 
 > The Shallow Structure Hypothesis (SSH) allows the possibility for nonnative speakers to show strong priming effects from nonconstituent and constituent primes equally because the shallow processing route, which relies more heavily on semantic and surface-level information than on structural information.
@@ -121,7 +116,7 @@ conditional_effects(sha_bm_1, "Group:Relation_type")
 
 ## BUT...
 
-::: box-error
+::: callout-error
 -   Multiple observations from different participants.
 
 -   Multiple observations from different target words.
@@ -129,7 +124,7 @@ conditional_effects(sha_bm_1, "Group:Relation_type")
 
 . . .
 
-::: box-tip
+::: callout-tip
 -   We need to include **varying terms**.
 :::
 
@@ -188,7 +183,7 @@ conditional_effects(sha_bm_2, "Group:Relation_type")
 
 ## Song 2020: hypotheses
 
-::: box-warning
+::: callout-warning
 Vague hypothesis:
 
 > The Shallow Structure Hypothesis (SSH) allows the possibility for nonnative speakers to show strong priming effects from nonconstituent and constituent primes equally because the shallow processing route, which relies more heavily on semantic and surface-level information than on structural information.
@@ -326,7 +321,7 @@ sha_bm_2_draws_r_wide |>
 
 ## Results overview
 
-::: box-note
+::: callout-note
 > The Shallow Structure Hypothesis (SSH) allows the possibility for nonnative speakers to show strong priming effects from nonconstituent and constituent primes equally because the shallow processing route, which relies more heavily on semantic and surface-level information than on structural information.
 
 -   The 90% CrI of the difference between nonconstituent and constituent in L2 is \[-1.3, 0.26\].
@@ -338,7 +333,7 @@ sha_bm_2_draws_r_wide |>
 
 ## Summary
 
-::: box-tip
+::: callout-tip
 -   You should include varying terms if data is "hierarchical", for example repeated measures from participants or items.
 
 -   Not including varying terms (wrongly) inflates posterior certainty.
