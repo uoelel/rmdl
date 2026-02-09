@@ -41,13 +41,13 @@ options(scipen = 999)
 ::: {.callout-note appearance="simple"}
 -   Semantic-relatedness task.
 
--   Pairs of written words presented visually.
+-   Pairs of written words presented visually (control and experimental).
 
-    -   **Homophones**: SON/SUN \~ MOON
+    -   **Homophones**: SIN-MOON, SON-MOON
 
-    -   **Near-homophones**: ROCK/LOCK \~ KEY
+    -   **Near-homophones**: SOCK-KEY, ROCK-KEY
 
-    -   **Minimal pairs**: PEAR/BEAR \~ FEAR
+    -   **Minimal pairs**: FEAR-PAW, PEAR-PAW
 :::
 
 . . .
@@ -95,7 +95,7 @@ ota2009
 #| echo: false
 
 emo <- tibble(
-  label = c("☀️-🌙", "👦-🌙", "🔒-🔑", "🪨-🔑", "🐻-😱", "🍐-😱"),
+  label = c("😈-🌙", "👦-🌙", "🧦-🔑", "🪨-🔑", "😱-🐾", "🍐-🐾"),
   Condition = c(rep(c("control", "unrelated"), 3)),
   Contrast = c(rep(c("H", "LR", "PB"), each = 2)),
   RT_log = 6.5
