@@ -1,6 +1,7 @@
 ---
 title: "RMDL -- Week 5"
 subtitle: "Varying effects I"
+bibliography: references.bib
 ---
 
 ```{r}
@@ -38,9 +39,10 @@ If you see `Project (none)` in the top-right corner, that means **you are not** 
 To make sure you are in the Quarto project, you can open the project by going to the project folder in File Explorer (Win) or Finder (macOS) and double click on the `.Rproj` file.
 :::
 
-In this tutorial, you have to run Bayesian regression models with data from Winter 2012 (DOI [10.1016/j.wocn.2012.08.006](https://doi.org/10.1016/j.wocn.2012.08.006)).
+In this tutorial, you have to run Bayesian regression models with data from @winter2012.
 
-You can get the data [here](/data/winter2012/polite.csv) (right-click and download). This page explains the meaning of the columns in the data: <https://uoelel.github.io/qml-data/data/winter2012/polite.html>.
+You can get the data [here](/data/winter2012/polite.csv) (right-click and download).
+This page explains the meaning of the columns in the data: <https://uoelel.github.io/qml-data/data/winter2012/polite.html>.
 
 ## Mean f0
 
@@ -51,7 +53,7 @@ Fit a regression model to answer the following question:
 The model should have the following variables:
 
 -   `f0mn` as the outcome variable.
--   `gender`, `months_ger` and `attitude` as predictors. Use indexing (`0 +`).
+-   `gender`, `months_ger` and `attitude` as predictors.
 -   Add varying effects as needed.
 
 ```{r}
@@ -59,13 +61,17 @@ The model should have the following variables:
 polite <- read_csv("data/winter2012/polite.csv")
 ```
 
-We fit a Bayesian regression model with mean f0 as the outcome variable, using a Gaussian family. As predictors, we include gender, attitude and months spent in germany. We also model an interaction between gender and attitude and between gender, attitude and months in germany. We also let the effect of attitude to vary by subject. (The effects of gender and months in Germany cannot vary by subject because they are within-subject variables).
+We fit a Bayesian regression model with mean f0 as the outcome variable, using a Gaussian family.
+As predictors, we include gender, attitude and months spent in Germany, including all interactions.
+We also let the effect of attitude to vary by subject.
+(The effects of gender and months in Germany cannot vary by subject because they are within-subject variables).
 
 ```{r}
 #| label: f0-bm
 f0_bm <- brm(
-  f0mn ~ 0 + gender:attitude + gender:attitude:months_ger +
-    (0 + attitude | subject),
+  f0mn ~ gender * attitude * months_ger +
+    (attitude | subject),
+  family = gaussian,
   data = polite,
   cores = 4,
   seed = my_seed,
@@ -75,14 +81,19 @@ f0_bm <- brm(
 
 ```{r}
 #| label: f0-bm-summary
-summary(f0_bm)
+summary(f0_bm, prob = 0.9)
 ```
 
-The 95% CrI of the effect of months in Germany on mean f0 when the attitude is polite and gender is female is \[-0.4, +0.1\], while it is \[-0.33, +0.2\] when the attitude is informal. The CrIs for gender male are much more uncertain. Given the level of uncertainty of the effect of months spent in Germany it is not wise to make any inference in relation to the research question and further comparisons will not be attempted. See @fig-f0-bm for the expected mean f0 based on the model.
+The coefficients of interest are `attitudepol:months_ger` (for females) and `genderM:attitudepol:months_ger`.
+The 90% CrI of `attitudepol:months_ger` is \[-0.04, 0.22\]: for each month spent in Germany the effect of attitude (polite) changes by -0.04 to +0.22 at 90% probability.
+While most of CrI is positive, a negative but small interaction could exist.
+Since the effect of attitude (polite) is negative, the interaction term indicates that the effect of attitude might decrease with time spent in Germany for female speakers.
+For male speakers, the interaction term `genderM:attitudepol:months_ger` adds more uncertainty, so it is not wise to make any inference.
+See @fig-f0-bm for the expected mean f0 based on the model.
 
 ```{r}
 #| label: fig-f0-bm
-#| fig-cap: "Expected mean f0."
+#| fig-cap: "Expected mean f0 by gender, attitude and months spent in Germany."
 
 plot(
   conditional_effects(f0_bm, "months_ger:attitude", conditions = make_conditions(polite, "gender")),
@@ -98,13 +109,17 @@ If you have time, run another regression model to answer the following research 
 
 The H1-H2 difference is correlated with breathiness: the higher the difference, the more breathy the voice quality.
 
-We fit a Bayesian regression with H1-H2 difference as the outcome variable, with a Gaussian family. As predictors, the model has attitude, gender and whether the participant is a music student. We let the affect of attitude to vary by participant. @fig-h1h2-bm shows the expected H1-H2 difference depending on attitude, gender and music student based on the model.
+We fit a Bayesian regression with H1-H2 difference as the outcome variable, with a Gaussian family.
+As predictors, the model has attitude, gender and whether the participant is a music student, including all interactions.
+We let the affect of attitude to vary by participant by including a by-subject varying intercept and varying slope for attitude.
+@fig-h1h2-bm shows the expected H1-H2 difference depending on attitude, gender and music student based on the model.
 
 ```{r}
 #| label: h1h2-bm
 h1h2_bm <- brm(
-  H1H2 ~ 0 + attitude:musicstudent:gender + (0 + attitude | subject),
+  H1H2 ~ attitude * musicstudent * gender + (attitude | subject),
   data = polite,
+  family = gaussian,
   cores = 4,
   seed = my_seed,
   file = "data/cache/h1h2_bm"
@@ -128,18 +143,19 @@ To answer the RQ of whether the difference between informal and polite attitude 
 
 -   Difference between H1-H2 in informal vs polite in male participants, separately for music students (`mus_m`) vs non-music students (`nomus_m`).
 
--   Difference between the differences for female and male participants (`no_mus_f` and `no_mus_m`). This estimand is the one we need to answer the RQ.
+-   Difference between the differences for female and male participants (`no_mus_f` and `no_mus_m`).
+    This estimand is the one we need to answer the RQ.
 
 ```{r}
 #| label: h1h2-fraws
 h1h2_draws <- as_draws_df(h1h2_bm, "^b_", regex = TRUE)
 h1h2_draws <- h1h2_draws |> 
   mutate(
-    nomus_f = `b_attitudepol:musicstudentno:genderF` - `b_attitudeinf:musicstudentno:genderF`,
-    mus_f = `b_attitudepol:musicstudentyes:genderF` - `b_attitudeinf:musicstudentyes:genderF`,
+    nomus_f = b_attitudepol,
+    mus_f = b_attitudepol + `b_attitudepol:musicstudentyes`,
     no_mus_f = mus_f - nomus_f,
-    nomus_m = `b_attitudepol:musicstudentno:genderM` - `b_attitudeinf:musicstudentno:genderM`,
-    mus_m = `b_attitudepol:musicstudentyes:genderM` - `b_attitudeinf:musicstudentyes:genderM`,
+    nomus_m = b_attitudepol + `b_attitudepol:genderM`,
+    mus_m = b_attitudepol + `b_attitudepol:genderM` + `b_attitudepol:musicstudentyes` + `b_attitudepol:musicstudentyes:genderM`,
     no_mus_m = mus_m - nomus_m,
   )
 
@@ -149,7 +165,9 @@ h1h2_music_diff <- h1h2_draws |>
   pivot_longer(everything())
 ```
 
-@fig-h1h2-music-diff shows the estimated difference between the by-attitude H1-H2 difference in music vs non-music students, separately for female and male students. There is some indication of a difference for female participants, but not so much for male participants. Let's calculate 95, 80, and 60% CrI.
+@fig-h1h2-music-diff shows the estimated difference between the by-attitude H1-H2 difference in music vs non-music students, separately for female and male students.
+There is some indication of a difference for female participants, but not so much for male participants.
+Let's calculate 95, 80, and 60% CrI.
 
 ```{r}
 #| label: fig-h1h2-music-diff
@@ -160,7 +178,8 @@ h1h2_music_diff |>
   geom_density(alpha = 0.5)
 ```
 
-The 80% CrI [-2.16, -0.04] for femal participants suggests a difference based on whether the participant is a music student or not, at 80% confidence, although the magnitude of the difference is quite uncertain and if a difference is indeed present it is 2 db or smaller.
+The 80% CrI \[-1.98, -0.22\] for female participants suggests a difference of the effect of attitude based on whether the participant is a music student or not, at 80% confidence, although the magnitude of the difference is quite uncertain and if a difference is indeed present it is less than 2 db.
+For male participants there is a lot of uncertainty.
 
 ```{r}
 #| label: h1h2-music-diff-cri
@@ -172,23 +191,7 @@ h1h2_music_diff |>
   unnest_wider(ci)
 ```
 
-In sum, the results are inconclusive as to which being a music student makes a difference in H1-H2 differences between polite and informal speech, particularly for male speakers. For female speakers, there might be a slightly greater difference in the H1-H2 difference of polite vs informal speech when they are music students relative to non-music students, but the effect could be anything between 2 and almost 0 db.
+In sum, the results are inconclusive as to which being a music student makes a difference in H1-H2 differences between polite and informal speech for male speakers.
+For female speakers, there might be a slightly greater difference in the H1-H2 difference of polite vs informal speech when they are music students relative to non-music students, but the difference is below 2 db.
 
-## Reporting
-
-You should mention the varying effects you included when reporting the model specification. For example, for the following model:
-
-``` r
-ota_bm_2 <- brm(
-  Words.RT ~ 0 + Condition:Contrast +
-    (0 + Condition:Contrast | Subject) +
-    (0 + Condition:Contrast | Version),
-  family = lognormal,
-  data = ota2009,
-  seed = my_seed,
-  cores = 4,
-  file = "data/cache/ota_bm_2"
-)
-```
-
-> As varying (aka random) effects, we included by-participant and by-list varying terms for the interaction between condition and contrast.
+### References
