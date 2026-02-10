@@ -14,7 +14,6 @@ theme_set(theme_light())
 library(posterior)
 
 library(brms)
-library(broom.mixed)
 
 options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
 options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))

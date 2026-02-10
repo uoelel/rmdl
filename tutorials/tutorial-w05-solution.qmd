@@ -13,7 +13,6 @@ theme_set(theme_light())
 library(posterior)
 
 library(brms)
-library(broom.mixed)
 
 options(ggplot2.discrete.fill = RColorBrewer::brewer.pal(8, "Dark2"))
 options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(8, "Dark2"))
@@ -79,7 +78,7 @@ f0_bm <- brm(
 summary(f0_bm)
 ```
 
-The 95% CrI of the effect of months in Germany on mean f0 when the attitude is polite and gender is female is \[-0.4, +0.1\], while it is \[-0.33, +0.2\] when the attitude is informal. The CrIs for gender male are much more uncertain. Given the level of uncertainty of the effect of months spent in Germany it is not wise to make any inference in relation to the research question and further comparisons will not be attempted. See @fig-f0 for the expected mean f0 based on the model.
+The 95% CrI of the effect of months in Germany on mean f0 when the attitude is polite and gender is female is \[-0.4, +0.1\], while it is \[-0.33, +0.2\] when the attitude is informal. The CrIs for gender male are much more uncertain. Given the level of uncertainty of the effect of months spent in Germany it is not wise to make any inference in relation to the research question and further comparisons will not be attempted. See @fig-f0-bm for the expected mean f0 based on the model.
 
 ```{r}
 #| label: fig-f0-bm
